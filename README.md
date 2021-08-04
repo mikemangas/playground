@@ -1,3 +1,5 @@
+Check my Project Progress on: https://trello.com/b/Wjo0btkw/capstone-project-mike-playground
+
 # Fullstack Project Template
 
 This is a template that can be used to create a new repository for
