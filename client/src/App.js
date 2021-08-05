@@ -2,7 +2,6 @@ import "./App.css";
 // import { useEffect, useState } from "react";
 
 function App() {
-
   /* This is just an example to show that we can access
   the endpoint wihout writing the whole path, and that 
   the proxy feature of the create-react-app proxies the request
@@ -15,7 +14,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1> Hallo </h1>
+      <h1> TestHeader </h1>
     </div>
   );
 }
