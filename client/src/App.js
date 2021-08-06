@@ -1,4 +1,7 @@
+import Main from "./components/Main";
+import Header from "./components/Header";
 import "./App.css";
+// import Main from "../components/Main";
 // import { useEffect, useState } from "react";
 
 function App() {
@@ -14,7 +17,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1> TestHeader </h1>
+      <Header />
+      <Main />
     </div>
   );
 }
