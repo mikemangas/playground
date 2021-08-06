@@ -1,8 +1,6 @@
 import Main from "./components/Main";
 import Header from "./components/Header";
 import "./App.css";
-// import Main from "../components/Main";
-// import { useEffect, useState } from "react";
 
 function App() {
   // /* This is just an example to show that we can access
