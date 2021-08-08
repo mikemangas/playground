@@ -1,6 +1,6 @@
 // import { useEffect, useState } from "react";
 
-import { MapContainer, TileLayer, Marker /*Popup*/ } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 // import { useMapEvents } from "react-leaflet";
 import testjson from "../testjson.json";
 // import L from "leaflet";
@@ -86,20 +86,22 @@ export default function Home() {
   //     </Marker>
   //   );
   // }
-
+  function handleDies(e) {
+    e.preventDefault();
+    return <MapContainer zoom={1} />;
+  }
   return (
     <div>
-      <form>
+      <form onSubmit={handleDies}>
         <input name="plz" id="plz" placeholder="deine PLZ" />
         <button type="submit">Send</button>
       </form>
 
       <MapContainer
         // ref={mapRef}
-
-        zoom={1}
+        center={[50.9194634670891, 11.62]}
+        zoom={8}
         scrollWheelZoom={false}
-        center={[11.6280471251885, 50.9194634670891]}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -109,16 +111,19 @@ export default function Home() {
         {/* <Marker position={[testDataOne[1], testDataOne[0]]}> */}
         {testjson.features.map((positionData) => (
           <Marker
-            // key={positionData?.recordid}
+            key={positionData?.properties?.id}
             position={[
               positionData?.geometry?.coordinates[1],
               positionData?.geometry?.coordinates[0],
             ]}
-          />
-          //   <Popup>
-          //     <button>CHECK-IN</button>
-          //   </Popup>
-          // </Marker>
+          >
+            <Popup>
+              <>
+                <button>CHECK-IN</button>
+                <p>{positionData?.properties?.name}</p>
+              </>
+            </Popup>
+          </Marker>
         ))}
 
         {/* <LocationMarker /> */}
