@@ -28,6 +28,7 @@ export default function Main() {
           <SpielplatzEintragen />
         </Route>
         <Route path="/2">
+          <div id="mapid"></div>
           <Home2 />
         </Route>
         <Route exact path="/">
