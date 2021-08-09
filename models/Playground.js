@@ -5,11 +5,11 @@ const playGroundSchema = new Schema(
   {
     title: {
       type: String,
-      required: true,
+      required: false,
     },
     author: {
       maxLength: 80,
-      required: true,
+      required: false,
       type: String,
     },
     isRead: {
@@ -20,14 +20,13 @@ const playGroundSchema = new Schema(
 
     genre: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 );
-//use singular for model names like "Book"
 const Playground = mongoose.model("Playground", playGroundSchema);
 module.exports = Playground;

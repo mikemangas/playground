@@ -6,7 +6,6 @@ import NotFound from "../pages/NotFound";
 import Kontakt from "../pages/Kontakt";
 import UeberUns from "../pages/UeberUns";
 import SpielplatzEintragen from "../pages/SpielplatzEintragen";
-import Home2 from "../pages/Home2";
 
 export default function Main() {
   return (
@@ -26,10 +25,6 @@ export default function Main() {
         </Route>
         <Route path="/spielplatz-eintragen">
           <SpielplatzEintragen />
-        </Route>
-        <Route path="/2">
-          <div id="mapid"></div>
-          <Home2 />
         </Route>
         <Route exact path="/">
           <Home />

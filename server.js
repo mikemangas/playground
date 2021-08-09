@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const Playground = require("./models/playgroundModel");
+const Playground = require("./models/Playground");
 
 /* Middleware */
 app.use(express.json());
@@ -18,8 +18,7 @@ If you have many endpoints, consider use Express Router for each set of endpoint
 app.get("/api/playground", (req, res) => {
   Playground.find({})
     .then((playground) => {
-      res.send(playground);
-      res.status(200).json();
+      res.status(200).json(playground);
     })
     .catch(() => {
       res.status(500);

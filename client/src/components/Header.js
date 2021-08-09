@@ -4,7 +4,6 @@ export default function Header() {
   return (
     <header className="header">
       <NavLink to="/">Home</NavLink>
-      <NavLink to="/2">Home2</NavLink>
       <NavLink to="/impressum">Impressum</NavLink>
       <NavLink to="/datenschutz">Datenschutz</NavLink>
       <NavLink to="/wir">Über Uns</NavLink>
