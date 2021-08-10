@@ -5,7 +5,7 @@ export default function Home() {
   const [playgrounds, setPlaygrounds] = useState([]);
 
   useEffect(() => {
-    const url = `http://localhost:4000/api/playground`;
+    const url = `https://playground-check.herokuapp.com/api/playground`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
