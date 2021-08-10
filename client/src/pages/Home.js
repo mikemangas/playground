@@ -4,8 +4,6 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [playgrounds, setPlaygrounds] = useState([]);
   const [map, setMap] = useState(null);
-  const [latitude, setLatitude] = useState(48.12804396748148);
-  const [longitude, setLongitude] = useState(11.50236734761081);
 
   useEffect(() => {
     const url = "/api/playground";
@@ -25,14 +23,14 @@ export default function Home() {
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
-        setLatitude(data[0]?.lat);
-        setLongitude(data[0]?.lon);
+        const newLatitude = Number(data[0]?.lat);
+        const newLongitude = Number(data[0]?.lon);
+        map.flyTo([newLatitude, newLongitude], 15);
       })
       .catch((error) => {
         console.error(error);
       });
     form.reset();
-    map.flyTo([latitude, longitude], 15);
   }
 
   return (
