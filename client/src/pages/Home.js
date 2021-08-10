@@ -4,10 +4,8 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [playgrounds, setPlaygrounds] = useState([]);
   const [map, setMap] = useState(null);
-  // const [searchInput, setSearchInput] = useState();
   const [latitude, setLatitude] = useState(48.12804396748148);
   const [longitude, setLongitude] = useState(11.50236734761081);
-  // const [status, setStatus] = useState(false);
 
   useEffect(() => {
     const url = "/api/playground";
@@ -23,13 +21,12 @@ export default function Home() {
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
-    console.log(formInputValue);
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${formInputValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
-        setLatitude(data[0].lat);
-        setLongitude(data[0].lon);
+        setLatitude(data[0]?.lat);
+        setLongitude(data[0]?.lon);
       })
       .catch((error) => {
         console.error(error);
