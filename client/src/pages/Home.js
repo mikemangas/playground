@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 export default function Home() {
   const [playgrounds, setPlaygrounds] = useState([]);
   const [map, setMap] = useState(null);
-  const [searchInput, setSearchInput] = useState(81927);
-  const [latitude, setLatitude] = useState(48.078);
-  const [longitude, setLongitude] = useState(11.522);
+  // const [searchInput, setSearchInput] = useState();
+  const [latitude, setLatitude] = useState(48.12804396748148);
+  const [longitude, setLongitude] = useState(11.50236734761081);
+  // const [status, setStatus] = useState(false);
 
   useEffect(() => {
     const url = "/api/playground";
@@ -15,11 +16,15 @@ export default function Home() {
       .then((data) => {
         setPlaygrounds(data);
       })
-      .catch((error) => console.error("something went wrong"));
+      .catch((error) => console.error(error));
   }, []);
 
-  useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${searchInput}&limit=20&format=json`;
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formInputValue = form.searchInput.value;
+    console.log(formInputValue);
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${formInputValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
@@ -29,16 +34,8 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
-  }, [searchInput]);
-
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formInputValue = form.searchInput.value;
-    console.log(formInputValue);
-    setSearchInput(formInputValue);
-    map.flyTo([latitude, longitude], 15);
     form.reset();
+    map.flyTo([latitude, longitude], 15);
   }
 
   return (
