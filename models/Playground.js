@@ -40,7 +40,8 @@ const playGroundSchema = new Schema({
       type: String,
     },
     coordinates: {
-      type: Array,
+      type: [Number],
+      required: true,
     },
   },
   timestamps: true,
