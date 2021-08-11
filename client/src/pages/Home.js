@@ -1,5 +1,6 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 
 export default function Home() {
   const [playgrounds, setPlaygrounds] = useState([]);
@@ -55,22 +56,24 @@ export default function Home() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {playgrounds.map((positionData) => (
-          <Marker
-            key={positionData?._id}
-            position={[
-              positionData?.geometry?.coordinates[1],
-              positionData?.geometry?.coordinates[0],
-            ]}
-          >
-            <Popup>
-              <>
-                <button>CHECK-IN</button>
-                <p>{positionData?.properties?.name}</p>
-              </>
-            </Popup>
-          </Marker>
-        ))}
+        <MarkerClusterGroup>
+          {playgrounds.map((positionData) => (
+            <Marker
+              key={positionData?._id}
+              position={[
+                positionData?.geometry?.coordinates[1],
+                positionData?.geometry?.coordinates[0],
+              ]}
+            >
+              <Popup>
+                <>
+                  <button>CHECK-IN</button>
+                  <p>{positionData?.properties?.name}</p>
+                </>
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
       </MapContainer>
     </div>
   );
