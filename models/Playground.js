@@ -1,32 +1,50 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
-const playGroundSchema = new Schema(
-  {
-    title: {
+const playGroundSchema = new Schema({
+  checkedIn: {
+    type: Number,
+    default: 0,
+  },
+  type: {
+    type: String,
+  },
+  properties: {
+    access: {
       type: String,
-      required: false,
     },
-    author: {
-      maxLength: 80,
-      required: false,
+    leisure: {
       type: String,
     },
-    isRead: {
-      type: Boolean,
-      default: false,
-      required: false,
-    },
-
-    genre: {
+    name: {
       type: String,
-      required: false,
+    },
+    note: {
+      type: String,
+    },
+    wheelchair: {
+      type: String,
+    },
+    surface: {
+      type: String,
+    },
+    max_age: {
+      type: Number,
+    },
+    min_age: {
+      type: Number,
     },
   },
-  {
-    timestamps: false,
-    versionKey: false,
-  }
-);
+  geometry: {
+    type: {
+      type: String,
+    },
+    coordinates: {
+      type: Array,
+    },
+  },
+  timestamps: true,
+  versionKey: false,
+});
 const Playground = mongoose.model("Playground", playGroundSchema);
 module.exports = Playground;
