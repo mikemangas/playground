@@ -61,21 +61,40 @@ app.delete("/api/playground/:id", (req, res) => {
 
 app.patch("/api/playground/:id", (req, res) => {
   const id = req.params.id;
-  Playground.findByIdAndUpdate(id, req.body, { new: true })
-    .then((updatePlayground) => {
-      if (!updatePlayground) {
-        res.status(404).end();
-        return;
-      }
-      res.send(updatePlayground);
-    })
-    .catch(() => {
-      res.status(500);
-      res.json({
-        error:
-          "something went wrong when updating a playgrround title, please try again",
+  const { userId } = req.body;
+
+  // Find the playground
+  Playground.findById(id).then((playground) => {
+    if (playground.checkedIn.includes(userId)) {
+      // userId in playground
+      Playground.findByIdAndUpdate(
+        id,
+        {
+          $pull: { checkedIn: userId },
+        },
+        { new: true }
+      ).then((updatedPlayground) => {
+        res.status(200).json({
+          status: "CHECKED-OUT",
+          count: updatedPlayground.checkedIn.length,
+        });
       });
-    });
+    } else {
+      // userId not in playground
+      Playground.findByIdAndUpdate(
+        id,
+        {
+          $push: { checkedIn: userId },
+        },
+        { new: true }
+      ).then((updatedPlayground) => {
+        res.status(200).json({
+          status: "CHECKED-IN",
+          count: updatedPlayground.checkedIn.length,
+        });
+      });
+    }
+  });
 });
 if (process.env.NODE_ENV === "production") {
   // Serve any static file

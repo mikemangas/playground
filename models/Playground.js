@@ -3,8 +3,7 @@ const { Schema } = mongoose;
 
 const playGroundSchema = new Schema({
   checkedIn: {
-    type: Number,
-    default: 0,
+    type: [String],
   },
   type: {
     type: String,
@@ -44,8 +43,6 @@ const playGroundSchema = new Schema({
       required: true,
     },
   },
-  timestamps: true,
-  versionKey: false,
 });
 const Playground = mongoose.model("Playground", playGroundSchema);
 module.exports = Playground;

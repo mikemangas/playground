@@ -3,15 +3,14 @@ import { useState, useEffect } from "react";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 
 export default function Home() {
-  const [playgrounds, setPlaygrounds] = useState([]);
+  const [playGroundData, setPlayGroundData] = useState([]);
   const [map, setMap] = useState(null);
-
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setPlaygrounds(data);
+        setPlayGroundData(data);
       })
       .catch((error) => console.error(error));
   }, []);
@@ -34,6 +33,25 @@ export default function Home() {
     form.reset();
   }
 
+  function handleCheckButton(data) {
+    const url = `api/playground/${data._id}`;
+    const patchMethodCheckIn = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: "HALLO",
+      }),
+    };
+
+    fetch(url, patchMethodCheckIn)
+      .then((res) => {
+        res.json();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <div>
       <form onSubmit={handleOnSubmit}>
@@ -42,7 +60,7 @@ export default function Home() {
           id="searchInput"
           placeholder="PLZ oder Stadteil"
         />
-        <button type="submit">Send</button>
+        <button type="submit">SEND</button>
       </form>
 
       <MapContainer
@@ -57,7 +75,7 @@ export default function Home() {
         />
 
         <MarkerClusterGroup>
-          {playgrounds.map((positionData) => (
+          {playGroundData.map((positionData) => (
             <Marker
               key={positionData?._id}
               position={[
@@ -67,7 +85,9 @@ export default function Home() {
             >
               <Popup>
                 <>
-                  <button>CHECK-IN</button>
+                  <button onClick={() => handleCheckButton(positionData)}>
+                    CHECKIN
+                  </button>
                   <p>{positionData?.properties?.name}</p>
                 </>
               </Popup>
