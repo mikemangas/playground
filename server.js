@@ -14,6 +14,7 @@ app.use(cors());
 All your api endpoints should be prefixed with /api and be before the next ones
 If you have many endpoints, consider use Express Router for each set of endpoints
 */
+
 app.get("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   Playground.findById(id)
@@ -76,11 +77,9 @@ app.delete("/api/playground/:id", (req, res) => {
 app.patch("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
-
-  // Find the playground
-  Playground.findById(id).then((playground) => {
-    if (playground.checkedIn.includes(userId)) {
-      // userId in playground
+  Playground.find({ checkedIn: userId }).then((playground) => {
+    if (playground.length > 0) {
+      console.log("User is already logged in");
       Playground.findByIdAndUpdate(
         id,
         {
@@ -94,22 +93,42 @@ app.patch("/api/playground/:id", (req, res) => {
         });
       });
     } else {
-      // userId not in playground
-      Playground.findByIdAndUpdate(
-        id,
-        {
-          $push: { checkedIn: userId },
-        },
-        { new: true }
-      ).then((updatedPlayground) => {
-        res.status(200).json({
-          status: "CHECKED-IN",
-          count: updatedPlayground.checkedIn.length,
-        });
+      console.log("User successfully logged in");
+      Playground.findById(id).then((playground) => {
+        if (playground.checkedIn.includes(userId)) {
+          // userId in playground
+          Playground.findByIdAndUpdate(
+            id,
+            {
+              $pull: { checkedIn: userId },
+            },
+            { new: true }
+          ).then((updatedPlayground) => {
+            res.status(200).json({
+              status: "CHECKED-OUT",
+              count: updatedPlayground.checkedIn.length,
+            });
+          });
+        } else {
+          // userId not in playground
+          Playground.findByIdAndUpdate(
+            id,
+            {
+              $push: { checkedIn: userId },
+            },
+            { new: true }
+          ).then((updatedPlayground) => {
+            res.status(200).json({
+              status: "CHECKED-IN",
+              count: updatedPlayground.checkedIn.length,
+            });
+          });
+        }
       });
     }
   });
 });
+
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
   app.use(express.static(path.join(__dirname, "client/build")));
