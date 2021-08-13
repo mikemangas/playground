@@ -1,11 +1,12 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { useState, useEffect } from "react";
 import MarkerClusterGroup from "react-leaflet-markercluster";
+import CheckInText from "../components/CheckInText";
 
 export default function Home() {
   const [playGroundData, setPlayGroundData] = useState([]);
   const [map, setMap] = useState(null);
-  // const [status, setStatus] = useState();
+  const [status, setStatus] = useState();
 
   useEffect(() => {
     const url = "/api/playground";
@@ -15,7 +16,7 @@ export default function Home() {
         setPlayGroundData(data);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [status]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -46,29 +47,13 @@ export default function Home() {
     };
     fetch(url, patchMethodCheckIn)
       .then((res) => {
+        setStatus(!status);
         res.json();
       })
       .catch((error) => {
         console.error(error);
       });
   }
-
-  function checkInText(data) {
-    const url = `api/playground/${data._id}`;
-    fetch(url)
-      .then((res) => {
-        res.json();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
-      return "CHECK-OUT";
-    } else {
-      return "CHECK-IN";
-    }
-  }
-
   return (
     <div>
       <form onSubmit={handleOnSubmit}>
@@ -103,7 +88,12 @@ export default function Home() {
               <Popup>
                 <>
                   <button onClick={() => handleCheckButton(positionData)}>
-                    {checkInText(positionData)}
+                    <CheckInText
+                      hasId={positionData?.checkedIn.includes(
+                        JSON.parse(localStorage.getItem("userId"))
+                      )}
+                      data={positionData}
+                    />
                   </button>
                   <p>{positionData?.properties?.name}</p>
                 </>
