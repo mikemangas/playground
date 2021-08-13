@@ -54,6 +54,7 @@ export default function Home() {
         console.error(error);
       });
   }
+
   return (
     <div>
       <form onSubmit={handleOnSubmit}>

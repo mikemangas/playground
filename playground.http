@@ -1,5 +1,5 @@
 ###get all articles
-GET http://localhost:4000/api/playground HTTP/1.1
+GET http://localhost:4000/api/playground/61153788da59d0d60ba35403 HTTP/1.1
 
 
 ###Create
