@@ -5,6 +5,8 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 export default function Home() {
   const [playGroundData, setPlayGroundData] = useState([]);
   const [map, setMap] = useState(null);
+  // const [status, setStatus] = useState();
+
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
@@ -42,7 +44,6 @@ export default function Home() {
         userId: JSON.parse(localStorage.getItem("userId")),
       }),
     };
-
     fetch(url, patchMethodCheckIn)
       .then((res) => {
         res.json();
@@ -50,6 +51,22 @@ export default function Home() {
       .catch((error) => {
         console.error(error);
       });
+  }
+
+  function checkInText(data) {
+    const url = `api/playground/${data._id}`;
+    fetch(url)
+      .then((res) => {
+        res.json();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
+      return "CHECK-OUT";
+    } else {
+      return "CHECK-IN";
+    }
   }
 
   return (
@@ -86,7 +103,7 @@ export default function Home() {
               <Popup>
                 <>
                   <button onClick={() => handleCheckButton(positionData)}>
-                    CHECKIN
+                    {checkInText(positionData)}
                   </button>
                   <p>{positionData?.properties?.name}</p>
                 </>

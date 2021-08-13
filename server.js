@@ -14,6 +14,20 @@ app.use(cors());
 All your api endpoints should be prefixed with /api and be before the next ones
 If you have many endpoints, consider use Express Router for each set of endpoints
 */
+app.get("/api/playground/:id", (req, res) => {
+  const id = req.params.id;
+  Playground.findById(id)
+    .then((playground) => {
+      res.status(200).json(playground);
+    })
+    .catch(() => {
+      res.status(500);
+      res.json({
+        error:
+          "something went wrong when calling the playgrounds. please try again",
+      });
+    });
+});
 
 app.get("/api/playground", (req, res) => {
   Playground.find({})
