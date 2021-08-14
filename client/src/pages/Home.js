@@ -6,7 +6,7 @@ import CheckInText from "../components/CheckInText";
 export default function Home() {
   const [playGroundData, setPlayGroundData] = useState([]);
   const [map, setMap] = useState(null);
-  const [status, setStatus] = useState();
+  const [state, setState] = useState();
 
   useEffect(() => {
     const url = "/api/playground";
@@ -16,7 +16,7 @@ export default function Home() {
         setPlayGroundData(data);
       })
       .catch((error) => console.error(error));
-  }, [status]);
+  }, [state]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -47,7 +47,7 @@ export default function Home() {
     };
     fetch(url, patchMethodCheckIn)
       .then((res) => {
-        setStatus(!status);
+        setState(!state);
         res.json();
       })
       .catch((error) => {

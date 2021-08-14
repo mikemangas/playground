@@ -22,8 +22,7 @@ app.get("/api/playground/:id", (req, res) => {
       res.status(200).json(playground);
     })
     .catch(() => {
-      res.status(500);
-      res.json({
+      res.status(500).json({
         error:
           "something went wrong when calling the playgrounds. please try again",
       });
@@ -36,8 +35,7 @@ app.get("/api/playground", (req, res) => {
       res.status(200).json(playground);
     })
     .catch(() => {
-      res.status(500);
-      res.json({
+      res.status(500).json({
         error:
           "something went wrong when calling the playgrounds. please try again",
       });
@@ -50,8 +48,7 @@ app.post("/api/playground", (req, res) => {
       res.status(201).send(newPlayground);
     })
     .catch(() => {
-      res.status(500);
-      res.json({
+      res.status(500).res.json({
         error:
           "something went wrong when creating a playground, please try again",
       });
@@ -66,8 +63,7 @@ app.delete("/api/playground/:id", (req, res) => {
       console.log(`successfully deleted ${body.title}`);
     })
     .catch(() => {
-      res.status(500);
-      res.json({
+      res.status(500).json({
         error:
           "something went wrong when deleting a playgtround title, please try again",
       });
