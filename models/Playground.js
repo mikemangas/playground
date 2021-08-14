@@ -3,8 +3,7 @@ const { Schema } = mongoose;
 
 const playGroundSchema = new Schema({
   checkedIn: {
-    type: Number,
-    default: 0,
+    type: [String],
   },
   type: {
     type: String,
