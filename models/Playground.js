@@ -44,8 +44,6 @@ const playGroundSchema = new Schema({
       required: true,
     },
   },
-  timestamps: true,
-  versionKey: false,
 });
 const Playground = mongoose.model("Playground", playGroundSchema);
 module.exports = Playground;
