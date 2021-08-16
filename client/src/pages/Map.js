@@ -5,10 +5,10 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 export default function Map() {
-  const [map, setMap] = useState(null);
+  const [map, setMap] = useState();
   const [playGroundData, setPlayGroundData] = useState([]);
-  const [state, setState] = useState();
-  const { params } = useParams([]);
+  const [checkStatus, setCheckStatus] = useState();
+  const { searchparams } = useParams();
 
   useEffect(() => {
     const url = "/api/playground";
@@ -18,19 +18,21 @@ export default function Map() {
         setPlayGroundData(data);
       })
       .catch((error) => console.error(error));
+  }, [checkStatus, searchparams, map]);
 
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${params}&limit=20&format=json`;
+  useEffect(() => {
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${searchparams}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
-        map.flyTo([newLatitude, newLongitude], 15);
+        map.setView([newLatitude, newLongitude], 13);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [state, params, map]);
+  });
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -42,7 +44,7 @@ export default function Map() {
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
-        map.flyTo([newLatitude, newLongitude], 15);
+        map.setView([newLatitude, newLongitude], 13);
       })
       .catch((error) => {
         console.error(error);
@@ -61,7 +63,7 @@ export default function Map() {
     };
     fetch(url, patchMethodCheckIn)
       .then((res) => {
-        setState(!state);
+        setCheckStatus(!checkStatus);
         res.json();
       })
       .catch((error) => {
@@ -72,11 +74,8 @@ export default function Map() {
   return (
     <>
       <form onSubmit={handleOnSubmit}>
-        <input
-          name="searchInput"
-          id="searchInput"
-          placeholder="PLZ oder Stadteil"
-        />
+        <label for="searchInput">PLZ oder Stadteil</label>
+        <input name="searchInput" id="searchInput" />
         <button type="submit">SEND</button>
       </form>
 

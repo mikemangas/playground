@@ -13,11 +13,8 @@ export default function Home() {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <input
-        name="searchInput"
-        id="searchInput"
-        placeholder="PLZ oder Stadteil"
-      />
+      <label for="searchInput">PLZ oder Stadteil</label>
+      <input name="searchInput" id="searchInput" />
       <button type="submit">SEND</button>
     </form>
   );
