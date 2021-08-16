@@ -31,6 +31,7 @@ export default function Map() {
       })
       .catch((error) => {
         console.error(error);
+        hahaha;
       });
   });
 
