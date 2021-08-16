@@ -1,5 +1,6 @@
 import { Switch, Route } from "react-router-dom";
 import Home from "../pages/Home";
+import Map from "../pages/Map";
 import Impressum from "../pages/Impressum";
 import Datenschutz from "../pages/Datenschutz";
 import NotFound from "../pages/NotFound";
@@ -13,6 +14,9 @@ export default function Main() {
       <Switch>
         <Route path="/impressum">
           <Impressum />
+        </Route>
+        <Route path="/map/:params">
+          <Map />
         </Route>
         <Route path="/datenschutz">
           <Datenschutz />
