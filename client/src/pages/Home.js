@@ -7,15 +7,16 @@ export default function Home() {
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
+    localStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
-    history.push(`/map/${formInputValue}`);
+    history.push(`/map`);
   }
 
   return (
     <form onSubmit={handleOnSubmit}>
       <label htmlFor="searchInput">PLZ oder Stadteil</label>
       <input name="searchInput" id="searchInput" />
-      <button type="submit">SENDa</button>
+      <button type="submit">SEND</button>
     </form>
   );
 }

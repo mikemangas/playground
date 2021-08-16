@@ -1,4 +1,4 @@
-export default function CheckInText({ data, hasId }) {
+export default function CheckInText({ data, hasId, check }) {
   const url = `api/playground/${data._id}`;
   fetch(url)
     .then((res) => {
