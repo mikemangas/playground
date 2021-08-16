@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <form onSubmit={handleOnSubmit}>
-      <label for="searchInput">PLZ oder Stadteil</label>
+      <label htmlFor="searchInput">PLZ oder Stadteil</label>
       <input name="searchInput" id="searchInput" />
       <button type="submit">SEND</button>
     </form>
