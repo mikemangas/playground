@@ -15,7 +15,7 @@ export default function Main() {
         <Route path="/impressum">
           <Impressum />
         </Route>
-        <Route path="/map/:searchparams">
+        <Route path="/map/">
           <Map />
         </Route>
         <Route path="/datenschutz">

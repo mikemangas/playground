@@ -1,5 +1,8 @@
 export default function CheckInText({ data, hasId }) {
   const url = `api/playground/${data._id}`;
+  const checkout = "CHECK-OUT";
+  const checkin = "CHECK-IN";
+
   fetch(url)
     .then((res) => {
       res.json();
@@ -8,8 +11,8 @@ export default function CheckInText({ data, hasId }) {
       console.error(error);
     });
   if (hasId) {
-    return "CHECK-OUT";
+    return checkout;
   } else {
-    return "CHECK-IN";
+    return checkin;
   }
 }

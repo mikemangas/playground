@@ -7,8 +7,9 @@ export default function Home() {
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
+    localStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
-    history.push(`/map/${formInputValue}`);
+    history.push(`/map`);
   }
 
   return (

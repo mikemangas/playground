@@ -1,14 +1,14 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import CheckInText from "../components/CheckInText";
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+// import { useHistory } from "react-router-dom";
 
 export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [searchState, setSearchState] = useState();
-  const { searchparams } = useParams([]);
+  const localStorageInputText = JSON.parse(localStorage.getItem("inputText"));
 
   useEffect(() => {
     const url = "/api/playground";
@@ -18,10 +18,10 @@ export default function Map() {
         setPlayGroundData(data);
       })
       .catch((error) => console.error(error));
-  }, [searchparams, searchState, map]);
+  }, [searchState, map]);
 
   useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${searchparams}&limit=20&format=json`;
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${localStorageInputText}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
@@ -33,24 +33,6 @@ export default function Map() {
         console.error(error);
       });
   });
-
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formInputValue = form.searchInput.value;
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${formInputValue}&limit=20&format=json`;
-    fetch(searchInputUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        const newLatitude = Number(data[0]?.lat);
-        const newLongitude = Number(data[0]?.lon);
-        map.setView([newLatitude, newLongitude], 12);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    form.reset();
-  }
 
   function handleCheckButton(data) {
     const url = `/api/playground/${data._id}`;
@@ -69,16 +51,16 @@ export default function Map() {
       .catch((error) => {
         console.error(error);
       });
+
+    // if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
+    //   alert("successfully CHECKED-OUT");
+    // } else {
+    //   alert("successfully CHECKED-IN");
+    // }
   }
 
   return (
     <>
-      <form onSubmit={handleOnSubmit}>
-        <label htmlFor="searchInput">PLZ oder Stadteil</label>
-        <input name="searchInput" id="searchInput" />
-        <button type="submit">SEND</button>
-      </form>
-
       <section className="mapcontainer">
         <MapContainer
           whenCreated={setMap}
