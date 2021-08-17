@@ -1,27 +1,38 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
-import CheckInText from "../components/CheckInText";
 import { useState, useEffect } from "react";
-// import { useHistory } from "react-router-dom";
+import CheckinButton from "../components/CheckinButton";
 
 export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
-  const [searchState, setSearchState] = useState();
-  const localStorageInputText = JSON.parse(localStorage.getItem("inputText"));
+  const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+  const [
+    playgroundWhereUserIsCheckedIn,
+    setPlaygroundWhereUserIsCheckedIn,
+  ] = useState(null);
 
+  const userId = JSON.parse(localStorage.getItem("userId"));
+
+  // Fetch playgrounds
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
       .then((res) => res.json())
-      .then((data) => {
-        setPlayGroundData(data);
+      .then((allPlaygrounds) => {
+        // Check if user is in any playground
+        const checkedPlayground = allPlaygrounds.find((playground) => {
+          return playground.checkedIn.includes(userId);
+        });
+        setPlaygroundWhereUserIsCheckedIn(checkedPlayground);
+        setPlayGroundData(allPlaygrounds);
       })
       .catch((error) => console.error(error));
-  }, [searchState, map]);
+  }, [userId]);
 
+  // Fetch coordinates for given zipcode
   useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${localStorageInputText}&limit=20&format=json`;
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
@@ -32,35 +43,43 @@ export default function Map() {
       .catch((error) => {
         console.error(error);
       });
-  });
+  }, [locationSearchValue, map]);
 
-  function handleCheckButton(data) {
-    const url = `/api/playground/${data._id}`;
+  function handleCheckButton(clickedPlayground) {
+    const url = `/api/playground/${clickedPlayground?._id}`;
     const patchMethodCheckIn = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: JSON.parse(localStorage.getItem("userId")),
+        userId: userId,
       }),
     };
     fetch(url, patchMethodCheckIn)
       .then((res) => {
-        setSearchState(!searchState);
-        res.json();
+        return res.json();
+      })
+      .then((userStatus) => {
+        console.log(userStatus);
+        if (userStatus.status === "CHECKED-IN") {
+          setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
+        } else {
+          setPlaygroundWhereUserIsCheckedIn(null);
+        }
       })
       .catch((error) => {
         console.error(error);
       });
-
-    // if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
-    //   alert("successfully CHECKED-OUT");
-    // } else {
-    //   alert("successfully CHECKED-IN");
-    // }
   }
 
   return (
     <>
+      {playgroundWhereUserIsCheckedIn && (
+        <button
+          onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
+        >
+          CHECK-OUT
+        </button>
+      )}
       <section className="mapcontainer">
         <MapContainer
           whenCreated={setMap}
@@ -84,14 +103,11 @@ export default function Map() {
               >
                 <Popup>
                   <>
-                    <button onClick={() => handleCheckButton(positionData)}>
-                      <CheckInText
-                        hasId={positionData?.checkedIn.includes(
-                          JSON.parse(localStorage.getItem("userId"))
-                        )}
-                        data={positionData}
-                      />
-                    </button>
+                    <CheckinButton
+                      handleCheckButton={() => handleCheckButton(positionData)}
+                      data={positionData}
+                      isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                    />
                     <p>{positionData?.properties?.name}</p>
                   </>
                 </Popup>
