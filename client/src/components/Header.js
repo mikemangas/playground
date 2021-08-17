@@ -8,6 +8,7 @@ export default function Header() {
   return (
     <nav className="nav">
       <NavLink to="/">Home</NavLink>
+      <NavLink to="/map">Map</NavLink>
       <NavLink to="/impressum">Impressum</NavLink>
       <NavLink to="/datenschutz">Datenschutz</NavLink>
       <NavLink to="/wir">Über Uns</NavLink>
