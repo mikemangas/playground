@@ -61,7 +61,6 @@ export default function Map() {
         return res.json();
       })
       .then((userStatus) => {
-        console.log(userStatus);
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
         } else {
