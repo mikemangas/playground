@@ -15,9 +15,9 @@ Content-Type: application/json
 DELETE http://localhost:4000/api/playground/611133f30cc1bc32da9f26fb HTTP/1.1
 
 ### update
-PATCH http://localhost:4000/api/playground/61153788da59d0d60ba35403 HTTP/1.1
+PATCH http://localhost:4000/api/playground/61153788da59d0d60ba35408 HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":  "HOLA"
+    "userId":  "18747630-b86e-4460-95f5-9230d09e0438"
 }

@@ -1,18 +1,12 @@
 export default function CheckInText({ data, hasId }) {
-  const url = `api/playground/${data._id}`;
   const checkout = "CHECK-OUT";
   const checkin = "CHECK-IN";
 
-  fetch(url)
-    .then((res) => {
-      res.json();
-    })
-    .catch((error) => {
-      console.error(error);
-    });
   if (hasId) {
+    localStorage.setItem("CHECKED", JSON.stringify(true));
     return checkout;
   } else {
+    localStorage.setItem("CHECKED", JSON.stringify(false));
     return checkin;
   }
 }
