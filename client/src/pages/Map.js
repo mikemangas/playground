@@ -1,7 +1,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
-import CheckinButton from "../components/CheckinButton";
+import CheckinButton from "../components/CheckInButton";
+import SubmitForm from "../components/SubmitForm";
 
 export default function Map() {
   const [map, setMap] = useState(null);
@@ -11,6 +12,7 @@ export default function Map() {
     playgroundWhereUserIsCheckedIn,
     setPlaygroundWhereUserIsCheckedIn,
   ] = useState(null);
+  const [updatePage, setUpdatePage] = useState();
 
   const userId = JSON.parse(localStorage.getItem("userId"));
 
@@ -71,8 +73,19 @@ export default function Map() {
       });
   }
 
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formInputValue = form.searchInput.value;
+    localStorage.setItem("inputText", JSON.stringify(formInputValue));
+    form.reset();
+    setUpdatePage(!updatePage);
+  }
+
   return (
     <>
+      <SubmitForm handleOnSubmit={handleOnSubmit} />
+
       {playgroundWhereUserIsCheckedIn && (
         <button
           onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}

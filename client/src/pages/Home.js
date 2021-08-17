@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import SubmitForm from "../components/SubmitForm";
 
 export default function Home() {
   const history = useHistory();
@@ -12,11 +13,5 @@ export default function Home() {
     history.push(`/map`);
   }
 
-  return (
-    <form onSubmit={handleOnSubmit}>
-      <label htmlFor="searchInput">PLZ oder Stadteil</label>
-      <input name="searchInput" id="searchInput" />
-      <button type="submit">SEND</button>
-    </form>
-  );
+  return <SubmitForm handleOnSubmit={handleOnSubmit} />;
 }
