@@ -52,11 +52,11 @@ export default function Map() {
         console.error(error);
       });
 
-    if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
-      alert("successfully logged in");
-    } else {
-      alert("successfully checked in");
-    }
+    // if (data?.checkedIn.includes(JSON.parse(localStorage.getItem("userId")))) {
+    //   alert("successfully CHECKED-OUT");
+    // } else {
+    //   alert("successfully CHECKED-IN");
+    // }
   }
 
   return (
@@ -90,7 +90,6 @@ export default function Map() {
                           JSON.parse(localStorage.getItem("userId"))
                         )}
                         data={positionData}
-                        checktext
                       />
                     </button>
                     <p>{positionData?.properties?.name}</p>
