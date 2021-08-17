@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A really cool web application where parents can browse all playgrounds in Germany, and Check-In",
   "engines": {
-    "node": "16.4.0"
+    "node": "16.x"
   },
   "scripts": {
     "server-start-prod": "NODE_ENV=production node server.js",
