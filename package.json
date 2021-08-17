@@ -1,7 +1,10 @@
 {
-  "name": "capstone-fullstack-template",
+  "name": "playground-finding-app",
   "version": "1.0.0",
-  "description": "Project template for a FullStack project with NodeJS for backend and React for frontend",
+  "description": "A really cool web application where parents can browse all playgrounds in Germany, and Check-In",
+  "engines": {
+    "node": "16.4.0"
+  },
   "scripts": {
     "server-start-prod": "NODE_ENV=production node server.js",
     "server-start-dev": "nodemon server.js",
