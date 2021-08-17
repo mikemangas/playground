@@ -1,7 +1,7 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
-import CheckinButton from "../components/CheckInButton";
+import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
 
 export default function Map() {
@@ -115,7 +115,7 @@ export default function Map() {
               >
                 <Popup>
                   <>
-                    <CheckinButton
+                    <CheckInButton
                       handleCheckButton={() => handleCheckButton(positionData)}
                       data={positionData}
                       isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
