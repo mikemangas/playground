@@ -1,0 +1,17 @@
+.leaflet-container {
+  height: 80vh;
+  width: 95%;
+}
+
+.leaflet-marker-icon {
+  background-color: olivedrab;
+  border-radius: 50%;
+}
+
+.leaflet-marker-icon span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  position: relative;
+}
