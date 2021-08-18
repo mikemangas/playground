@@ -1,0 +1,22 @@
+.home__banner__wrapper {
+  margin: 30px;
+  top: 20%;
+  position: absolute;
+}
+
+.home__banner__title1 {
+  color: var(--purple);
+}
+.home__banner__title2 {
+  color: var(--beige);
+  background-color: var(--purple);
+  width: fit-content;
+  padding: 8px;
+  margin: 10px;
+  position: relative;
+  left: 40px;
+}
+
+.home__banner__title3 {
+  color: var(--purple);
+}

@@ -17,9 +17,22 @@
   color: var(--placeholder);
 }
 
-.submitform button {
+.submitform input:focus {
+  border: 2px var(--turqouise) solid;
+  color: var(--purple);
+}
+
+.submitform button:hover {
   padding: 10px;
   border: 2px var(--turqouise) solid;
   color: var(--turqouise);
   background-color: var(--purple);
+  cursor: pointer;
+}
+
+.submitform button {
+  padding: 10px;
+  border: 2px var(--purple) solid;
+  color: var(--purple);
+  background-color: var(--turqouise);
 }

@@ -14,9 +14,16 @@ export default function Home() {
   }
 
   return (
-    <SubmitForm
-      className={"home__submitform"}
-      handleOnSubmit={handleOnSubmit}
-    />
+    <>
+      <div className="home__banner__wrapper">
+        <h2 className="home__banner__title1">Finde einen</h2>
+        <h2 className="home__banner__title2">Spielplatz</h2>
+        <h2 className="home__banner__title3">In deiner Nähe</h2>
+      </div>
+      <SubmitForm
+        className={"home__submitform"}
+        handleOnSubmit={handleOnSubmit}
+      />
+    </>
   );
 }

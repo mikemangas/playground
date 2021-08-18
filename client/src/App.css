@@ -3,6 +3,7 @@
 @import url("./styles/_colors.css");
 @import url("./styles/main.css");
 @import url("./styles/submitform.css");
+@import url("./styles/home.css");
 
 .App {
   height: 100vh;
