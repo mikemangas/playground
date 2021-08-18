@@ -1,7 +1,7 @@
 .leaflet-container {
-  height: 70vh;
+  height: 80vh;
   width: 95%;
-  margin-top: 30px;
+  margin-top: 20px;
   position: relative;
   left: 10px;
   border: 3px var(--purple) dotted;
@@ -18,4 +18,29 @@
   align-items: center;
   top: 10px;
   position: relative;
+}
+
+/* Zoom Bar */
+.leaflet-touch .leaflet-bar a {
+  color: var(--purple);
+}
+
+.map__submitform__checkout__button {
+  background-color: var(--unsubmit);
+  color: var(--text);
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.map__checkin__button {
+  background-color: var(--submit);
+  color: white;
+  padding: 5px;
+}
+
+.map__checkin__button:disabled {
+  background-color: var(--disabled-background);
+  color: var(--disabled-text);
+  padding: 5px;
 }

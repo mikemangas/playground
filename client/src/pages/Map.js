@@ -90,6 +90,7 @@ export default function Map() {
 
       {playgroundWhereUserIsCheckedIn && (
         <button
+          className="map__submitform__checkout__button"
           onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
         >
           CHECK-OUT
@@ -97,6 +98,7 @@ export default function Map() {
       )}
       <section className="mapcontainer">
         <MapContainer
+          tap={false}
           whenCreated={setMap}
           center={[48.1047822, 11.5767881]}
           zoom={12}
@@ -122,6 +124,7 @@ export default function Map() {
                       handleCheckButton={() => handleCheckButton(positionData)}
                       data={positionData}
                       isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                      className={"map__checkin__button"}
                     />
                     <p>{positionData?.properties?.name}</p>
                   </>

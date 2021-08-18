@@ -5,4 +5,8 @@
   --black: #313632;
   --text: #fafcfb;
   --placeholder: #545856;
+  --submit: #04aa6d;
+  --disabled-text: rgb(194, 189, 189);
+  --disabled-background: lightgrey;
+  --unsubmit: crimson;
 }
