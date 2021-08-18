@@ -13,5 +13,10 @@ export default function Home() {
     history.push(`/map`);
   }
 
-  return <SubmitForm handleOnSubmit={handleOnSubmit} />;
+  return (
+    <SubmitForm
+      className={"home__submitform"}
+      handleOnSubmit={handleOnSubmit}
+    />
+  );
 }

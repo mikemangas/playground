@@ -83,7 +83,10 @@ export default function Map() {
 
   return (
     <>
-      <SubmitForm handleOnSubmit={handleOnSubmit} />
+      <SubmitForm
+        className={"map__submitform"}
+        handleOnSubmit={handleOnSubmit}
+      />
 
       {playgroundWhereUserIsCheckedIn && (
         <button

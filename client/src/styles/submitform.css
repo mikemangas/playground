@@ -1,0 +1,25 @@
+.home__submitform {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+}
+
+.submitform label {
+  color: var(--placeholder);
+}
+
+.submitform input {
+  padding: 10px;
+  margin: 10px 4px 10px 10px;
+  border: 2px var(--purple) solid;
+  color: var(--placeholder);
+}
+
+.submitform button {
+  padding: 10px;
+  border: 2px var(--turqouise) solid;
+  color: var(--turqouise);
+  background-color: var(--purple);
+}
