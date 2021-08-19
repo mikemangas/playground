@@ -35,12 +35,12 @@
   display: none;
 }
 
-.Header__navigation--toggle--off {
-  padding: 0px 20px;
-  color: var(--color-blue);
-}
-
 .Header__navigation--toggle {
   padding: 10px;
-  color: var(--color-blue);
+  color: var(--color-purple);
+}
+
+.Header__navigation--toggle--off {
+  padding: 0px 20px;
+  color: var(--color-purple);
 }
