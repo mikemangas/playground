@@ -26,7 +26,7 @@
 
 .Header__navigation--links {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   flex-direction: column;
   padding: 10px;
 }
