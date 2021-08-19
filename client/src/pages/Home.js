@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import SubmitForm from "../components/SubmitForm";
+import "../styles/Home.css";
 
 export default function Home() {
   const history = useHistory();

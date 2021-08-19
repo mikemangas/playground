@@ -1,3 +1,5 @@
+import "../styles/Submitform.css";
+
 export default function SubmitForm({ handleOnSubmit, className }) {
   return (
     <form className={`submitform ${className}`} onSubmit={handleOnSubmit}>
