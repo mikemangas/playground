@@ -1,3 +1,4 @@
+import "./Home.css";
 import { useHistory } from "react-router-dom";
 import SubmitForm from "../components/SubmitForm";
 
@@ -21,7 +22,7 @@ export default function Home() {
         <h2 className="Home__banner-title3">In deiner Nähe</h2>
       </div>
       <SubmitForm
-        className={"Home__submitform"}
+        className={"Home__SubmitForm"}
         handleOnSubmit={handleOnSubmit}
       />
     </section>

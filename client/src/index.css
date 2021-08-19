@@ -1,7 +1,17 @@
+@font-face {
+  font-family: "HammersmithOne";
+  src: local("HammersmithOne"),
+    url("./assets/Font/HammersmithOne-Regular.ttf") format("truetype");
+}
+
 *,
 ::before,
 ::after {
-  box-sizing: content-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+:root {
+  font-size: 15px;
 }

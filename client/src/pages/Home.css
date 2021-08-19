@@ -1,3 +1,12 @@
+.Home__section {
+  display: flex;
+  height: 75vh;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: left;
+}
+
 .Home__banner-wrapper {
   margin-left: 30px;
   margin-bottom: 40px;
@@ -17,18 +26,9 @@
   color: var(--color-purple);
 }
 
-.Home__submitform {
+.Home__SubmitForm {
   box-shadow: 6px 4px 10px var(--color-black);
   max-width: 280px;
   margin: 10px;
   padding: 5px;
-}
-
-.Home__section {
-  display: flex;
-  height: 90vh;
-  justify-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: left;
 }

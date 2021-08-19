@@ -3,6 +3,7 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
+import "./Map.css";
 
 export default function Map() {
   const [map, setMap] = useState(null);
