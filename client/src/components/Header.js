@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import logo from "../assets/Images/swing_icon_colored.png";
-import "../styles/Header.css";
+import "./Header.css";
 
 export default function Header() {
   const [toggleNavigationLinks, setToggleNavigationLinks] = useState(

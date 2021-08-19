@@ -1,4 +1,4 @@
-import "../styles/Submitform.css";
+import "./Submitform.css";
 
 export default function SubmitForm({ handleOnSubmit, className }) {
   return (
