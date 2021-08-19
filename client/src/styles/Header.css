@@ -4,9 +4,21 @@
   padding: 20px;
 }
 
-.Header__navigation {
+.Header__navigation__wrapper {
+  display: grid;
+  grid-template-columns: [navigation] auto [x-button] 30px;
+  background-color: var(--color-turqouise);
+  border: 1px solid var(--color-purple);
+  max-width: fit-content;
+  justify-self: end;
+}
+
+.Header__navigation--links {
   display: flex;
-  justify-content: end;
   align-items: end;
   flex-direction: column;
+  padding: 10px;
+}
+.Header__navigation--toggle {
+  padding: 10px;
 }
