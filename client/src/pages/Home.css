@@ -26,7 +26,7 @@
   color: var(--color-purple);
 }
 
-.Home__submitform {
+.Home__SubmitForm {
   box-shadow: 6px 4px 10px var(--color-black);
   max-width: 280px;
   margin: 10px;

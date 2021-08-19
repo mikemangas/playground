@@ -2,7 +2,7 @@ import "./SubmitForm.css";
 
 export default function SubmitForm({ handleOnSubmit, className }) {
   return (
-    <form className={`submitform ${className}`} onSubmit={handleOnSubmit}>
+    <form className={`SubmitForm ${className}`} onSubmit={handleOnSubmit}>
       <input
         required
         placeholder="Ort oder Postleitzahl"
