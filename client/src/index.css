@@ -1,7 +1,3 @@
-@import url("./styles/_base.css");
-@import url("./styles/_colors.css");
-@import url("./styles/_fonts.css");
-
 @font-face {
   font-family: "HammersmithOne";
   src: local("HammersmithOne"),
@@ -11,7 +7,7 @@
 *,
 ::before,
 ::after {
-  box-sizing: content-box;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }

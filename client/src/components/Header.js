@@ -18,7 +18,7 @@ export default function Header() {
   );
 
   if (localStorage.getItem("userId") === null) {
-    return localStorage.setItem("userId", JSON.stringify(uuidv4()));
+    localStorage.setItem("userId", JSON.stringify(uuidv4()));
   }
 
   function handleOnClick() {
