@@ -1,0 +1,46 @@
+.leaflet-container {
+  height: 80vh;
+  width: 95%;
+  margin-top: 20px;
+  position: relative;
+  left: 10px;
+  border: 3px var(--color-purple) dotted;
+}
+
+.leaflet-marker-icon {
+  background-color: var(--color-beige);
+  border-radius: 50%;
+}
+
+.leaflet-marker-icon span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  position: relative;
+}
+
+/* Zoom Bar */
+.leaflet-touch .leaflet-bar a {
+  color: var(--color-purple);
+}
+
+.Map__submitform__button--checkout {
+  background-color: var(--color-unsubmit);
+  color: var(--color-text);
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.Map__submitform__button--checkin {
+  background-color: var(--color-submit);
+  color: white;
+  padding: 5px;
+}
+
+.Map__submitform__button--checkin:disabled {
+  background-color: var(--color-disabled-background);
+  color: var(--color-disabled-text);
+  padding: 5px;
+}

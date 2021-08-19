@@ -13,5 +13,17 @@ export default function Home() {
     history.push(`/map`);
   }
 
-  return <SubmitForm handleOnSubmit={handleOnSubmit} />;
+  return (
+    <section className="Home__section">
+      <div className="Home__banner-wrapper">
+        <h2 className="Home__banner-title1">Finde einen</h2>
+        <h2 className="Home__banner-title2">Spielplatz</h2>
+        <h2 className="Home__banner-title3">In deiner Nähe</h2>
+      </div>
+      <SubmitForm
+        className={"Home__submitform"}
+        handleOnSubmit={handleOnSubmit}
+      />
+    </section>
+  );
 }

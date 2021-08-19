@@ -1,0 +1,37 @@
+.submitform label {
+  color: var(--color-placeholder);
+}
+
+.submitform input {
+  padding: 10px;
+  max-width: 70%;
+  margin: 10px 4px 10px 10px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-placeholder);
+}
+
+.submitform input:focus {
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-purple);
+}
+
+.submitform button:hover {
+  padding: 10px;
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-turqouise);
+  background-color: var(--color-purple);
+  cursor: pointer;
+}
+
+.submitform button:active {
+  transform: translate(2px, 10%);
+}
+
+.submitform button {
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  max-width: 20%;
+}

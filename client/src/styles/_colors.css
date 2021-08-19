@@ -1,0 +1,12 @@
+:root {
+  --color-purple: #80679e;
+  --color-turqouise: #bcebc9;
+  --color-beige: #eacda3;
+  --color-black: #313632;
+  --color-text: #fafcfb;
+  --color-placeholder: #545856;
+  --color-submit: #04aa6d;
+  --color-disabled-text: #c2bdbd;
+  --color-disabled-background: #d3d3d3;
+  --color-unsubmit: #dc143c;
+}

@@ -1,9 +1,13 @@
-export default function SubmitForm({ handleOnSubmit }) {
+export default function SubmitForm({ handleOnSubmit, className }) {
   return (
-    <form onSubmit={handleOnSubmit}>
-      <label htmlFor="searchInput">PLZ oder Stadteil</label>
-      <input name="searchInput" id="searchInput" />
-      <button type="submit">SEND</button>
+    <form className={`submitform ${className}`} onSubmit={handleOnSubmit}>
+      <input
+        required
+        placeholder="Ort oder Postleitzahl"
+        name="searchInput"
+        id="searchInput"
+      />
+      <button type="submit"> send </button>
     </form>
   );
 }

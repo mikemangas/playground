@@ -1,17 +1,14 @@
-.leaflet-container {
+@import url("./styles/Map.css");
+@import url("./styles/_base.css");
+@import url("./styles/_colors.css");
+@import url("./styles/Main.css");
+@import url("./styles/Submitform.css");
+@import url("./styles/Home.css");
+
+.App {
   height: 100vh;
-  width: 100%;
-}
-
-.leaflet-marker-icon {
-  background-color: olivedrab;
-  border-radius: 50%;
-}
-
-.leaflet-marker-icon span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 10px;
-  position: relative;
+  width: 100vw;
+  background: #eacda3;
+  background: -webkit-linear-gradient(to right, #d6ae7b, #eacda3);
+  background: linear-gradient(to right, #d6ae7b, #eacda3);
 }

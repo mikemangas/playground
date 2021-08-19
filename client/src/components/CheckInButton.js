@@ -1,6 +1,15 @@
-export default function CheckinButton({ data, handleCheckButton, isDisabled }) {
+export default function CheckinButton({
+  data,
+  handleCheckButton,
+  isDisabled,
+  className,
+}) {
   return (
-    <button disabled={isDisabled} onClick={() => handleCheckButton(data)}>
+    <button
+      className={className}
+      disabled={isDisabled}
+      onClick={() => handleCheckButton(data)}
+    >
       CHECK-IN
     </button>
   );

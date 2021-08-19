@@ -8,10 +8,8 @@ export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
-  const [
-    playgroundWhereUserIsCheckedIn,
-    setPlaygroundWhereUserIsCheckedIn,
-  ] = useState(null);
+  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
+    useState(null);
   const [updatePage, setUpdatePage] = useState();
 
   const userId = JSON.parse(localStorage.getItem("userId"));
@@ -83,17 +81,22 @@ export default function Map() {
 
   return (
     <>
-      <SubmitForm handleOnSubmit={handleOnSubmit} />
+      <SubmitForm
+        className={"Map__submitform"}
+        handleOnSubmit={handleOnSubmit}
+      />
 
       {playgroundWhereUserIsCheckedIn && (
         <button
+          className="Map__submitform__button--checkout"
           onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
         >
           CHECK-OUT
         </button>
       )}
-      <section className="mapcontainer">
+      <section className="Mapcontainer">
         <MapContainer
+          tap={false}
           whenCreated={setMap}
           center={[48.1047822, 11.5767881]}
           zoom={12}
@@ -119,6 +122,7 @@ export default function Map() {
                       handleCheckButton={() => handleCheckButton(positionData)}
                       data={positionData}
                       isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                      className={"Map__submitform__button--checkin"}
                     />
                     <p>{positionData?.properties?.name}</p>
                   </>
