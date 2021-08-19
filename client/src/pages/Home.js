@@ -15,13 +15,13 @@ export default function Home() {
 
   return (
     <>
-      <div className="home__banner__wrapper">
-        <h2 className="home__banner__title1">Finde einen</h2>
-        <h2 className="home__banner__title2">Spielplatz</h2>
-        <h2 className="home__banner__title3">In deiner Nähe</h2>
+      <div className="Home__banner-wrapper">
+        <h2 className="Home__banner-title1">Finde einen</h2>
+        <h2 className="Home__banner-title2">Spielplatz</h2>
+        <h2 className="Home__banner-title3">In deiner Nähe</h2>
       </div>
       <SubmitForm
-        className={"home__submitform"}
+        className={"Home__submitform"}
         handleOnSubmit={handleOnSubmit}
       />
     </>

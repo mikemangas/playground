@@ -1,13 +1,13 @@
-.home__banner__wrapper {
+.Home__banner-wrapper {
   margin: 30px;
   top: 20%;
   position: absolute;
 }
 
-.home__banner__title1 {
+.Home__banner-title1 {
   color: var(--purple);
 }
-.home__banner__title2 {
+.Home__banner-title2 {
   color: var(--beige);
   background-color: var(--purple);
   width: fit-content;
@@ -17,11 +17,11 @@
   left: 40px;
 }
 
-.home__banner__title3 {
+.Home__banner-title3 {
   color: var(--purple);
 }
 
-.home__submitform {
+.Home__submitform {
   display: flex;
   justify-content: center;
   align-items: center;

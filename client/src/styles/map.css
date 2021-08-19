@@ -25,7 +25,7 @@
   color: var(--purple);
 }
 
-.map__submitform__checkout__button {
+.Map__submitform__button--checkout {
   background-color: var(--unsubmit);
   color: var(--text);
   padding: 10px;
@@ -33,13 +33,13 @@
   cursor: pointer;
 }
 
-.map__checkin__button {
+.Map__submitform__button--checkin {
   background-color: var(--submit);
   color: white;
   padding: 5px;
 }
 
-.map__checkin__button:disabled {
+.Map__submitform__button--checkin:disabled {
   background-color: var(--disabled-background);
   color: var(--disabled-text);
   padding: 5px;
