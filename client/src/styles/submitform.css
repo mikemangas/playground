@@ -1,24 +1,24 @@
 .submitform label {
-  color: var(--placeholder);
+  color: var(--color-placeholder);
 }
 
 .submitform input {
   padding: 10px;
   margin: 10px 4px 10px 10px;
-  border: 2px var(--purple) solid;
-  color: var(--placeholder);
+  border: 2px var(--color-purple) solid;
+  color: var(--color-placeholder);
 }
 
 .submitform input:focus {
-  border: 2px var(--turqouise) solid;
-  color: var(--purple);
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-purple);
 }
 
 .submitform button:hover {
   padding: 10px;
-  border: 2px var(--turqouise) solid;
-  color: var(--turqouise);
-  background-color: var(--purple);
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-turqouise);
+  background-color: var(--color-purple);
   cursor: pointer;
 }
 
@@ -29,7 +29,7 @@
 .submitform button {
   padding: 10px;
   margin: 10px 10px 10px 0px;
-  border: 2px var(--purple) solid;
-  color: var(--purple);
-  background-color: var(--turqouise);
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
 }

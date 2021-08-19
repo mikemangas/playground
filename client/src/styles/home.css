@@ -5,11 +5,11 @@
 }
 
 .Home__banner-title1 {
-  color: var(--purple);
+  color: var(--color-purple);
 }
 .Home__banner-title2 {
-  color: var(--beige);
-  background-color: var(--purple);
+  color: var(--color-beige);
+  background-color: var(--color-purple);
   width: fit-content;
   padding: 8px;
   margin: 10px;
@@ -18,7 +18,7 @@
 }
 
 .Home__banner-title3 {
-  color: var(--purple);
+  color: var(--color-purple);
 }
 
 .Home__submitform {
@@ -27,7 +27,7 @@
   align-items: center;
   position: absolute;
   top: 50%;
-  box-shadow: 6px 4px 10px var(--black);
+  box-shadow: 6px 4px 10px var(--color-black);
   margin: 10px;
   padding: 5px;
 }
