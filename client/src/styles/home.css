@@ -1,4 +1,12 @@
 @import url(./_fonts.css);
+.Home__section {
+  display: flex;
+  height: 75vh;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: left;
+}
 
 .Home__banner-wrapper {
   margin-left: 30px;
@@ -24,13 +32,4 @@
   max-width: 280px;
   margin: 10px;
   padding: 5px;
-}
-
-.Home__section {
-  display: flex;
-  height: 90vh;
-  justify-content: center;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: left;
 }

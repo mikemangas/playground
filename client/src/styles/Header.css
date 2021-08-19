@@ -1,0 +1,12 @@
+.Header {
+  display: grid;
+  grid-template-columns: [logo] 60px [navigation] auto;
+  padding: 20px;
+}
+
+.Header__navigation {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  flex-direction: column;
+}
