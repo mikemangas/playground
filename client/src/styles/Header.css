@@ -13,12 +13,34 @@
   justify-self: end;
 }
 
+.Header__navigation__wrapper--off {
+  display: flex;
+  grid-template-columns: [navigation] auto [x-button] 30px;
+  background-color: var(--color-turqouise);
+  border: 1px solid var(--color-purple);
+  justify-self: end;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
 .Header__navigation--links {
   display: flex;
   align-items: end;
   flex-direction: column;
   padding: 10px;
 }
+
+.Header__navigation--links--off {
+  display: none;
+}
+
+.Header__navigation--toggle--off {
+  padding: 0px 20px;
+  color: var(--color-blue);
+}
+
 .Header__navigation--toggle {
   padding: 10px;
+  color: var(--color-blue);
 }
