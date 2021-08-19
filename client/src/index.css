@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "HammersmithOne";
+  src: local("HammersmithOne"),
+    url("./assets/Font/HammersmithOne-Regular.ttf") format("truetype");
+}
+
 *,
 ::before,
 ::after {
