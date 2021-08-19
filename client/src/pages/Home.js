@@ -14,7 +14,7 @@ export default function Home() {
   }
 
   return (
-    <>
+    <section className="Home__section">
       <div className="Home__banner-wrapper">
         <h2 className="Home__banner-title1">Finde einen</h2>
         <h2 className="Home__banner-title2">Spielplatz</h2>
@@ -24,6 +24,6 @@ export default function Home() {
         className={"Home__submitform"}
         handleOnSubmit={handleOnSubmit}
       />
-    </>
+    </section>
   );
 }

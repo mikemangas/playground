@@ -4,6 +4,7 @@
 
 .submitform input {
   padding: 10px;
+  max-width: 70%;
   margin: 10px 4px 10px 10px;
   border: 2px var(--color-purple) solid;
   color: var(--color-placeholder);
@@ -32,4 +33,5 @@
   border: 2px var(--color-purple) solid;
   color: var(--color-purple);
   background-color: var(--color-turqouise);
+  max-width: 20%;
 }

@@ -1,9 +1,9 @@
-@import url("./styles/map.css");
+@import url("./styles/Map.css");
 @import url("./styles/_base.css");
 @import url("./styles/_colors.css");
-@import url("./styles/main.css");
-@import url("./styles/submitform.css");
-@import url("./styles/home.css");
+@import url("./styles/Main.css");
+@import url("./styles/Submitform.css");
+@import url("./styles/Home.css");
 
 .App {
   height: 100vh;

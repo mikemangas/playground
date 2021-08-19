@@ -1,9 +1,7 @@
 .Home__banner-wrapper {
-  margin: 30px;
-  top: 20%;
-  position: absolute;
+  margin-left: 30px;
+  margin-bottom: 40px;
 }
-
 .Home__banner-title1 {
   color: var(--color-purple);
 }
@@ -13,8 +11,6 @@
   width: fit-content;
   padding: 8px;
   margin: 10px;
-  position: relative;
-  left: 40px;
 }
 
 .Home__banner-title3 {
@@ -22,12 +18,17 @@
 }
 
 .Home__submitform {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 50%;
   box-shadow: 6px 4px 10px var(--color-black);
+  max-width: 280px;
   margin: 10px;
   padding: 5px;
+}
+
+.Home__section {
+  display: flex;
+  height: 90vh;
+  justify-content: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: left;
 }

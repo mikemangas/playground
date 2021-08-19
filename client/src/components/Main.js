@@ -10,7 +10,7 @@ import SpielplatzEintragen from "../pages/SpielplatzEintragen";
 
 export default function Main() {
   return (
-    <main className="main">
+    <main className="Main">
       <Switch>
         <Route path="/impressum">
           <Impressum />
