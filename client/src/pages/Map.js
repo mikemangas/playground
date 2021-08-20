@@ -7,6 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Map.css";
 
+import L from "leaflet";
+import iconColored from "../assets/Images/swing_icon_colored.png";
+import iconWhite from "../assets/Images/swing_icon_white.png";
+
 export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
@@ -76,6 +80,20 @@ export default function Map() {
       });
   }
 
+  function getIcon(data) {
+    if (data?.checkedIn?.length > 0) {
+      return L.icon({
+        iconUrl: iconColored,
+        iconSize: [30, 30],
+      });
+    } else {
+      return L.icon({
+        iconUrl: iconWhite,
+        iconSize: [30, 30],
+      });
+    }
+  }
+
   function handleOnSubmit(e) {
     e.preventDefault();
     const form = e.target;
@@ -117,6 +135,7 @@ export default function Map() {
           <MarkerClusterGroup>
             {playGroundData.map((positionData) => (
               <Marker
+                icon={getIcon(positionData)}
                 key={positionData?._id}
                 position={[
                   positionData?.geometry?.coordinates[1],
