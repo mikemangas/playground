@@ -1,49 +1,92 @@
 .Header {
-  display: grid;
-  grid-template-columns: [logo] 60px [navigation] auto;
+  display: flex;
+  justify-content: space-between;
   padding: 20px;
+  position: relative;
+}
+
+.Header__logo__wrapper {
+  width: 50px;
+  height: 50px;
+}
+
+.Header__logo {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 
 .Header__navigation__wrapper {
-  display: grid;
-  grid-template-columns: [navigation] auto [x-button] 30px;
+  display: flex;
   background-color: var(--color-turqouise);
   border: 2px solid var(--color-purple);
-  max-width: fit-content;
-  justify-self: end;
-  position: absolute;
-  margin-right: 30px;
+  padding: 15px;
+  transition: all 0.5s ease;
+  position: fixed;
   z-index: 1000;
+  right: 5px;
+  cursor: pointer;
 }
 
 .Header__navigation__wrapper--off {
   display: flex;
-  grid-template-columns: [navigation] auto [x-button] 30px;
   background-color: var(--color-turqouise);
   border: 2px solid var(--color-purple);
-  justify-self: end;
-  align-content: center;
   justify-content: center;
   align-items: center;
+  transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 .Header__navigation--links {
   display: flex;
-  align-items: flex-end;
+  gap: 10px;
   flex-direction: column;
-  padding: 10px;
+  align-items: center;
 }
 
 .Header__navigation--links--off {
   display: none;
 }
 
-.Header__navigation--toggle {
+.Header__navigation__link {
   padding: 10px;
+  border: 2px var(--color-purple) solid;
+  width: 80%;
+  color: var(--color-purple);
+  text-align: center;
+  text-decoration: none;
+}
+
+.Header__navigation__link:hover {
+  background-color: var(--color-purple);
+  color: var(--color-turqouise);
+}
+
+.Header__navigation--toggle {
+  height: 20px;
+  padding: 0px 15px;
   color: var(--color-purple);
 }
 
 .Header__navigation--toggle--off {
-  padding: 0px 20px;
+  height: 20px;
+  padding: 0px 15px;
   color: var(--color-purple);
+}
+
+.Header__navigation__menu__button {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  filter: invert(48%) sepia(16%) saturate(985%) hue-rotate(225deg)
+    brightness(88%) contrast(91%);
+}
+
+.Header__navigation__menu__button--close {
+  object-fit: contain;
+  object-position: center;
+  width: 100%;
+  height: 100%;
 }

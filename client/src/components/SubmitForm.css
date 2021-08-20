@@ -4,7 +4,6 @@
 
 .SubmitForm input {
   padding: 10px;
-  max-width: 65%;
   margin: 10px 4px 10px 10px;
   border: 2px var(--color-purple) solid;
   color: var(--color-placeholder);

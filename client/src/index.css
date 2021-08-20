@@ -5,13 +5,51 @@
 }
 
 *,
-::before,
-::after {
-  box-sizing: border-box;
-  margin: 0;
+*::after,
+*::before {
   padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  border: none;
+}
+:root {
+  font-family: "HammersmithOne", sans-serif;
+  font-size: 15px;
 }
 
 :root {
-  font-size: 15px;
+  --color-purple: #80679e;
+  --color-turqouise: #bcebc9;
+  --color-beige: #eacda3;
+  --color-black: #313632;
+  --color-text: #fafcfb;
+  --color-placeholder: #545856;
+  --color-submit: #04aa6d;
+  --color-disabled-text: #c2bdbd;
+  --color-disabled-background: #d3d3d3;
+  --color-unsubmit: #dc143c;
+}
+
+h1 {
+  font-size: 3.2rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+h4 {
+  font-size: 1.4rem;
+}
+
+h5,
+h6,
+p,
+input,
+button {
+  font-size: 1rem;
 }

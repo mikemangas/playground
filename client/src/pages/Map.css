@@ -44,3 +44,15 @@
   color: var(--color-disabled-text);
   padding: 5px;
 }
+
+.Toastify__progress-bar--default {
+  background: linear-gradient(
+    to right,
+    var(--color-purple),
+    var(--color-turqouise),
+    var(--color-beige),
+    var(--color-purple),
+    var(--color-turqouise),
+    var(--color-beige)
+  );
+}
