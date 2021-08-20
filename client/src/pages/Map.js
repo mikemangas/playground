@@ -3,6 +3,8 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./Map.css";
 
 export default function Map() {
@@ -12,7 +14,6 @@ export default function Map() {
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
   const [updatePage, setUpdatePage] = useState();
-
   const userId = JSON.parse(localStorage.getItem("userId"));
 
   // Fetch playgrounds
@@ -62,8 +63,12 @@ export default function Map() {
       .then((userStatus) => {
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
+          toast(
+            "Eingecheckt. Denke bitte daran, dich wieder auszuchecken, wenn du den Spielplatz verlässt "
+          );
         } else {
           setPlaygroundWhereUserIsCheckedIn(null);
+          toast("Ausgecheckt");
         }
       })
       .catch((error) => {
@@ -82,6 +87,7 @@ export default function Map() {
 
   return (
     <>
+      <ToastContainer autoClose={3500} pauseOnHover />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
