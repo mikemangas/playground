@@ -61,7 +61,7 @@ export default function Header() {
 
   return (
     <header className="Header">
-      <Link to="/">
+      <Link className="Header__logo__wrapper" to="/">
         <img className="Header__logo" src={logo} alt="logo" />
       </Link>
       <section className={toggleWrapper}>
