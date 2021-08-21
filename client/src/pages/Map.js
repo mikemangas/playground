@@ -3,13 +3,11 @@ import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "./Map.css";
-
 import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
+import iconChild from "../assets/Images/child_icon.png";
 
 export default function Map() {
   const [map, setMap] = useState(null);
@@ -18,6 +16,7 @@ export default function Map() {
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
   const [updatePage, setUpdatePage] = useState();
+
   const userId = JSON.parse(localStorage.getItem("userId"));
 
   // Fetch playgrounds
@@ -44,7 +43,7 @@ export default function Map() {
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
-        map.setView([newLatitude, newLongitude], 12);
+        map.setView([newLatitude, newLongitude], 15);
       })
       .catch((error) => {
         console.error(error);
@@ -67,12 +66,8 @@ export default function Map() {
       .then((userStatus) => {
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
-          toast(
-            "Eingecheckt. Denke bitte daran, dich wieder auszuchecken, wenn du den Spielplatz verlässt "
-          );
         } else {
           setPlaygroundWhereUserIsCheckedIn(null);
-          toast("Ausgecheckt");
         }
       })
       .catch((error) => {
@@ -84,12 +79,12 @@ export default function Map() {
     if (data?.checkedIn?.length > 0) {
       return L.icon({
         iconUrl: iconColored,
-        iconSize: [30, 30],
+        iconSize: [50, 50],
       });
     } else {
       return L.icon({
         iconUrl: iconWhite,
-        iconSize: [30, 30],
+        iconSize: [50, 50],
       });
     }
   }
@@ -105,7 +100,6 @@ export default function Map() {
 
   return (
     <>
-      <ToastContainer autoClose={3500} pauseOnHover />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
@@ -113,51 +107,62 @@ export default function Map() {
 
       {playgroundWhereUserIsCheckedIn && (
         <button
-          className="Map__submitform__button--checkout"
+          className="Map__button--checkout"
           onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
         >
           CHECK-OUT
         </button>
       )}
-      <section className="Mapcontainer">
-        <MapContainer
-          tap={false}
-          whenCreated={setMap}
-          center={[48.1047822, 11.5767881]}
-          zoom={12}
-          scrollWheelZoom={false}
-        >
-          <TileLayer
-            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          />
 
-          <MarkerClusterGroup>
-            {playGroundData.map((positionData) => (
-              <Marker
-                icon={getIcon(positionData)}
-                key={positionData?._id}
-                position={[
-                  positionData?.geometry?.coordinates[1],
-                  positionData?.geometry?.coordinates[0],
-                ]}
-              >
-                <Popup>
-                  <>
-                    <CheckInButton
-                      handleCheckButton={() => handleCheckButton(positionData)}
-                      data={positionData}
-                      isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
-                      className={"Map__submitform__button--checkin"}
+      <MapContainer
+        className="Map__Mapcontainer"
+        tap={false}
+        whenCreated={setMap}
+        // center={[48.1047822, 11.5767881]}
+        // zoom={5}
+        scrollWheelZoom={false}
+      >
+        <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+
+        <MarkerClusterGroup>
+          {playGroundData.map((positionData) => (
+            <Marker
+              className="Map__Marker"
+              icon={getIcon(positionData)}
+              key={positionData?._id}
+              position={[
+                positionData?.geometry?.coordinates[1],
+                positionData?.geometry?.coordinates[0],
+              ]}
+            >
+              <Popup className="Map__Popup">
+                <>
+                  <CheckInButton
+                    handleCheckButton={() => handleCheckButton(positionData)}
+                    data={positionData}
+                    isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                    className={"Map__button--checkin"}
+                  />
+                  <p>{positionData?.properties?.name}</p>
+                  <div className="Map__Popup__childcounter__wrapper">
+                    <img
+                      className="Map__Popup__child-icon"
+                      src={iconChild}
+                      alt="Kinderanzahl"
                     />
-                    <p>{positionData?.properties?.name}</p>
-                  </>
-                </Popup>
-              </Marker>
-            ))}
-          </MarkerClusterGroup>
-        </MapContainer>
-      </section>
+                    <p className="Map__Popup__childnumber">
+                      {positionData?.checkedIn?.length}
+                    </p>
+                  </div>
+                </>
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
+      </MapContainer>
     </>
   );
 }

@@ -1,5 +1,5 @@
-.leaflet-container {
-  height: 60vh;
+.Map__Mapcontainer {
+  height: 68vh;
   width: 95%;
   margin-top: 20px;
   position: relative;
@@ -7,17 +7,36 @@
   border: 3px var(--color-purple) dotted;
 }
 
-.leaflet-marker-icon {
-  background-color: var(--color-beige);
+.leaflet-marker-icon div {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  font-size: 1.3rem;
+  top: 2px;
+  color: var(--color-purple);
+}
+
+.leaflet-marker-icon.marker-cluster {
+  border: var(--color-purple) 3px solid;
+}
+
+.marker-cluster {
+  background: var(--color-turqouise);
   border-radius: 50%;
 }
 
-.leaflet-marker-icon span {
+.Map__Popup__childnumber {
+  font-size: 1rem;
+}
+.Map__Popup__childcounter__wrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
-  top: 10px;
-  position: relative;
+}
+
+.Map__Popup__child-icon {
+  max-width: 30px;
+  max-height: 30px;
 }
 
 /* Zoom Bar */
@@ -25,7 +44,17 @@
   color: var(--color-purple);
 }
 
-.Map__submitform__button--checkout {
+@media only screen and (max-width: 450px) {
+  .SubmitForm input {
+    width: 100%;
+  }
+  .SubmitForm {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.Map__button--checkout {
   background-color: var(--color-unsubmit);
   color: var(--color-text);
   padding: 10px;
@@ -33,13 +62,14 @@
   cursor: pointer;
 }
 
-.Map__submitform__button--checkin {
+.Map__button--checkin {
   background-color: var(--color-submit);
   color: white;
   padding: 5px;
+  cursor: pointer;
 }
 
-.Map__submitform__button--checkin:disabled {
+.Map__button--checkin:disabled {
   background-color: var(--color-disabled-background);
   color: var(--color-disabled-text);
   padding: 5px;

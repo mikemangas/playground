@@ -65,7 +65,7 @@ export default function Header() {
         <img className="Header__logo" src={logo} alt="logo" />
       </Link>
       <section className={toggleWrapper}>
-        <nav className={toggleNavigationLinks}>
+        <nav onClick={handleOnClick} className={toggleNavigationLinks}>
           <NavLink className={navLink} to="/">
             Home
           </NavLink>
