@@ -6,7 +6,6 @@ import SubmitForm from "../components/SubmitForm";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Map.css";
-
 import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
@@ -20,6 +19,7 @@ export default function Map() {
     useState(null);
   const [updatePage, setUpdatePage] = useState();
   const userId = JSON.parse(localStorage.getItem("userId"));
+  const [isLoading, setIsLoading] = useState(false);
 
   // Fetch playgrounds
   useEffect(() => {
@@ -40,12 +40,14 @@ export default function Map() {
   // Fetch coordinates for given zipcode
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
+    setIsLoading(true);
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
         map.setView([newLatitude, newLongitude], 15);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -125,8 +127,8 @@ export default function Map() {
         className="Map__Mapcontainer"
         tap={false}
         whenCreated={setMap}
-        center={[48.1047822, 11.5767881]}
-        zoom={5}
+        // center={[48.1047822, 11.5767881]}
+        // zoom={5}
         scrollWheelZoom={false}
       >
         <TileLayer
