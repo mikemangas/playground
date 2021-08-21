@@ -45,7 +45,7 @@ export default function Map() {
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
-        map.setView([newLatitude, newLongitude], 12);
+        map.setView([newLatitude, newLongitude], 15);
       })
       .catch((error) => {
         console.error(error);
@@ -126,7 +126,7 @@ export default function Map() {
         tap={false}
         whenCreated={setMap}
         center={[48.1047822, 11.5767881]}
-        zoom={12}
+        zoom={5}
         scrollWheelZoom={false}
       >
         <TileLayer

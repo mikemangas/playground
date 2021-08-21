@@ -7,6 +7,24 @@
   border: 3px var(--color-purple) dotted;
 }
 
+.leaflet-marker-icon div {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  font-size: 1.3rem;
+  top: 2px;
+  color: var(--color-purple);
+}
+
+.leaflet-marker-icon.marker-cluster {
+  border: var(--color-purple) 3px solid;
+}
+
+.marker-cluster {
+  background: var(--color-turqouise);
+  border-radius: 50%;
+}
+
 .Map__Popup__childnumber {
   font-size: 1rem;
 }
