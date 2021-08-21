@@ -1,4 +1,4 @@
-.leaflet-container {
+.Map__Mapcontainer {
   height: 60vh;
   width: 95%;
   margin-top: 20px;
@@ -7,17 +7,18 @@
   border: 3px var(--color-purple) dotted;
 }
 
-.leaflet-marker-icon {
-  background-color: var(--color-beige);
-  border-radius: 50%;
+.Map__Popup__childnumber {
+  font-size: 1rem;
+}
+.Map__Popup__childcounter__wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
-.leaflet-marker-icon span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 10px;
-  position: relative;
+.Map__Popup__child-icon {
+  max-width: 30px;
+  max-height: 30px;
 }
 
 /* Zoom Bar */
