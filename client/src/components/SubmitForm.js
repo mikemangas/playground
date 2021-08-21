@@ -5,7 +5,7 @@ export default function SubmitForm({ handleOnSubmit, className }) {
     <form className={`SubmitForm ${className}`} onSubmit={handleOnSubmit}>
       <input
         required
-        placeholder="Ort oder Postleitzahl"
+        placeholder="PLZ oder Ort oder Adresse"
         name="searchInput"
         id="searchInput"
       />

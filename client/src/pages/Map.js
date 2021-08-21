@@ -19,7 +19,7 @@ export default function Map() {
     useState(null);
   const [updatePage, setUpdatePage] = useState();
   const userId = JSON.parse(localStorage.getItem("userId"));
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
   // Fetch playgrounds
   useEffect(() => {
@@ -40,14 +40,14 @@ export default function Map() {
   // Fetch coordinates for given zipcode
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
-    setIsLoading(true);
+    // setIsLoading(true);
     fetch(searchInputUrl)
       .then((res) => res.json())
       .then((data) => {
         const newLatitude = Number(data[0]?.lat);
         const newLongitude = Number(data[0]?.lon);
         map.setView([newLatitude, newLongitude], 15);
-        setIsLoading(false);
+        // setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -116,7 +116,7 @@ export default function Map() {
 
       {playgroundWhereUserIsCheckedIn && (
         <button
-          className="Map__submitform__button--checkout"
+          className="Map__button--checkout"
           onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
         >
           CHECK-OUT
@@ -153,7 +153,7 @@ export default function Map() {
                     handleCheckButton={() => handleCheckButton(positionData)}
                     data={positionData}
                     isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
-                    className={"Map__submitform__button--checkin"}
+                    className={"Map__button--checkin"}
                   />
                   <p>{positionData?.properties?.name}</p>
                   <div className="Map__Popup__childcounter__wrapper">

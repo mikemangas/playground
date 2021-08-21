@@ -44,7 +44,17 @@
   color: var(--color-purple);
 }
 
-.Map__submitform__button--checkout {
+@media only screen and (max-width: 450px) {
+  .SubmitForm input {
+    width: 100%;
+  }
+  .SubmitForm {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.Map__button--checkout {
   background-color: var(--color-unsubmit);
   color: var(--color-text);
   padding: 10px;
@@ -52,13 +62,13 @@
   cursor: pointer;
 }
 
-.Map__submitform__button--checkin {
+.Map__button--checkin {
   background-color: var(--color-submit);
   color: white;
   padding: 5px;
 }
 
-.Map__submitform__button--checkin:disabled {
+.Map__button--checkin:disabled {
   background-color: var(--color-disabled-background);
   color: var(--color-disabled-text);
   padding: 5px;

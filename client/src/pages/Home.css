@@ -33,3 +33,9 @@
   padding: 5px;
   justify-content: space-between;
 }
+
+@media only screen and (max-width: 450px) {
+  .Home__SubmitForm {
+    max-width: 100%;
+  }
+}
