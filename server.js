@@ -109,6 +109,33 @@ app.patch("/api/playground/:id", (req, res) => {
   });
 });
 
+app.get("/api/users/:userId", (req, res) => {
+  const { userId } = req.params;
+  Playground.find({
+    checkedIn: userId,
+  }).then((playgrounds) => {
+    if (playgrounds.length === 0) {
+      res.send({
+        checkedIn: false,
+      });
+    } else {
+      res.send({
+        checkedIn: true,
+      });
+    }
+  });
+
+  // this enpdoint will give us information about the user
+  /*
+  A user is checked in if:
+   - userId is found in any playground checkedIn array
+*/
+
+  /*
+  Find playgrounds where checkedIn contains the userId
+*/
+});
+
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
   app.use(express.static(path.join(__dirname, "client/build")));

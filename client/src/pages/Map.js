@@ -8,6 +8,8 @@ import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
+import "leaflet-loading";
+import { ToastContainer, toast } from "react-toast";
 
 export default function Map() {
   const [map, setMap] = useState(null);
@@ -66,8 +68,16 @@ export default function Map() {
       .then((userStatus) => {
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
+          toast("Eingecheckt", {
+            backgroundColor: "#04aa6d",
+            color: "#fafcfb",
+          });
         } else {
           setPlaygroundWhereUserIsCheckedIn(null);
+          toast("Ausgecheckt", {
+            backgroundColor: "#dc143c",
+            color: "#fafcfb",
+          });
         }
       })
       .catch((error) => {
@@ -100,6 +110,7 @@ export default function Map() {
 
   return (
     <>
+      <ToastContainer position={"bottom-center"} />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
@@ -118,6 +129,7 @@ export default function Map() {
         className="Map__Mapcontainer"
         tap={false}
         whenCreated={setMap}
+        loadingControl={true}
         // center={[48.1047822, 11.5767881]}
         // zoom={5}
         scrollWheelZoom={false}
@@ -151,7 +163,7 @@ export default function Map() {
                     <img
                       className="Map__Popup__child-icon"
                       src={iconChild}
-                      alt="Kinderanzahl"
+                      alt="child-counter"
                     />
                     <p className="Map__Popup__childnumber">
                       {positionData?.checkedIn?.length}
