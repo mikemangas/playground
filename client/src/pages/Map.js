@@ -8,6 +8,7 @@ import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
+import "leaflet-loading";
 
 export default function Map() {
   const [map, setMap] = useState(null);
@@ -118,6 +119,7 @@ export default function Map() {
         className="Map__Mapcontainer"
         tap={false}
         whenCreated={setMap}
+        loadingControl={true}
         // center={[48.1047822, 11.5767881]}
         // zoom={5}
         scrollWheelZoom={false}
