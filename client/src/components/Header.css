@@ -90,3 +90,11 @@
   width: 100%;
   height: 100%;
 }
+
+.Header__button--checkout {
+  background-color: var(--color-unsubmit);
+  color: var(--color-text);
+  padding: 10px;
+  margin-left: 10px;
+  cursor: pointer;
+}

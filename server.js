@@ -6,14 +6,8 @@ const cors = require("cors");
 const app = express();
 const Playground = require("./models/Playground");
 
-/* Middleware */
 app.use(express.json());
 app.use(cors());
-
-/*
-All your api endpoints should be prefixed with /api and be before the next ones
-If you have many endpoints, consider use Express Router for each set of endpoints
-*/
 
 app.get("/api/playground/:id", (req, res) => {
   const id = req.params.id;
@@ -121,19 +115,25 @@ app.get("/api/users/:userId", (req, res) => {
     } else {
       res.send({
         checkedIn: true,
+        checkedInPlayground: playgrounds[0]._id,
       });
     }
   });
+});
 
-  // this enpdoint will give us information about the user
-  /*
-  A user is checked in if:
-   - userId is found in any playground checkedIn array
-*/
-
-  /*
-  Find playgrounds where checkedIn contains the userId
-*/
+app.get("/api/users/:userId", (req, res) => {
+  Playground.find({
+    checkedIn: userId,
+  })
+    .then((playground) => {
+      res.status(200).json(playground);
+    })
+    .catch(() => {
+      res.status(500).json({
+        error:
+          "something went wrong when calling the playgrounds. please try again",
+      });
+    });
 });
 
 if (process.env.NODE_ENV === "production") {
