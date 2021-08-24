@@ -25,11 +25,12 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((allPlaygrounds) => {
-        // Check if user is in any playground
         setPlayGroundData(allPlaygrounds);
       })
       .catch((error) => console.error(error));
-  }, [userId]);
+  }, []);
+
+  console.log(playGroundData);
 
   //Fetch all Users
   useEffect(() => {
@@ -37,11 +38,6 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((allUsers) => {
-        const checkedUser = allUsers.find((checkedInUser) => {
-          return checkedInUser.userId.includes(userId);
-        });
-
-        setCheckedInUser(checkedUser);
         setDbUserId(allUsers._id);
       });
   });
@@ -77,7 +73,7 @@ export default function Map() {
       })
       .then((user) => {
         if (user.userId) {
-          setCheckedInUser(user.checkedInPlayground);
+          setCheckedInUser(user?.checkedInPlayground);
         } else {
           setCheckedInUser(null);
         }
@@ -138,8 +134,6 @@ export default function Map() {
         tap={false}
         whenCreated={setMap}
         loadingControl={true}
-        // center={[48.1047822, 11.5767881]}
-        // zoom={5}
         scrollWheelZoom={false}
       >
         <TileLayer

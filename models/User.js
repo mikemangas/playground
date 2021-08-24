@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
   createdAt: {
     type: Date,
-    expires: 3600,
+    expires: 7200,
     default: Date.now,
   },
   userId: {
@@ -16,5 +16,6 @@ const userSchema = new Schema({
     required: true,
   },
 });
+userSchema.index({ createdAt: 1 }, { expireAfterSeconds: 7200 });
 const User = mongoose.model("User", userSchema);
 module.exports = User;
