@@ -50,11 +50,26 @@ app.post("/api/playground", (req, res) => {
     });
 });
 
+//Find all users
+app.get("/api/user", (req, res) => {
+  User.find({})
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch(() => {
+      res.status(500).json({
+        error:
+          "something went wrong when calling the playgrounds. please try again",
+      });
+    });
+});
+
 //Create a new User
 app.post("/api/user", (req, res) => {
   User.create(req.body)
     .then((newUser) => {
-      res.status(201).send(newUser);
+      // res.status(201).send(newUser);
+      console.log(newUser);
     })
     .catch(() => {
       res.status(500).json({
@@ -68,7 +83,7 @@ app.post("/api/user", (req, res) => {
 app.delete("/api/user/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndRemove(id)
-    .then((body) => {
+    .then(() => {
       res.status(204);
       console.log(`successfully deleted`);
     })
@@ -153,22 +168,6 @@ app.get("/api/users/:userId", (req, res) => {
     }
   });
 });
-
-//  redundant
-// app.get("/api/users/:userId", (req, res) => {
-//   Playground.find({
-//     checkedIn: userId,
-//   })
-//     .then((playground) => {
-//       res.status(200).json(playground);
-//     })
-//     .catch(() => {
-//       res.status(500).json({
-//         error:
-//           "something went wrong when calling the playgrounds. please try again",
-//       });
-//     });
-// });
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file

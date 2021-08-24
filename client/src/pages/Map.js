@@ -14,10 +14,9 @@ export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
-  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
-    useState(null);
   const [updatePage, setUpdatePage] = useState();
-
+  const [checkedInUser, setCheckedInUser] = useState(null);
+  const [dbUserId, setDbUserId] = useState(null);
   const userId = JSON.parse(localStorage.getItem("userId"));
 
   // Fetch playgrounds
@@ -27,14 +26,25 @@ export default function Map() {
       .then((res) => res.json())
       .then((allPlaygrounds) => {
         // Check if user is in any playground
-        const checkedPlayground = allPlaygrounds.find((playground) => {
-          return playground.checkedIn.includes(userId);
-        });
-        setPlaygroundWhereUserIsCheckedIn(checkedPlayground);
         setPlayGroundData(allPlaygrounds);
       })
       .catch((error) => console.error(error));
   }, [userId]);
+
+  //Fetch all Users
+  useEffect(() => {
+    const url = "/api/user";
+    fetch(url)
+      .then((res) => res.json())
+      .then((allUsers) => {
+        const checkedUser = allUsers.find((checkedInUser) => {
+          return checkedInUser.userId.includes(userId);
+        });
+
+        setCheckedInUser(checkedUser);
+        setDbUserId(allUsers._id);
+      });
+  });
 
   // Fetch coordinates for given zipcode
   useEffect(() => {
@@ -51,24 +61,25 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
-  function handleCheckButton(clickedPlayground) {
-    const url = `/api/playground/${clickedPlayground?._id}`;
-    const patchMethodCheckIn = {
-      method: "PATCH",
+  function handleCheckInButton(clickedPlayground) {
+    const url = `/api/user`;
+    const postMethodCheckIn = {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: userId,
+        checkedInPlayground: clickedPlayground,
       }),
     };
-    fetch(url, patchMethodCheckIn)
+    fetch(url, postMethodCheckIn)
       .then((res) => {
         return res.json();
       })
-      .then((userStatus) => {
-        if (userStatus.status === "CHECKED-IN") {
-          setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
+      .then((user) => {
+        if (user.userId) {
+          setCheckedInUser(user.checkedInPlayground);
         } else {
-          setPlaygroundWhereUserIsCheckedIn(null);
+          setCheckedInUser(null);
         }
       })
       .catch((error) => {
@@ -99,6 +110,13 @@ export default function Map() {
     setUpdatePage(!updatePage);
   }
 
+  function handleCheckOutButton() {
+    const url = `/api/user/${dbUserId}`;
+    const postMethodCheckIn = {
+      method: "DELETE",
+    };
+    fetch(url, postMethodCheckIn);
+  }
   return (
     <>
       <SubmitForm
@@ -106,10 +124,10 @@ export default function Map() {
         handleOnSubmit={handleOnSubmit}
       />
 
-      {playgroundWhereUserIsCheckedIn && (
+      {checkedInUser && (
         <button
           className="Map__button--checkout"
-          onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
+          onClick={() => handleCheckOutButton()}
         >
           CHECK-OUT
         </button>
@@ -143,9 +161,11 @@ export default function Map() {
               <Popup className="Map__Popup">
                 <>
                   <CheckInButton
-                    handleCheckButton={() => handleCheckButton(positionData)}
+                    handleCheckInButton={() =>
+                      handleCheckInButton(positionData)
+                    }
                     data={positionData}
-                    isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                    isDisabled={checkedInUser ? true : false}
                     className={"Map__button--checkin"}
                   />
                   <p>{positionData?.properties?.name}</p>
