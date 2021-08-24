@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  // createdAt: {
-  //   type: Date,
-  //   expires: 60,
-  //   default: Date.now,
-  // },
+  createdAt: {
+    type: Date,
+    expires: 3600,
+    default: Date.now,
+  },
   userId: {
     type: String,
     required: true,
@@ -16,6 +16,5 @@ const userSchema = new Schema({
     required: true,
   },
 });
-userSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 const User = mongoose.model("User", userSchema);
 module.exports = User;

@@ -19,17 +19,17 @@ GET http://localhost:4000/api/user HTTP/1.1
 
 ###Create user
 
-POST http://localhost:4000/api/user HTTP/1.1
+POST http://localhost:4000/api/user/ HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "1234567",
-  "checkedInPlayground": "898584Aj",
+  "userId" : "1234567",
+  "checkedInPlayground" : "HALLO" 
 }
 
 
 ###DELETE User
-DELETE http://localhost:4000/api/user/612541ea11dfdb5faf1a99ff HTTP/1.1
+DELETE http://localhost:4000/api/user/6125574bdaff546a19b030e4 HTTP/1.1
 
 ###DELETE Playground
 DELETE http://localhost:4000/api/playground/612541ea11dfdb5faf1a99ff HTTP/1.1

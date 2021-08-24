@@ -50,6 +50,20 @@ app.post("/api/playground", (req, res) => {
     });
 });
 
+//Create a new User
+app.post("/api/user", (req, res) => {
+  User.create(req.body)
+    .then((newUser) => {
+      res.status(201).send(newUser);
+    })
+    .catch(() => {
+      res.status(500).json({
+        error:
+          "something went wrong when creating a user, please check the error",
+      });
+    });
+});
+
 //Find all users
 app.get("/api/user", (req, res) => {
   User.find({})
@@ -64,26 +78,11 @@ app.get("/api/user", (req, res) => {
     });
 });
 
-//Create a new User
-app.post("/api/user", (req, res) => {
-  User.create(req.body)
-    .then((newUser) => {
-      // res.status(201).send(newUser);
-      console.log(newUser);
-    })
-    .catch(() => {
-      res.status(500).json({
-        error:
-          "something went wrong when creating a user, please check the error",
-      });
-    });
-});
-
 //Delete a User
 app.delete("/api/user/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndRemove(id)
-    .then(() => {
+    .then((body) => {
       res.status(204);
       console.log(`successfully deleted`);
     })
