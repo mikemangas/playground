@@ -5,6 +5,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const Playground = require("./models/Playground");
+const User = require("./models/User");
 
 app.use(express.json());
 app.use(cors());
@@ -49,6 +50,36 @@ app.post("/api/playground", (req, res) => {
     });
 });
 
+//Create a new User
+app.post("/api/user", (req, res) => {
+  User.create(req.body)
+    .then((newUser) => {
+      res.status(201).send(newUser);
+    })
+    .catch(() => {
+      res.status(500).json({
+        error:
+          "something went wrong when creating a user, please check the error",
+      });
+    });
+});
+
+//Delete a User
+app.delete("/api/user/:id", (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndRemove(id)
+    .then((body) => {
+      res.status(204);
+      console.log(`successfully deleted`);
+    })
+    .catch(() => {
+      res.status(500).json({
+        error: "something went wrong when deleting a user. please check",
+      });
+    });
+});
+
+//Delete a playground
 app.delete("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   Playground.findByIdAndRemove(id)
@@ -64,6 +95,7 @@ app.delete("/api/playground/:id", (req, res) => {
     });
 });
 
+//patch a playground
 app.patch("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
@@ -103,6 +135,7 @@ app.patch("/api/playground/:id", (req, res) => {
   });
 });
 
+//find a checkedin user in playground
 app.get("/api/users/:userId", (req, res) => {
   const { userId } = req.params;
   Playground.find({
@@ -121,20 +154,21 @@ app.get("/api/users/:userId", (req, res) => {
   });
 });
 
-app.get("/api/users/:userId", (req, res) => {
-  Playground.find({
-    checkedIn: userId,
-  })
-    .then((playground) => {
-      res.status(200).json(playground);
-    })
-    .catch(() => {
-      res.status(500).json({
-        error:
-          "something went wrong when calling the playgrounds. please try again",
-      });
-    });
-});
+//  redundant
+// app.get("/api/users/:userId", (req, res) => {
+//   Playground.find({
+//     checkedIn: userId,
+//   })
+//     .then((playground) => {
+//       res.status(200).json(playground);
+//     })
+//     .catch(() => {
+//       res.status(500).json({
+//         error:
+//           "something went wrong when calling the playgrounds. please try again",
+//       });
+//     });
+// });
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
