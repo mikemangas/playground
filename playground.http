@@ -20,8 +20,8 @@ POST http://localhost:4000/api/user HTTP/1.1
 Content-Type: application/json
 
 {
-  "checkedInStatus": true,
-  "checkedInPlayground": "mike user"
+  "userId": "UUID4-ldkjfalksdjf4-4lkasdf",
+  "checkedInPlayground": "id4040400503250"
 }
 
 

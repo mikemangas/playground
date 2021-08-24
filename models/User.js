@@ -7,8 +7,8 @@ const userSchema = new Schema({
     expires: 60,
     default: Date.now,
   },
-  checkedInStatus: {
-    type: Boolean,
+  userId: {
+    type: String,
     required: true,
   },
   checkedInPlayground: {
