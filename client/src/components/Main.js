@@ -8,7 +8,7 @@ import Kontakt from "../pages/Kontakt";
 import UeberUns from "../pages/UeberUns";
 import SpielplatzEintragen from "../pages/SpielplatzEintragen";
 
-export default function Main() {
+export default function Main({ setCallback }) {
   return (
     <main className="Main">
       <Switch>
@@ -16,7 +16,7 @@ export default function Main() {
           <Impressum />
         </Route>
         <Route path="/map/">
-          <Map />
+          <Map setCallback={setCallback} />
         </Route>
         <Route path="/datenschutz">
           <Datenschutz />

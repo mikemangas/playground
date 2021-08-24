@@ -9,9 +9,8 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
-import { ToastContainer, toast } from "react-toast";
 
-export default function Map() {
+export default function Map({ setCallback }) {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -68,16 +67,10 @@ export default function Map() {
       .then((userStatus) => {
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
-          toast("Eingecheckt", {
-            backgroundColor: "#04aa6d",
-            color: "#fafcfb",
-          });
+          setCallback(true);
         } else {
           setPlaygroundWhereUserIsCheckedIn(null);
-          toast("Ausgecheckt", {
-            backgroundColor: "#dc143c",
-            color: "#fafcfb",
-          });
+          setCallback(false);
         }
       })
       .catch((error) => {
@@ -110,7 +103,6 @@ export default function Map() {
 
   return (
     <>
-      <ToastContainer position={"bottom-center"} />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
