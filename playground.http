@@ -2,7 +2,9 @@
 GET http://localhost:4000/api/playground/ HTTP/1.1
 
 ### User infos
-GET http://localhost:4000/api/users/f026bf22-8c94-45ed-a844-3a5d0cbd3e75 HTTP/1.1
+GET http://localhost:4000/api/users/622afe4c-628d-40c8-9731-56c9af052679 HTTP/1.1
+
+
 ###Create
 
 POST http://localhost:4000/api/playground HTTP/1.1
