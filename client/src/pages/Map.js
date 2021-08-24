@@ -10,7 +10,7 @@ import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 
-export default function Map({ setCallback }) {
+export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -67,10 +67,8 @@ export default function Map({ setCallback }) {
       .then((userStatus) => {
         if (userStatus.status === "CHECKED-IN") {
           setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
-          setCallback(true);
         } else {
           setPlaygroundWhereUserIsCheckedIn(null);
-          setCallback(false);
         }
       })
       .catch((error) => {

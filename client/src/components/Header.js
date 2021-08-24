@@ -6,9 +6,9 @@ import menu from "../assets/Images/menu-lines.png";
 import menuClose from "../assets/Images/menu-close.png";
 import "./Header.css";
 
-export default function Header({ callback }) {
+export default function Header() {
   const userId = JSON.parse(localStorage.getItem("userId"));
-  // const [checkedInStatus, setCheckedInStatus] = useState();
+  const [checkedInStatus, setCheckedInStatus] = useState();
   const [checkedInPlayground, setCheckedInPlayground] = useState();
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function Header({ callback }) {
     fetch(url)
       .then((res) => res.json())
       .then((isCheckedIn) => {
-        // setCheckedInStatus(isCheckedIn?.checkedIn);
+        setCheckedInStatus(isCheckedIn?.checkedIn);
         setCheckedInPlayground(isCheckedIn?.checkedInPlayground);
       })
       .catch((error) => console.error(error));
@@ -87,21 +87,18 @@ export default function Header({ callback }) {
         return res.json();
       })
       .then((checkedStatus) => {
-        if (checkedStatus.status === "CHECKED-IN") {
-          callback(true);
-        } else {
-          callback(false);
+        if (checkedStatus.status === "CHECKED-OUT") {
+          setCheckedInStatus();
         }
       });
   }
 
   return (
     <header className="Header">
-      <p>{`Hallo ${callback}`}</p>
       <Link className="Header__logo__wrapper" to="/">
         <img className="Header__logo" src={logo} alt="logo" />
       </Link>
-      {callback && (
+      {checkedInStatus && (
         <button
           className="Header__button--checkout"
           onClick={() => handleCheckOutButton(checkedInPlayground)}
