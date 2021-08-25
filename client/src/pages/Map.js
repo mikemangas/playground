@@ -18,11 +18,9 @@ export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
-  // const [allUsers, setAllUsers] = useState(null);
-  // const [userCounter, setUserCounter] = useState(null);
   const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
-  // const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
-  //   useState(null);
+  const [checkedInUserCounterDecrease, setCheckedInUserCounterDecrease] =
+    useState(null);
 
   // Fetch All playgrounds
   useEffect(() => {
@@ -67,6 +65,7 @@ export default function Map() {
       .then((res) => res.json())
       .then((playground) => {
         setCheckedInUserCounter(playground?.userCounter);
+        setCheckedInUserCounterDecrease(playground?.userCounter);
       });
 
     //create a new user on the selected playground
@@ -117,7 +116,7 @@ export default function Map() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: checkedInUserCounter - 1,
+        userCounter: checkedInUserCounterDecrease - 1,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
