@@ -19,6 +19,8 @@ export default function Map() {
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
   const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
+  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
+    useState(null);
   const [checkedInUserCounterDecrease, setCheckedInUserCounterDecrease] =
     useState(null);
 
@@ -39,7 +41,7 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((checkedInUser) => {
-        // setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
+        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
         setDbUserId(checkedInUser?.checkedInUserMongoId);
       });
   }, [localStorageUserId, updatePage, updateDeleteButton]);
@@ -59,15 +61,17 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
-  function handleCheckInButton(clickedPlayground) {
-    const url = `/api/playground/${clickedPlayground._id}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((playground) => {
-        setCheckedInUserCounter(playground?.userCounter);
-        setCheckedInUserCounterDecrease(playground?.userCounter);
-      });
+  // useEffect(() => {
+  //   const url = `/api/playground/${clickedPlayground._id}`;
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((playground) => {
+  //       setCheckedInUserCounter(playground?.userCounter);
+  //       // setCheckedInUserCounterDecrease(playground?.userCounter);
+  //     });
+  // })
 
+  function handleCheckInButton(clickedPlayground) {
     //create a new user on the selected playground
 
     const urlUser = `/api/user`;
@@ -87,7 +91,7 @@ export default function Map() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: checkedInUserCounter + 1,
+        userCounter: { checkedInUserCounter } + 1,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
@@ -116,7 +120,7 @@ export default function Map() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: checkedInUserCounterDecrease - 1,
+        userCounter: checkedInUserCounter - 1,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
@@ -146,7 +150,7 @@ export default function Map() {
       {dbUserId && (
         <button
           className="Map__button--checkout"
-          onClick={() => handleCheckOutButton()}
+          onClick={() => handleCheckOutButton(playgroundWhereUserIsCheckedIn)}
         >
           CHECK-OUT
         </button>
