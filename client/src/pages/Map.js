@@ -18,11 +18,11 @@ export default function Map() {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
-  const [allUsers, setAllUsers] = useState(null);
-  const [userCounter, setUserCounter] = useState(null);
+  // const [allUsers, setAllUsers] = useState(null);
+  // const [userCounter, setUserCounter] = useState(null);
   const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
-  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
-    useState(null);
+  // const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
+  //   useState(null);
 
   // Fetch All playgrounds
   useEffect(() => {
@@ -41,20 +41,10 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((checkedInUser) => {
-        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
+        // setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
         setDbUserId(checkedInUser?.checkedInUserMongoId);
       });
   }, [localStorageUserId, updatePage, updateDeleteButton]);
-
-  //Find all users
-  useEffect(() => {
-    const url = `/api/user/`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((allUsers) => {
-        setAllUsers(allUsers);
-      });
-  }, [localStorageUserId]);
 
   // Fetch coordinates for given zipcode
   useEffect(() => {
@@ -71,16 +61,14 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
-  useEffect(() => {
-    const url = `/api/userinplayground/${playgroundWhereUserIsCheckedIn}`;
+  function handleCheckInButton(clickedPlayground) {
+    const url = `/api/playground/${clickedPlayground._id}`;
     fetch(url)
       .then((res) => res.json())
-      .then((data) => {
-        setUserCounter(data.userCounter);
+      .then((playground) => {
+        setCheckedInUserCounter(playground?.userCounter);
       });
-  }, [playgroundWhereUserIsCheckedIn]);
 
-  function handleCheckInButton(clickedPlayground) {
     //create a new user on the selected playground
 
     const urlUser = `/api/user`;
@@ -94,25 +82,16 @@ export default function Map() {
     };
     fetch(urlUser, postMethodCheckIn);
 
-    //set current userCounter
-    const url = `/api/playground/${clickedPlayground}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((playground) => {
-        setCheckedInUserCounter(playground?.userCounter);
-      });
-
     //change the userCounter to +1
-    const urlPlayground = `/api/playground/${clickedPlayground?._id}`;
+    const urlPlayground = `/api/playground/${clickedPlayground._id}`;
     const patchMethodCheckin = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: checkedInUserCounter + 2,
+        userCounter: checkedInUserCounter + 1,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
-
     setUpdatePage(!updatePage);
   }
 
@@ -131,6 +110,18 @@ export default function Map() {
       method: "DELETE",
     };
     fetch(url, postMethodCheckIn);
+
+    //change the userCounter to -1
+    const urlPlayground = `/api/playground/61264830a1792817b301dabd`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userCounter: checkedInUserCounter - 1,
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin);
+
     setUpdateDeleteButton(!updateDeleteButton);
   }
   function getIcon(data) {

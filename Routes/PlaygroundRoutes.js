@@ -80,42 +80,19 @@ router.delete("/api/playground/:id", (req, res) => {
     });
 });
 
-// Update checkedIn Status in a playground
 router.patch("/api/playground/:id", (req, res) => {
   const id = req.params.id;
-  const { userId } = req.body;
+  const userCounter = req.body;
 
-  Playground.findById(id).then((playground) => {
-    if (playground.checkedIn.includes(userId)) {
-      // userId in playground
-      Playground.findByIdAndUpdate(
-        id,
-        {
-          $pull: { checkedIn: userId },
-        },
-        { new: true }
-      ).then((updatedPlayground) => {
-        res.status(200).json({
-          status: "CHECKED-OUT",
-          count: updatedPlayground.checkedIn.length,
-        });
-      });
-    } else {
-      // userId not in playground
-      Playground.findByIdAndUpdate(
-        id,
-        {
-          $push: { checkedIn: userId },
-        },
-        { new: true }
-      ).then((updatedPlayground) => {
-        res.status(200).json({
-          status: "CHECKED-IN",
-          count: updatedPlayground.checkedIn.length,
-        });
+  Playground.findByIdAndUpdate(id, userCounter, { new: true }).then(
+    (playground) => {
+      res.status(200).json({
+        status: "CHECKED-IN",
+        count: playground.userCounter,
+        playgroundId: playground._id,
       });
     }
-  });
+  );
 });
 
 module.exports = router;
