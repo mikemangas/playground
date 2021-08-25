@@ -2,6 +2,7 @@ const Playground = require("../models/Playground");
 const express = require("express");
 const router = express.Router();
 
+//find playground by Id
 router.get("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   Playground.findById(id)
@@ -11,11 +12,12 @@ router.get("/api/playground/:id", (req, res) => {
     .catch(() => {
       res.status(500).json({
         error:
-          "something went wrong when calling the playgrounds. please try again",
+          "something went wrong when searching for a playground. please try again",
       });
     });
 });
 
+//find all playgrounds
 router.get("/api/playground", (req, res) => {
   Playground.find({})
     .then((playground) => {
@@ -29,6 +31,26 @@ router.get("/api/playground", (req, res) => {
     });
 });
 
+//find a checkedin user in playground
+router.get("/api/users/:userId", (req, res) => {
+  const { userId } = req.params;
+  Playground.find({
+    checkedIn: userId,
+  }).then((playgrounds) => {
+    if (playgrounds.length === 0) {
+      res.send({
+        checkedIn: false,
+      });
+    } else {
+      res.send({
+        checkedIn: true,
+        checkedInPlayground: playgrounds[0]._id,
+      });
+    }
+  });
+});
+
+//create a playground
 router.post("/api/playground", (req, res) => {
   Playground.create(req.body)
     .then((newPlayground) => {
@@ -58,7 +80,7 @@ router.delete("/api/playground/:id", (req, res) => {
     });
 });
 
-// patch a playground
+// Update checkedIn Status in a playground
 router.patch("/api/playground/:id", (req, res) => {
   const id = req.params.id;
   const { userId } = req.body;
@@ -91,25 +113,6 @@ router.patch("/api/playground/:id", (req, res) => {
           status: "CHECKED-IN",
           count: updatedPlayground.checkedIn.length,
         });
-      });
-    }
-  });
-});
-
-//find a checkedin user in playground
-router.get("/api/users/:userId", (req, res) => {
-  const { userId } = req.params;
-  Playground.find({
-    checkedIn: userId,
-  }).then((playgrounds) => {
-    if (playgrounds.length === 0) {
-      res.send({
-        checkedIn: false,
-      });
-    } else {
-      res.send({
-        checkedIn: true,
-        checkedInPlayground: playgrounds[0]._id,
       });
     }
   });

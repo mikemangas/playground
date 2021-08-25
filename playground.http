@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "userId" : "288c00fc-c7be-483d-b3db-d2a50822a0da",
-  "checkedInPlayground" : "1337"
+  "checkedInPlayground" : "1588"
 }
 
 
@@ -43,4 +43,4 @@ Content-Type: application/json
 }
 
 ### User infos
-GET http://localhost:4000/api/userinplayground/61153788da59d0d60ba35408 HTTP/1.1
+GET http://localhost:4000/api/userinplayground/1337 HTTP/1.1
