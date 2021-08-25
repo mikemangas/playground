@@ -18,9 +18,12 @@ export default function Map() {
   const [updateDeleteButton, setUpdateDeleteButton] = useState();
   const [dbUserId, setDbUserId] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
+  const [userCounter, setUserCounter] = useState(null);
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
+  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
+    useState(null);
 
-  // Fetch playgrounds
+  // Fetch All playgrounds
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
@@ -37,12 +40,12 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((checkedInUser) => {
-        // setPlaygroundWhereUserIsCheckedIn(allUsers?.checkedInPlayground);
+        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
         setDbUserId(checkedInUser?.checkedInUserMongoId);
       });
   }, [localStorageUserId, updatePage, updateDeleteButton]);
 
-  //find all users
+  //Find all users
   useEffect(() => {
     const url = `/api/user/`;
     fetch(url)
@@ -67,6 +70,15 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
+  useEffect(() => {
+    const url = `/api/userinplayground/${playgroundWhereUserIsCheckedIn}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        setUserCounter(data.userCounter);
+      });
+  }, [playgroundWhereUserIsCheckedIn]);
+
   function handleCheckInButton(clickedPlayground) {
     const url = `/api/user`;
     const postMethodCheckIn = {
@@ -79,20 +91,6 @@ export default function Map() {
     };
     fetch(url, postMethodCheckIn);
     setUpdatePage(!updatePage);
-  }
-
-  function getIcon(data) {
-    if (data?.checkedIn?.length > 0) {
-      return L.icon({
-        iconUrl: iconColored,
-        iconSize: [50, 50],
-      });
-    } else {
-      return L.icon({
-        iconUrl: iconWhite,
-        iconSize: [50, 50],
-      });
-    }
   }
 
   function handleOnSubmit(e) {
@@ -111,6 +109,19 @@ export default function Map() {
     };
     fetch(url, postMethodCheckIn);
     setUpdateDeleteButton(!updateDeleteButton);
+  }
+  function getIcon(data) {
+    if (data > 0) {
+      return L.icon({
+        iconUrl: iconColored,
+        iconSize: [50, 50],
+      });
+    } else {
+      return L.icon({
+        iconUrl: iconWhite,
+        iconSize: [50, 50],
+      });
+    }
   }
   return (
     <>
