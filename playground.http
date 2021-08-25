@@ -29,7 +29,7 @@ Content-Type: application/json
 
 
 ###DELETE User
-DELETE http://localhost:4000/api/user/6125574bdaff546a19b030e4 HTTP/1.1
+DELETE http://localhost:4000/api/user/0d804961-6236-4773-90cb-f3990a7c6c9c HTTP/1.1
 
 ###DELETE Playground
 DELETE http://localhost:4000/api/playground/612541ea11dfdb5faf1a99ff HTTP/1.1
@@ -41,3 +41,6 @@ Content-Type: application/json
 {
     "userId":  "18747630-b86e-4460-95f5-9230d09e0438"
 }
+
+### User infos
+GET http://localhost:4000/api/user/288c00fc-c7be-483d-b3db-d2a5089ea0da HTTP/1.1
