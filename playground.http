@@ -11,7 +11,16 @@ POST http://localhost:4000/api/playground HTTP/1.1
 Content-Type: application/json
 
 {
-  "checkedIn": []
+  "geometry": {
+      "coordinates": [
+        11.516052709701846,
+        48.11061101493707
+      ],
+      "type": "Point"
+    },
+    "userCounter": 1,
+    "type": "Feature",
+    "id": "node/270951761"
 }
 
 ###get all users
@@ -35,11 +44,11 @@ DELETE http://localhost:4000/api/user/0d804961-6236-4773-90cb-f3990a7c6c9c HTTP/
 DELETE http://localhost:4000/api/playground/612541ea11dfdb5faf1a99ff HTTP/1.1
 
 ### update
-PATCH http://localhost:4000/api/playground/61153788da59d0d60ba35408 HTTP/1.1
+PATCH http://localhost:4000/api/playground/61153788da59d0d60b44540a HTTP/1.1
 Content-Type: application/json
 
 {
-    "userId":  "18747630-b86e-4460-95f5-9230d09e0438"
+    "userCounter" : 1
 }
 
 ### User infos

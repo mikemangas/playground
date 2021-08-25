@@ -11,15 +11,16 @@ import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 
 export default function Map() {
-  const [map, setMap] = useState(null);
-  const [playGroundData, setPlayGroundData] = useState([]);
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+  const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [updateDeleteButton, setUpdateDeleteButton] = useState();
+  const [map, setMap] = useState(null);
+  const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
   const [userCounter, setUserCounter] = useState(null);
-  const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
+  const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
 
@@ -33,6 +34,15 @@ export default function Map() {
       })
       .catch((error) => console.error(error));
   }, []);
+
+  useEffect(() => {
+    const url = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((playground) => {
+        console.log(playground);
+      });
+  });
 
   //Find playground where user is checked in & find out his MongoId
   useEffect(() => {
@@ -80,7 +90,7 @@ export default function Map() {
   }, [playgroundWhereUserIsCheckedIn]);
 
   function handleCheckInButton(clickedPlayground) {
-    const url = `/api/user`;
+    const urlUser = `/api/user`;
     const postMethodCheckIn = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -89,7 +99,19 @@ export default function Map() {
         checkedInPlayground: clickedPlayground,
       }),
     };
-    fetch(url, postMethodCheckIn);
+    fetch(urlUser, postMethodCheckIn);
+
+    const urlPlayground = `/api/playground/${clickedPlayground?._id}`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userCounter: {
+          ...(userCounter + 1),
+        },
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin);
 
     setUpdatePage(!updatePage);
   }

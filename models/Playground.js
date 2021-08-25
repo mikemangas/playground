@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const playGroundSchema = new Schema({
-  checkedIn: {
-    type: [String],
+  userCounter: {
+    type: Number,
   },
   type: {
     type: String,
