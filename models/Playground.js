@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 const playGroundSchema = new Schema({
   userCounter: {
     type: Number,
+    default: 0,
   },
   type: {
     type: String,

@@ -35,15 +35,6 @@ export default function Map() {
       .catch((error) => console.error(error));
   }, []);
 
-  useEffect(() => {
-    const url = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((playground) => {
-        console.log(playground);
-      });
-  });
-
   //Find playground where user is checked in & find out his MongoId
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -90,6 +81,8 @@ export default function Map() {
   }, [playgroundWhereUserIsCheckedIn]);
 
   function handleCheckInButton(clickedPlayground) {
+    //create a new user on the selected playground
+
     const urlUser = `/api/user`;
     const postMethodCheckIn = {
       method: "POST",
@@ -101,14 +94,21 @@ export default function Map() {
     };
     fetch(urlUser, postMethodCheckIn);
 
+    //set current userCounter
+    const url = `/api/playground/${clickedPlayground}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((playground) => {
+        setCheckedInUserCounter(playground?.userCounter);
+      });
+
+    //change the userCounter to +1
     const urlPlayground = `/api/playground/${clickedPlayground?._id}`;
     const patchMethodCheckin = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: {
-          ...(userCounter + 1),
-        },
+        userCounter: checkedInUserCounter + 2,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
