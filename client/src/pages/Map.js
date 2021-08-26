@@ -20,7 +20,6 @@ export default function Map() {
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
 
-  // Fetch All playgrounds
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
@@ -33,7 +32,6 @@ export default function Map() {
       });
   }, []);
 
-  // Fetch coordinates for given zipcode
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
@@ -48,7 +46,6 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
-  //Find playground where user is checked in & find out his MongoId
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
     fetch(url)
