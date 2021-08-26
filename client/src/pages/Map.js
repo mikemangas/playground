@@ -21,8 +21,6 @@ export default function Map() {
   const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
-  const [checkedInUserCounterDecrease, setCheckedInUserCounterDecrease] =
-    useState(null);
 
   // Fetch All playgrounds
   useEffect(() => {
@@ -73,7 +71,6 @@ export default function Map() {
 
   function handleCheckInButton(clickedPlayground) {
     //create a new user on the selected playground
-
     const urlUser = `/api/user`;
     const postMethodCheckIn = {
       method: "POST",
@@ -91,11 +88,12 @@ export default function Map() {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userCounter: { checkedInUserCounter } + 1,
+        userCounter: checkedInUserCounter + 1,
       }),
     };
     fetch(urlPlayground, patchMethodCheckin);
     setUpdatePage(!updatePage);
+    setCheckedInUserCounter(checkedInUserCounter + 1);
   }
 
   function handleOnSubmit(e) {
@@ -107,7 +105,7 @@ export default function Map() {
     setUpdatePage(!updatePage);
   }
 
-  function handleCheckOutButton() {
+  function handleCheckOutButton(clickedPlayground) {
     const url = `/api/user/${dbUserId}`;
     const postMethodCheckIn = {
       method: "DELETE",
@@ -115,7 +113,7 @@ export default function Map() {
     fetch(url, postMethodCheckIn);
 
     //change the userCounter to -1
-    const urlPlayground = `/api/playground/61264830a1792817b301dabd`;
+    const urlPlayground = `/api/playground/${clickedPlayground}`;
     const patchMethodCheckin = {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -126,6 +124,7 @@ export default function Map() {
     fetch(urlPlayground, patchMethodCheckin);
 
     setUpdateDeleteButton(!updateDeleteButton);
+    setCheckedInUserCounter(checkedInUserCounter - 1);
   }
   function getIcon(data) {
     if (data > 0) {
