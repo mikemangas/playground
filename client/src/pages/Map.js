@@ -99,8 +99,13 @@ export default function Map() {
         userId: localStorageUserId,
       }),
     };
-    fetch(urlPlayground, patchMethodCheckin);
-    setUpdatePage(!updatePage);
+    fetch(urlPlayground, patchMethodCheckin)
+      .then((res) => {
+        res.json();
+      })
+      .then(() => {
+        setUpdatePage(!updatePage);
+      });
   }
 
   function handleCheckOutButton() {
@@ -112,9 +117,13 @@ export default function Map() {
         userId: localStorageUserId,
       }),
     };
-    fetch(urlPlayground, patchMethodCheckin);
-    setUpdatePage(!updatePage);
-    console.log(playgroundWhereUserIsCheckedIn);
+    fetch(urlPlayground, patchMethodCheckin)
+      .then((res) => {
+        res.json();
+      })
+      .then(() => {
+        setUpdatePage(!updatePage);
+      });
   }
 
   return (
