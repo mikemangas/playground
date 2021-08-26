@@ -10,15 +10,13 @@ import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 
-export default function Map({ checkInState }) {
+export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
-  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
-    useState(null);
 
   useEffect(() => {
     const url = "/api/playground";
@@ -45,20 +43,18 @@ export default function Map({ checkInState }) {
         console.error(error);
       });
   }, [locationSearchValue, map]);
-
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
     fetch(url)
       .then((res) => res.json())
       .then((checkedInUser) => {
         setDbUserId(checkedInUser?.checkedInUserMongoId);
-        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
         checkInState(dbUserId);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [localStorageUserId, updatePage, checkInState, dbUserId]);
+  }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -101,39 +97,12 @@ export default function Map({ checkInState }) {
       });
   }
 
-  function handleCheckOutButton() {
-    const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
-    const patchMethodCheckin = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: localStorageUserId,
-      }),
-    };
-    fetch(urlPlayground, patchMethodCheckin)
-      .then((res) => {
-        res.json();
-      })
-      .then(() => {
-        setUpdatePage(!updatePage);
-      });
-  }
-
   return (
     <>
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
       />
-
-      {dbUserId && (
-        <button
-          className="Map__button--checkout"
-          onClick={() => handleCheckOutButton()}
-        >
-          CHECK-OUT
-        </button>
-      )}
 
       <MapContainer
         className="Map__Mapcontainer"

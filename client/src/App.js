@@ -5,11 +5,11 @@ import { useState, useEffect } from "react";
 
 function App() {
   const [checkInState, setCheckInState] = useState();
+  const [checkOutState, setCheckOutState] = useState();
   const [dbUserId, setDbUserId] = useState(null);
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
-  const [updatePage, setUpdatePage] = useState();
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -22,7 +22,7 @@ function App() {
       .catch((error) => {
         console.error(error);
       });
-  }, [localStorageUserId, updatePage, checkInState]);
+  }, [localStorageUserId, checkInState, checkOutState]);
 
   function handleCheckOutButton() {
     const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
@@ -38,7 +38,7 @@ function App() {
         res.json();
       })
       .then(() => {
-        setUpdatePage(!updatePage);
+        setCheckOutState(dbUserId);
       });
   }
 
@@ -53,7 +53,7 @@ function App() {
         </button>
       )}
       <Header />
-      <Main checkInState={setCheckInState} />
+      <Main checkOutState={checkOutState} checkInState={setCheckInState} />
     </div>
   );
 }
