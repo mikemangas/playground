@@ -1,8 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import "./Map.css";
 import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
@@ -11,32 +11,27 @@ import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 
 export default function Map() {
+  const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+  const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
+  const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
-  const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+  const [dbUserId, setDbUserId] = useState(null);
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
-  const [updatePage, setUpdatePage] = useState();
 
-  const userId = JSON.parse(localStorage.getItem("userId"));
-
-  // Fetch playgrounds
   useEffect(() => {
     const url = "/api/playground";
     fetch(url)
       .then((res) => res.json())
       .then((allPlaygrounds) => {
-        // Check if user is in any playground
-        const checkedPlayground = allPlaygrounds.find((playground) => {
-          return playground.checkedIn.includes(userId);
-        });
-        setPlaygroundWhereUserIsCheckedIn(checkedPlayground);
         setPlayGroundData(allPlaygrounds);
       })
-      .catch((error) => console.error(error));
-  }, [userId]);
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
-  // Fetch coordinates for given zipcode
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
@@ -51,33 +46,30 @@ export default function Map() {
       });
   }, [locationSearchValue, map]);
 
-  function handleCheckButton(clickedPlayground) {
-    const url = `/api/playground/${clickedPlayground?._id}`;
-    const patchMethodCheckIn = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: userId,
-      }),
-    };
-    fetch(url, patchMethodCheckIn)
-      .then((res) => {
-        return res.json();
-      })
-      .then((userStatus) => {
-        if (userStatus.status === "CHECKED-IN") {
-          setPlaygroundWhereUserIsCheckedIn(clickedPlayground);
-        } else {
-          setPlaygroundWhereUserIsCheckedIn(null);
-        }
+  useEffect(() => {
+    const url = `/api/user/${localStorageUserId}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((checkedInUser) => {
+        setDbUserId(checkedInUser?.checkedInUserMongoId);
+        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
       })
       .catch((error) => {
         console.error(error);
       });
+  }, [localStorageUserId, updatePage]);
+
+  function handleOnSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const formInputValue = form.searchInput.value;
+    localStorage.setItem("inputText", JSON.stringify(formInputValue));
+    form.reset();
+    setUpdatePage(!updatePage);
   }
 
-  function getIcon(data) {
-    if (data?.checkedIn?.length > 0) {
+  function getIcon(allPlaygrounds) {
+    if (allPlaygrounds > 0) {
       return L.icon({
         iconUrl: iconColored,
         iconSize: [50, 50],
@@ -90,13 +82,40 @@ export default function Map() {
     }
   }
 
-  function handleOnSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formInputValue = form.searchInput.value;
-    localStorage.setItem("inputText", JSON.stringify(formInputValue));
-    form.reset();
-    setUpdatePage(!updatePage);
+  function handleCheckInButton(clickedPlayground) {
+    const urlPlayground = `/api/playground/${clickedPlayground?._id}`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: localStorageUserId,
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin)
+      .then((res) => {
+        res.json();
+      })
+      .then(() => {
+        setUpdatePage(!updatePage);
+      });
+  }
+
+  function handleCheckOutButton() {
+    const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: localStorageUserId,
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin)
+      .then((res) => {
+        res.json();
+      })
+      .then(() => {
+        setUpdatePage(!updatePage);
+      });
   }
 
   return (
@@ -106,10 +125,10 @@ export default function Map() {
         handleOnSubmit={handleOnSubmit}
       />
 
-      {playgroundWhereUserIsCheckedIn && (
+      {dbUserId && (
         <button
           className="Map__button--checkout"
-          onClick={() => handleCheckButton(playgroundWhereUserIsCheckedIn)}
+          onClick={() => handleCheckOutButton()}
         >
           CHECK-OUT
         </button>
@@ -120,8 +139,6 @@ export default function Map() {
         tap={false}
         whenCreated={setMap}
         loadingControl={true}
-        // center={[48.1047822, 11.5767881]}
-        // zoom={5}
         scrollWheelZoom={false}
       >
         <TileLayer
@@ -133,7 +150,7 @@ export default function Map() {
           {playGroundData.map((positionData) => (
             <Marker
               className="Map__Marker"
-              icon={getIcon(positionData)}
+              icon={getIcon(positionData.userCounter)}
               key={positionData?._id}
               position={[
                 positionData?.geometry?.coordinates[1],
@@ -143,9 +160,11 @@ export default function Map() {
               <Popup className="Map__Popup">
                 <>
                   <CheckInButton
-                    handleCheckButton={() => handleCheckButton(positionData)}
+                    handleCheckInButton={() =>
+                      handleCheckInButton(positionData)
+                    }
                     data={positionData}
-                    isDisabled={playgroundWhereUserIsCheckedIn ? true : false}
+                    isDisabled={dbUserId ? true : false}
                     className={"Map__button--checkin"}
                   />
                   <p>{positionData?.properties?.name}</p>
@@ -156,7 +175,7 @@ export default function Map() {
                       alt="child-counter"
                     />
                     <p className="Map__Popup__childnumber">
-                      {positionData?.checkedIn?.length}
+                      {positionData?.userCounter}
                     </p>
                   </div>
                 </>
