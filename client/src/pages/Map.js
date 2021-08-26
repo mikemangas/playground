@@ -10,7 +10,7 @@ import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 
-export default function Map() {
+export default function Map({ checkInState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -53,11 +53,12 @@ export default function Map() {
       .then((checkedInUser) => {
         setDbUserId(checkedInUser?.checkedInUserMongoId);
         setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
+        checkInState(dbUserId);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [localStorageUserId, updatePage]);
+  }, [localStorageUserId, updatePage, checkInState, dbUserId]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
