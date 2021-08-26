@@ -44,7 +44,7 @@ function App() {
 
   return (
     <div className="App">
-      {checkInState && dbUserId && (
+      {dbUserId && (
         <button
           className="Map__button--checkout"
           onClick={() => handleCheckOutButton()}
