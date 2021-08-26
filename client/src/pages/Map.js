@@ -9,6 +9,7 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -40,7 +41,7 @@ export default function Map({ checkInState, checkOutState }) {
           const newLongitude = Number(searchedLocationData[0]?.lon);
           map.setView([newLatitude, newLongitude], 15);
         } else {
-          alert(
+          toast.error(
             "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
           );
         }
@@ -49,6 +50,7 @@ export default function Map({ checkInState, checkOutState }) {
         console.error(error);
       });
   }, [locationSearchValue, map]);
+
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
     fetch(url)
@@ -100,11 +102,24 @@ export default function Map({ checkInState, checkOutState }) {
       })
       .then(() => {
         setUpdatePage(!updatePage);
+        toast.success(
+          "Erfolgreich eingecheckt. Bitte denke daran dich wieder auszuchecken, wenn du den Spielplatz verlässt. Ansonsten werden wir es für dich automatisch nach 3 Stunden tun.",
+          {
+            duration: 8000,
+          }
+        );
+      })
+      .catch((error) => {
+        toast.error(
+          "Ups, leider ist beim einchecken etwas schiefgelaufen. Versuche es noch einmal."
+        );
+        console.error(error);
       });
   }
 
   return (
     <>
+      <Toaster />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}

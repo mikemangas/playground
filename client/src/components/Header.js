@@ -5,8 +5,10 @@ import logo from "../assets/Images/logo.png";
 import menu from "../assets/Images/menu-lines.png";
 import menuClose from "../assets/Images/menu-close.png";
 import "./Header.css";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Header({ checkInState, checkOutState }) {
+  const [updatePage, setUpdatePage] = useState();
   const [toggleNavigationLinks, setToggleNavigationLinks] = useState(
     "Header__navigation--links--off"
   );
@@ -74,7 +76,7 @@ export default function Header({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [localStorageUserId, checkInState]);
+  }, [localStorageUserId, checkInState, updatePage]);
 
   function handleCheckOutButton() {
     const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
@@ -91,11 +93,18 @@ export default function Header({ checkInState, checkOutState }) {
       })
       .then(() => {
         checkOutState(dbUserId);
+        setUpdatePage(!updatePage);
+        toast.success("Erfolgreich ausgecheckt");
+      })
+      .catch((error) => {
+        toast.error("Ups, leider ist beim einloggen etwas schiefgelaufen");
+        console.error(error);
       });
   }
 
   return (
     <header className="Header">
+      <Toaster />
       <Link className="Header__logo__wrapper" to="/">
         <img className="Header__logo" src={logo} alt="logo" />
       </Link>
@@ -113,9 +122,6 @@ export default function Header({ checkInState, checkOutState }) {
         <nav onClick={handleOnMenuClick} className={toggleNavigationLinks}>
           <NavLink className={navLink} to="/">
             Home
-          </NavLink>
-          <NavLink className={navLink} to="/map">
-            Map
           </NavLink>
           <NavLink className={navLink} to="/spielplatz-eintragen">
             Spielplatz Eintragen
