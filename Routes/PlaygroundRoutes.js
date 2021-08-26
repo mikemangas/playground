@@ -112,7 +112,10 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
   const user = await User.findOne({ userId });
 
   if (!user) {
-    await User.create({ userId, checkedInPlayground: playgroundId });
+    await User.create({
+      userId,
+      checkedInPlayground: playgroundId,
+    });
     await Playground.findByIdAndUpdate(
       playgroundId,
       {

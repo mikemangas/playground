@@ -1,8 +1,8 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import MarkerClusterGroup from "react-leaflet-markercluster";
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import MarkerClusterGroup from "react-leaflet-markercluster";
 import "./Map.css";
 import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
@@ -30,7 +30,6 @@ export default function Map() {
       })
       .catch((error) => {
         console.error(error);
-        console.error("something went wrong when fetching all playgrounds");
       });
   }, []);
 
@@ -46,7 +45,6 @@ export default function Map() {
       })
       .catch((error) => {
         console.error(error);
-        console.error("something went wrong when setting view");
       });
   }, [locationSearchValue, map]);
 
@@ -56,15 +54,11 @@ export default function Map() {
     fetch(url)
       .then((res) => res.json())
       .then((checkedInUser) => {
-        console.log(checkedInUser);
         setDbUserId(checkedInUser?.checkedInUserMongoId);
         setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
       })
       .catch((error) => {
         console.error(error);
-        console.error(
-          "something went wrong when fetching the checkedIn user Data"
-        );
       });
   }, [localStorageUserId, updatePage]);
 
@@ -76,8 +70,9 @@ export default function Map() {
     form.reset();
     setUpdatePage(!updatePage);
   }
-  function getIcon(data) {
-    if (data > 0) {
+
+  function getIcon(allPlaygrounds) {
+    if (allPlaygrounds > 0) {
       return L.icon({
         iconUrl: iconColored,
         iconSize: [50, 50],
