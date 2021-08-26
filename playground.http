@@ -1,5 +1,5 @@
 ###get all articles
-GET http://localhost:4000/api/playground/ HTTP/1.1
+GET http://localhost:4000/api/playground HTTP/1.1
 
 ### User infos
 GET http://localhost:4000/api/users/622afe4c-628d-40c8-9731-56c9af052679 HTTP/1.1
@@ -48,8 +48,8 @@ PATCH http://localhost:4000/api/playground/61264830a1792817b301dabd HTTP/1.1
 Content-Type: application/json
 
 {
-    "userCounter" : 5
+  "userId": "0d804961-6236-4773-90cb-f3990a7c6c9c"
 }
 
 ### User infos
-GET http://localhost:4000/api/userinplayground/1337 HTTP/1.1
+GET http://localhost:4000/api/user/0d804961-6236-4773-90cb-f3990a7c6c9c HTTP/1.1

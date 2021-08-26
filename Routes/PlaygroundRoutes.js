@@ -125,6 +125,7 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
 
     res.status(200).send({
       status: "CHECKED-IN",
+      playgroundId: playgroundId,
     });
   } else {
     if (user.checkedInPlayground === playgroundId) {

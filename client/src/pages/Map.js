@@ -14,11 +14,9 @@ export default function Map() {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
-  const [updateDeleteButton, setUpdateDeleteButton] = useState();
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
-  const [checkedInUserCounter, setCheckedInUserCounter] = useState(null);
   const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
     useState(null);
 
@@ -30,19 +28,11 @@ export default function Map() {
       .then((allPlaygrounds) => {
         setPlayGroundData(allPlaygrounds);
       })
-      .catch((error) => console.error(error));
-  }, []);
-
-  //Find playground where user is checked in & find out his MongoId
-  useEffect(() => {
-    const url = `/api/user/${localStorageUserId}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((checkedInUser) => {
-        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
-        setDbUserId(checkedInUser?.checkedInUserMongoId);
+      .catch((error) => {
+        console.error(error);
+        console.error("something went wrong when fetching all playgrounds");
       });
-  }, [localStorageUserId, updatePage, updateDeleteButton]);
+  }, []);
 
   // Fetch coordinates for given zipcode
   useEffect(() => {
@@ -56,45 +46,27 @@ export default function Map() {
       })
       .catch((error) => {
         console.error(error);
+        console.error("something went wrong when setting view");
       });
   }, [locationSearchValue, map]);
 
-  // useEffect(() => {
-  //   const url = `/api/playground/${clickedPlayground._id}`;
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((playground) => {
-  //       setCheckedInUserCounter(playground?.userCounter);
-  //       // setCheckedInUserCounterDecrease(playground?.userCounter);
-  //     });
-  // })
-
-  function handleCheckInButton(clickedPlayground) {
-    //create a new user on the selected playground
-    const urlUser = `/api/user`;
-    const postMethodCheckIn = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: localStorageUserId,
-        checkedInPlayground: clickedPlayground,
-      }),
-    };
-    fetch(urlUser, postMethodCheckIn);
-
-    //change the userCounter to +1
-    const urlPlayground = `/api/playground/${clickedPlayground._id}`;
-    const patchMethodCheckin = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userCounter: checkedInUserCounter + 1,
-      }),
-    };
-    fetch(urlPlayground, patchMethodCheckin);
-    setUpdatePage(!updatePage);
-    setCheckedInUserCounter(checkedInUserCounter + 1);
-  }
+  //Find playground where user is checked in & find out his MongoId
+  useEffect(() => {
+    const url = `/api/user/${localStorageUserId}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((checkedInUser) => {
+        console.log(checkedInUser);
+        setDbUserId(checkedInUser?.checkedInUserMongoId);
+        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
+      })
+      .catch((error) => {
+        console.error(error);
+        console.error(
+          "something went wrong when fetching the checkedIn user Data"
+        );
+      });
+  }, [localStorageUserId, updatePage]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -103,28 +75,6 @@ export default function Map() {
     localStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
     setUpdatePage(!updatePage);
-  }
-
-  function handleCheckOutButton(clickedPlayground) {
-    const url = `/api/user/${dbUserId}`;
-    const postMethodCheckIn = {
-      method: "DELETE",
-    };
-    fetch(url, postMethodCheckIn);
-
-    //change the userCounter to -1
-    const urlPlayground = `/api/playground/${clickedPlayground}`;
-    const patchMethodCheckin = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userCounter: checkedInUserCounter - 1,
-      }),
-    };
-    fetch(urlPlayground, patchMethodCheckin);
-
-    setUpdateDeleteButton(!updateDeleteButton);
-    setCheckedInUserCounter(checkedInUserCounter - 1);
   }
   function getIcon(data) {
     if (data > 0) {
@@ -139,6 +89,34 @@ export default function Map() {
       });
     }
   }
+
+  function handleCheckInButton(clickedPlayground) {
+    const urlPlayground = `/api/playground/${clickedPlayground?._id}`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: localStorageUserId,
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin);
+    setUpdatePage(!updatePage);
+  }
+
+  function handleCheckOutButton() {
+    const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
+    const patchMethodCheckin = {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: localStorageUserId,
+      }),
+    };
+    fetch(urlPlayground, patchMethodCheckin);
+    setUpdatePage(!updatePage);
+    console.log(playgroundWhereUserIsCheckedIn);
+  }
+
   return (
     <>
       <SubmitForm
@@ -149,7 +127,7 @@ export default function Map() {
       {dbUserId && (
         <button
           className="Map__button--checkout"
-          onClick={() => handleCheckOutButton(playgroundWhereUserIsCheckedIn)}
+          onClick={() => handleCheckOutButton()}
         >
           CHECK-OUT
         </button>
@@ -171,7 +149,7 @@ export default function Map() {
           {playGroundData.map((positionData) => (
             <Marker
               className="Map__Marker"
-              icon={getIcon(positionData)}
+              icon={getIcon(positionData.userCounter)}
               key={positionData?._id}
               position={[
                 positionData?.geometry?.coordinates[1],
@@ -196,7 +174,7 @@ export default function Map() {
                       alt="child-counter"
                     />
                     <p className="Map__Popup__childnumber">
-                      {positionData?.checkedIn?.length}
+                      {positionData?.userCounter}
                     </p>
                   </div>
                 </>
