@@ -23,18 +23,4 @@ router.get("/api/user/:userId", (req, res) => {
   });
 });
 
-//Find all users
-router.get("/api/user", (req, res) => {
-  User.find({})
-    .then((user) => {
-      res.status(200).json(user);
-    })
-    .catch(() => {
-      res.status(500).json({
-        error:
-          "something went wrong when calling the playgrounds. please try again",
-      });
-    });
-});
-
 module.exports = router;
