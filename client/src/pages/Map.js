@@ -34,10 +34,16 @@ export default function Map({ checkInState, checkOutState }) {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
-      .then((data) => {
-        const newLatitude = Number(data[0]?.lat);
-        const newLongitude = Number(data[0]?.lon);
-        map.setView([newLatitude, newLongitude], 15);
+      .then((searchedLocationData) => {
+        if (searchedLocationData.length > 0) {
+          const newLatitude = Number(searchedLocationData[0]?.lat);
+          const newLongitude = Number(searchedLocationData[0]?.lon);
+          map.setView([newLatitude, newLongitude], 15);
+        } else {
+          alert(
+            "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
+          );
+        }
       })
       .catch((error) => {
         console.error(error);
