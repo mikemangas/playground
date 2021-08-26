@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import logo from "../assets/Images/logo.png";
@@ -7,21 +7,6 @@ import menuClose from "../assets/Images/menu-close.png";
 import "./Header.css";
 
 export default function Header() {
-  // const userId = JSON.parse(localStorage.getItem("userId"));
-  // const [checkedInStatus, setCheckedInStatus] = useState();
-  // const [checkedInPlayground, setCheckedInPlayground] = useState();
-
-  // useEffect(() => {
-  //   const url = `/api/users/${userId}`;
-  //   fetch(url)
-  //     .then((res) => res.json())
-  //     .then((isCheckedIn) => {
-  //       setCheckedInStatus(isCheckedIn?.checkedIn);
-  //       setCheckedInPlayground(isCheckedIn?.checkedInPlayground);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, [userId]);
-
   const [toggleNavigationLinks, setToggleNavigationLinks] = useState(
     "Header__navigation--links--off"
   );
@@ -73,39 +58,12 @@ export default function Header() {
     }
   }
 
-  // function handleCheckOutButton() {
-  //   const url = `/api/playground/${checkedInPlayground}`;
-  //   const patchMethodCheckIn = {
-  //     method: "PATCH",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({
-  //       userId: userId,
-  //     }),
-  //   };
-  //   fetch(url, patchMethodCheckIn)
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((checkedStatus) => {
-  //       if (checkedStatus.status === "CHECKED-OUT") {
-  //         setCheckedInStatus();
-  //       }
-  //     });
-  // }
-
   return (
     <header className="Header">
       <Link className="Header__logo__wrapper" to="/">
         <img className="Header__logo" src={logo} alt="logo" />
       </Link>
-      {/* {checkedInStatus && (
-        <button
-          className="Header__button--checkout"
-          onClick={() => handleCheckOutButton(checkedInPlayground)}
-        >
-          CHECK-OUT
-        </button>
-      )} */}
+
       <section className={toggleWrapper}>
         <nav onClick={handleOnClick} className={toggleNavigationLinks}>
           <NavLink className={navLink} to="/">
