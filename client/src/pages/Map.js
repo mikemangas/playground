@@ -111,7 +111,7 @@ export default function Map({ checkInState, checkOutState }) {
       })
       .catch((error) => {
         toast.error(
-          "Ups, leider ist beim einchecken etwas schiefgelaufen. Versuche es noch einmal."
+          "Ups, leider ist beim einchecken etwas schief gelaufen. Versuche es noch einmal."
         );
         console.error(error);
       });
