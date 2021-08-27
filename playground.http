@@ -40,6 +40,11 @@ Content-Type: application/json
 ###DELETE User
 DELETE http://localhost:4000/api/user/0d804961-6236-4773-90cb-f3990a7c6c9c HTTP/1.1
 
+###DELETE all polygons
+DELETE http://localhost:4000//api/playground HTTP/1.1
+
+
+
 ###DELETE Playground
 DELETE http://localhost:4000/api/playground/612541ea11dfdb5faf1a99ff HTTP/1.1
 

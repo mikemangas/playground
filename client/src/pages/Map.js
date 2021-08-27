@@ -156,7 +156,14 @@ export default function Map({ checkInState, checkOutState }) {
                       positionData?.geometry?.coordinates[0][1][1],
                       positionData?.geometry?.coordinates[0][1][0],
                     ]
-                  : false
+                  : positionData?.geometry?.type === "LineString"
+                  ? [
+                      positionData?.geometry?.coordinates[0][1],
+                      positionData?.geometry?.coordinates[0][0],
+                    ]
+                  : console.log(
+                      `the playgroundID: ${positionData?._id} does not work`
+                    )
               }
             >
               <Popup className="Map__Popup">
