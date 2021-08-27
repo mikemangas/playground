@@ -9,16 +9,15 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
+import toast, { Toaster } from "react-hot-toast";
 
-export default function Map() {
+export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
-  const [playgroundWhereUserIsCheckedIn, setPlaygroundWhereUserIsCheckedIn] =
-    useState(null);
 
   useEffect(() => {
     const url = "/api/playground";
@@ -36,10 +35,16 @@ export default function Map() {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
-      .then((data) => {
-        const newLatitude = Number(data[0]?.lat);
-        const newLongitude = Number(data[0]?.lon);
-        map.setView([newLatitude, newLongitude], 15);
+      .then((searchedLocationData) => {
+        if (searchedLocationData.length > 0) {
+          const newLatitude = Number(searchedLocationData[0]?.lat);
+          const newLongitude = Number(searchedLocationData[0]?.lon);
+          map.setView([newLatitude, newLongitude], 15);
+        } else {
+          toast.error(
+            "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
+          );
+        }
       })
       .catch((error) => {
         console.error(error);
@@ -52,12 +57,12 @@ export default function Map() {
       .then((res) => res.json())
       .then((checkedInUser) => {
         setDbUserId(checkedInUser?.checkedInUserMongoId);
-        setPlaygroundWhereUserIsCheckedIn(checkedInUser?.checkedInPlayground);
+        checkInState(dbUserId);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, [localStorageUserId, updatePage]);
+  }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -97,42 +102,28 @@ export default function Map() {
       })
       .then(() => {
         setUpdatePage(!updatePage);
-      });
-  }
-
-  function handleCheckOutButton() {
-    const urlPlayground = `/api/playground/${playgroundWhereUserIsCheckedIn}`;
-    const patchMethodCheckin = {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: localStorageUserId,
-      }),
-    };
-    fetch(urlPlayground, patchMethodCheckin)
-      .then((res) => {
-        res.json();
+        toast.success(
+          "Erfolgreich eingecheckt. Bitte denke daran dich wieder auszuchecken, wenn du den Spielplatz verlässt. Ansonsten werden wir es für dich automatisch nach 3 Stunden tun.",
+          {
+            duration: 8000,
+          }
+        );
       })
-      .then(() => {
-        setUpdatePage(!updatePage);
+      .catch((error) => {
+        toast.error(
+          "Ups, leider ist beim einchecken etwas schiefgelaufen. Versuche es noch einmal."
+        );
+        console.error(error);
       });
   }
 
   return (
     <>
+      <Toaster />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
       />
-
-      {dbUserId && (
-        <button
-          className="Map__button--checkout"
-          onClick={() => handleCheckOutButton()}
-        >
-          CHECK-OUT
-        </button>
-      )}
 
       <MapContainer
         className="Map__Mapcontainer"
