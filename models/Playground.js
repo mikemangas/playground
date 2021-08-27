@@ -39,10 +39,6 @@ const playGroundSchema = new Schema({
     type: {
       type: String,
     },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
   },
 });
 const Playground = mongoose.model("Playground", playGroundSchema);

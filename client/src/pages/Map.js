@@ -143,10 +143,19 @@ export default function Map({ checkInState, checkOutState }) {
               className="Map__Marker"
               icon={getIcon(positionData.userCounter)}
               key={positionData?._id}
-              position={[
-                positionData?.geometry?.coordinates[1],
-                positionData?.geometry?.coordinates[0],
-              ]}
+              position={
+                positionData?.geometry?.type === "Point"
+                  ? [
+                      positionData?.geometry?.coordinates[1],
+                      positionData?.geometry?.coordinates[0],
+                    ]
+                  : positionData?.geometry?.type === "Polygon"
+                  ? [
+                      positionData?.geometry?.coordinates[0][1][1],
+                      positionData?.geometry?.coordinates[0][1][0],
+                    ]
+                  : false
+              }
             >
               <Popup className="Map__Popup">
                 <>
