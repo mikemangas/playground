@@ -29,7 +29,7 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [updatePage, checkOutState]);
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
