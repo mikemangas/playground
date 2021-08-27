@@ -158,7 +158,12 @@ export default function Map({ checkInState, checkOutState }) {
                     isDisabled={dbUserId ? true : false}
                     className={"Map__button--checkin"}
                   />
-                  <p>{positionData?.properties?.name}</p>
+
+                  {positionData?.properties?.name ? (
+                    <p>{positionData?.properties?.name}</p>
+                  ) : (
+                    false
+                  )}
                   <div className="Map__Popup__childcounter__wrapper">
                     <img
                       className="Map__Popup__child-icon"
