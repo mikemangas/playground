@@ -29,7 +29,9 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [updatePage, checkOutState]);
+  }, []);
+  //i could add "updatePage, checkOutState" inside the useeffect, in order to update the counter immediately
+  //but it would rerender the whole map (very bad for performance)
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
