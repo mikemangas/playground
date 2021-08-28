@@ -21,21 +21,6 @@ export default function Map({ checkInState, checkOutState }) {
   const [dbUserId, setDbUserId] = useState(null);
 
   useEffect(() => {
-    const url = `/api/playground/8.6962945227448/50.11320252103816`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((allPlaygrounds) => {
-        setPlayGroundData(allPlaygrounds);
-      })
-      .catch((error) => {
-        console.error(error);
-        console.log("that looks bad");
-      });
-  }, []);
-  //i could add "updatePage, checkOutState" inside the useeffect, in order to update the counter immediately
-  //but it would rerender the whole map (very bad for performance)
-
-  useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
       .then((res) => res.json())
@@ -43,7 +28,18 @@ export default function Map({ checkInState, checkOutState }) {
         if (searchedLocationData.length > 0) {
           const newLatitude = Number(searchedLocationData[0]?.lat);
           const newLongitude = Number(searchedLocationData[0]?.lon);
-          map.setView([newLatitude, newLongitude], 15);
+          const url = `/api/playground/${newLongitude}/${newLatitude}`;
+          fetch(url)
+            .then((res) => res.json())
+            .then((allPlaygrounds) => {
+              setPlayGroundData(allPlaygrounds);
+            })
+            .catch((error) => {
+              console.error(error);
+              console.log("that looks bad");
+            });
+
+          map.setView([newLatitude, newLongitude], 16);
         } else {
           toast.error(
             "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."

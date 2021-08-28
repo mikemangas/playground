@@ -13,7 +13,7 @@ router.get("/api/playground/:longitude/:latitude", (req, res) => {
           type: "Polygon",
           coordinates: [Number(longitude), Number(latitude)],
         },
-        $maxDistance: 5000,
+        $maxDistance: 3000,
       },
     },
   })
