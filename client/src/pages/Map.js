@@ -20,7 +20,7 @@ export default function Map({ checkInState, checkOutState }) {
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
 
-  document.addEventListener("DOMContentLoaded", function () {
+  useEffect(() => {
     const url = `/api/playground/8.6962945227448/50.11320252103816`;
     fetch(url)
       .then((res) => res.json())
@@ -31,8 +31,7 @@ export default function Map({ checkInState, checkOutState }) {
         console.error(error);
         console.log("that looks bad");
       });
-  });
-
+  }, []);
   //i could add "updatePage, checkOutState" inside the useeffect, in order to update the counter immediately
   //but it would rerender the whole map (very bad for performance)
 
@@ -44,8 +43,6 @@ export default function Map({ checkInState, checkOutState }) {
         if (searchedLocationData.length > 0) {
           const newLatitude = Number(searchedLocationData[0]?.lat);
           const newLongitude = Number(searchedLocationData[0]?.lon);
-          console.log(newLatitude);
-          console.log(newLongitude);
           map.setView([newLatitude, newLongitude], 15);
         } else {
           toast.error(
