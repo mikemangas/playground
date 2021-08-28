@@ -30,6 +30,8 @@ export default function Map({ checkInState, checkOutState }) {
         console.error(error);
       });
   }, []);
+  //i could add "updatePage, checkOutState" inside the useeffect, in order to update the counter immediately
+  //but it would rerender the whole map (very bad for performance)
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
@@ -111,7 +113,7 @@ export default function Map({ checkInState, checkOutState }) {
       })
       .catch((error) => {
         toast.error(
-          "Ups, leider ist beim einchecken etwas schiefgelaufen. Versuche es noch einmal."
+          "Ups, leider ist beim einchecken etwas schief gelaufen. Versuche es noch einmal."
         );
         console.error(error);
       });
@@ -143,10 +145,26 @@ export default function Map({ checkInState, checkOutState }) {
               className="Map__Marker"
               icon={getIcon(positionData.userCounter)}
               key={positionData?._id}
-              position={[
-                positionData?.geometry?.coordinates[1],
-                positionData?.geometry?.coordinates[0],
-              ]}
+              position={
+                positionData?.geometry?.type === "Point"
+                  ? [
+                      positionData?.geometry?.coordinates[1],
+                      positionData?.geometry?.coordinates[0],
+                    ]
+                  : positionData?.geometry?.type === "Polygon"
+                  ? [
+                      positionData?.geometry?.coordinates[0][1][1],
+                      positionData?.geometry?.coordinates[0][1][0],
+                    ]
+                  : positionData?.geometry?.type === "LineString"
+                  ? [
+                      positionData?.geometry?.coordinates[0][1],
+                      positionData?.geometry?.coordinates[0][0],
+                    ]
+                  : console.log(
+                      `the playgroundID: ${positionData?._id} does not work`
+                    )
+              }
             >
               <Popup className="Map__Popup">
                 <>
@@ -158,7 +176,12 @@ export default function Map({ checkInState, checkOutState }) {
                     isDisabled={dbUserId ? true : false}
                     className={"Map__button--checkin"}
                   />
-                  <p>{positionData?.properties?.name}</p>
+
+                  {positionData?.properties?.name ? (
+                    <p>{positionData?.properties?.name}</p>
+                  ) : (
+                    false
+                  )}
                   <div className="Map__Popup__childcounter__wrapper">
                     <img
                       className="Map__Popup__child-icon"

@@ -11,13 +11,13 @@
   display: flex;
   justify-content: center;
   position: relative;
-  font-size: 1.3rem;
-  top: 2px;
+  font-size: 0.8rem;
+  top: 8px;
   color: var(--color-purple);
 }
 
 .leaflet-marker-icon.marker-cluster {
-  border: var(--color-purple) 3px solid;
+  border: var(--color-purple) 2px solid;
 }
 
 .marker-cluster {
@@ -35,8 +35,8 @@
 }
 
 .Map__Popup__child-icon {
-  max-width: 30px;
-  max-height: 30px;
+  max-width: 40px;
+  max-height: 40px;
 }
 
 /* Zoom Bar */

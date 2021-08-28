@@ -17,9 +17,9 @@ export default function Home() {
   return (
     <section className="Home__section">
       <div className="Home__banner-wrapper">
-        <h2 className="Home__banner-title1">Finde einen</h2>
-        <h2 className="Home__banner-title2">Spielplatz</h2>
-        <h2 className="Home__banner-title3">In deiner Nähe</h2>
+        <h2 className="Home__banner-title1">Spielplätze mit </h2>
+        <h2 className="Home__banner-title2">Auslastung</h2>
+        <h2 className="Home__banner-title3">finden</h2>
       </div>
       <SubmitForm
         className={"Home__SubmitForm"}
