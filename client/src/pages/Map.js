@@ -16,11 +16,12 @@ export default function Map({ checkInState, checkOutState }) {
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
+  // const [map2, setMap2] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
 
-  useEffect(() => {
-    const url = "/api/playground";
+  document.addEventListener("DOMContentLoaded", function () {
+    const url = `/api/playground/8.6962945227448/50.11320252103816`;
     fetch(url)
       .then((res) => res.json())
       .then((allPlaygrounds) => {
@@ -28,8 +29,10 @@ export default function Map({ checkInState, checkOutState }) {
       })
       .catch((error) => {
         console.error(error);
+        console.log("that looks bad");
       });
-  }, []);
+  });
+
   //i could add "updatePage, checkOutState" inside the useeffect, in order to update the counter immediately
   //but it would rerender the whole map (very bad for performance)
 
@@ -41,6 +44,8 @@ export default function Map({ checkInState, checkOutState }) {
         if (searchedLocationData.length > 0) {
           const newLatitude = Number(searchedLocationData[0]?.lat);
           const newLongitude = Number(searchedLocationData[0]?.lon);
+          console.log(newLatitude);
+          console.log(newLongitude);
           map.setView([newLatitude, newLongitude], 15);
         } else {
           toast.error(
@@ -133,6 +138,7 @@ export default function Map({ checkInState, checkOutState }) {
         whenCreated={setMap}
         loadingControl={true}
         scrollWheelZoom={false}
+        // onDragEnd={setMap2}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
