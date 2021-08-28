@@ -4,7 +4,17 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/api/playground", (req, res) => {
-  Playground.find({})
+  Playground.find({
+    geometry: {
+      $nearSphere: {
+        $geometry: {
+          type: "Point",
+          coordinates: [11.51617072678361, 48.11063608748793],
+        },
+        $maxDistance: 5000,
+      },
+    },
+  })
     .then((playground) => {
       res.status(200).json(playground);
     })
