@@ -16,7 +16,6 @@ export default function Map({ checkInState, checkOutState }) {
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
-  // const [map2, setMap2] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
 
@@ -36,7 +35,6 @@ export default function Map({ checkInState, checkOutState }) {
             })
             .catch((error) => {
               console.error(error);
-              console.log("that looks bad");
             });
 
           map.setView([newLatitude, newLongitude], 16);
@@ -131,7 +129,6 @@ export default function Map({ checkInState, checkOutState }) {
         whenCreated={setMap}
         loadingControl={true}
         scrollWheelZoom={false}
-        // onDragEnd={setMap2}
       >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
