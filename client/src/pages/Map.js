@@ -36,7 +36,6 @@ export default function Map({ checkInState, checkOutState }) {
             .catch((error) => {
               console.error(error);
             });
-
           map.setView([newLatitude, newLongitude], 16);
         } else {
           toast.error(
