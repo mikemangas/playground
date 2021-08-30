@@ -46,7 +46,7 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [locationSearchValue, map]);
+  }, [locationSearchValue, map, updatePage]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -138,7 +138,7 @@ export default function Map({ checkInState, checkOutState }) {
           {playGroundData.map((positionData) => (
             <Marker
               className="Map__Marker"
-              icon={getIcon(positionData.userCounter)}
+              icon={getIcon(positionData.userCount)}
               key={positionData?._id}
               position={
                 positionData?.geometry?.type === "Point"
@@ -184,7 +184,7 @@ export default function Map({ checkInState, checkOutState }) {
                       alt="child-counter"
                     />
                     <p className="Map__Popup__childnumber">
-                      {positionData?.userCounter}
+                      {positionData?.userCount}
                     </p>
                   </div>
                 </>

@@ -3,29 +3,37 @@ const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
 
-router.get("/api/playground/:longitude/:latitude", (req, res) => {
+router.get("/api/playground/:longitude/:latitude", async (req, res) => {
   const { latitude } = req.params;
   const { longitude } = req.params;
-  Playground.find({
-    geometry: {
-      $nearSphere: {
-        $geometry: {
-          type: "Polygon",
-          coordinates: [Number(longitude), Number(latitude)],
+  try {
+    const playgrounds = await Playground.find({
+      geometry: {
+        $nearSphere: {
+          $geometry: {
+            type: "Polygon",
+            coordinates: [Number(longitude), Number(latitude)],
+          },
+          $maxDistance: 3000,
         },
-        $maxDistance: 3000,
       },
-    },
-  })
-    .then((playground) => {
-      res.send(playground);
-    })
-    .catch(() => {
-      res.status(500).json({
-        error:
-          "something went wrong when calling the playgrounds. please try again",
-      });
+    }).lean();
+    const playgroundsWithCountPromises = playgrounds.map(async (playground) => {
+      const userCount = await User.find({
+        checkedInPlayground: playground._id,
+      }).countDocuments();
+      return { ...playground, userCount };
     });
+    const playgroundsWithCount = await Promise.all(
+      playgroundsWithCountPromises
+    );
+    console.log(playgroundsWithCount);
+    res.send(playgroundsWithCount);
+  } catch (error) {
+    console.error(error);
+    res.status(500);
+    //send error
+  }
 });
 
 router.patch("/api/playground/:playgroundId", async (req, res) => {
@@ -39,16 +47,6 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
       userId,
       checkedInPlayground: playgroundId,
     });
-    await Playground.findByIdAndUpdate(
-      playgroundId,
-      {
-        $inc: {
-          userCounter: 1,
-        },
-      },
-      { new: true }
-    );
-
     res.status(200).send({
       status: "CHECKED-IN",
       playgroundId: playgroundId,
@@ -58,16 +56,6 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
       await User.findOneAndDelete({
         userId,
       });
-      await Playground.findByIdAndUpdate(
-        playgroundId,
-        {
-          $inc: {
-            userCounter: -1,
-          },
-        },
-        { new: true }
-      );
-
       res.status(200).send({
         status: "CHECKED-OUT",
       });
