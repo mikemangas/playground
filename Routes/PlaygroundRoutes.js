@@ -3,10 +3,22 @@ const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
 
-router.get("/api/playground", (req, res) => {
-  Playground.find({})
+router.get("/api/playground/:longitude/:latitude", (req, res) => {
+  const { latitude } = req.params;
+  const { longitude } = req.params;
+  Playground.find({
+    geometry: {
+      $nearSphere: {
+        $geometry: {
+          type: "Polygon",
+          coordinates: [Number(longitude), Number(latitude)],
+        },
+        $maxDistance: 3000,
+      },
+    },
+  })
     .then((playground) => {
-      res.status(200).json(playground);
+      res.send(playground);
     })
     .catch(() => {
       res.status(500).json({
