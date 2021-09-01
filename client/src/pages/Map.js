@@ -46,7 +46,7 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [locationSearchValue, map, updatePage]);
+  }, [map, updatePage, checkInState, checkOutState, locationSearchValue]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
