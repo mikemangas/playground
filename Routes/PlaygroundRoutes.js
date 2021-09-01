@@ -14,7 +14,7 @@ router.get("/api/playground/:longitude/:latitude", async (req, res) => {
             type: "Polygon",
             coordinates: [Number(longitude), Number(latitude)],
           },
-          $maxDistance: 3000,
+          $maxDistance: 2000,
         },
       },
     }).lean();
