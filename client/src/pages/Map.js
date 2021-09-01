@@ -9,7 +9,7 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -100,9 +100,9 @@ export default function Map({ checkInState, checkOutState }) {
       .then(() => {
         setUpdatePage(!updatePage);
         toast.success(
-          "Erfolgreich eingecheckt. Bitte denke daran dich wieder auszuchecken, wenn du den Spielplatz verlässt. Ansonsten werden wir es für dich automatisch nach 3 Stunden tun.",
+          "Erfolgreich eingecheckt. Bitte denke daran dich wieder auszuchecken, wenn du den Spielplatz verlässt.",
           {
-            duration: 8000,
+            duration: 4000,
           }
         );
       })
@@ -116,7 +116,6 @@ export default function Map({ checkInState, checkOutState }) {
 
   return (
     <>
-      <Toaster />
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
