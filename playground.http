@@ -1,5 +1,5 @@
 ###get all articles
-GET http://localhost:4000/api/playground HTTP/1.1
+GET http://localhost:4000/api/playground/612f9a58de1a89d96ce12aaf HTTP/1.1
 
 ###test
 GET http://localhost:4000/api/playground HTTP/1.1
