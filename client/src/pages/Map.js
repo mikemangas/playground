@@ -18,6 +18,8 @@ export default function Map({ checkInState, checkOutState }) {
   const [map, setMap] = useState(null);
   const [playGroundData, setPlayGroundData] = useState([]);
   const [dbUserId, setDbUserId] = useState(null);
+  const [lat, setLat] = useState(null);
+  const [lon, setLon] = useState(null);
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
@@ -27,15 +29,8 @@ export default function Map({ checkInState, checkOutState }) {
         if (searchedLocationData.length > 0) {
           const newLatitude = Number(searchedLocationData[0]?.lat);
           const newLongitude = Number(searchedLocationData[0]?.lon);
-          const url = `/api/playground/${newLongitude}/${newLatitude}`;
-          fetch(url)
-            .then((res) => res.json())
-            .then((allPlaygrounds) => {
-              setPlayGroundData(allPlaygrounds);
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+          setLat(newLatitude);
+          setLon(newLongitude);
           map.setView([newLatitude, newLongitude], 16);
         } else {
           toast.error(
@@ -46,7 +41,19 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [map, updatePage, checkInState, checkOutState, locationSearchValue]);
+  }, [map, locationSearchValue]);
+
+  useEffect(() => {
+    const url = `/api/playground/${lon}/${lat}`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((allPlaygrounds) => {
+        setPlayGroundData(allPlaygrounds);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [lat, lon]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
