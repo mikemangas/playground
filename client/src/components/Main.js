@@ -7,6 +7,7 @@ import NotFound from "../pages/NotFound";
 import Kontakt from "../pages/Kontakt";
 import UeberUns from "../pages/UeberUns";
 import SpielplatzEintragen from "../pages/SpielplatzEintragen";
+import "./Main.css";
 
 export default function Main({ checkInState, checkOutState }) {
   return (
