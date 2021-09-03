@@ -40,6 +40,8 @@
   color: var(--color-purple);
   background-color: var(--color-turqouise);
   max-width: 20%;
+  display: flex;
+  justify-content: center;
 }
 
 @media only screen and (min-width: 450px) {
