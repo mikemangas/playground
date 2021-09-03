@@ -7,6 +7,7 @@
   background-color: var(--color-turqouise);
   padding: 10px;
   box-shadow: 0px 2px 8px var(--color-black);
+  max-width: 320px;
 }
 
 .Home__Section__info__wrapper li {
@@ -51,7 +52,7 @@
 
 .Home__SubmitForm {
   box-shadow: 6px 4px 10px var(--color-black);
-  max-width: 320px;
+  max-width: 375px;
   margin: 10px;
   padding: 5px;
   justify-content: space-between;
@@ -61,7 +62,8 @@
   font-size: 1.2rem;
   color: var(--color-purple);
   display: flex;
-  justify-content: center;
+  justify-content: left;
+  margin: 10px;
 }
 
 .Home__SubmitForm__toolTipp--show {

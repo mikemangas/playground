@@ -5,7 +5,6 @@
   width: 20px;
   height: 20px;
   position: absolute;
-  right: 100px;
   filter: invert(43%) sepia(37%) saturate(448%) hue-rotate(225deg)
     brightness(93%) contrast(90%);
 }
@@ -41,4 +40,10 @@
   color: var(--color-purple);
   background-color: var(--color-turqouise);
   max-width: 20%;
+}
+
+@media only screen and (min-width: 450px) {
+  .Home__SubmitForm__toolTipp--show {
+    left: 20px;
+  }
 }
