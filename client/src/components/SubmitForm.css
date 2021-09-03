@@ -1,6 +1,14 @@
 .SubmitForm {
   display: flex;
 }
+.SubmitForm__info-button {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 100px;
+  filter: invert(43%) sepia(37%) saturate(448%) hue-rotate(225deg)
+    brightness(93%) contrast(90%);
+}
 
 .SubmitForm input {
   padding: 10px;

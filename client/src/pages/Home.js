@@ -23,6 +23,7 @@ export default function Home() {
           <h2 className="Home__banner-title3">finden</h2>
         </div>
         <SubmitForm
+          individualClass="Home"
           className={"Home__SubmitForm"}
           handleOnSubmit={handleOnSubmit}
         />

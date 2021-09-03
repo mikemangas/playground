@@ -64,6 +64,22 @@
   justify-content: center;
 }
 
+.Home__SubmitForm__toolTipp--show {
+  border: var(--color-purple) 2px solid;
+  border-radius: 10px;
+  width: 160px;
+  position: absolute;
+  background-color: var(--color-turqouise);
+  right: 20px;
+  top: 350px;
+  text-align: center;
+  color: var(--color-purple);
+  padding: 5px;
+}
+
+.Home__SubmitForm__toolTipp--hide {
+  display: none;
+}
 @media only screen and (max-width: 450px) {
   .Home__SubmitForm {
     max-width: 100%;
