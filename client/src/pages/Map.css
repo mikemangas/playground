@@ -1,3 +1,20 @@
+.Map__SubmitForm__toolTipp--show {
+  border: var(--color-purple) 2px solid;
+  border-radius: 10px;
+  width: 160px;
+  position: absolute;
+  background-color: var(--color-turqouise);
+  right: 140px;
+  top: 16px;
+  text-align: center;
+  color: var(--color-purple);
+  padding: 5px;
+}
+
+.Map__SubmitForm__toolTipp--hide {
+  display: none;
+}
+
 .Map__Mapcontainer {
   height: 68vh;
   width: 95%;

@@ -126,6 +126,7 @@ export default function Map({ checkInState, checkOutState }) {
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
+        individualClass="Map"
       />
 
       <MapContainer

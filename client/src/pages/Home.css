@@ -1,4 +1,27 @@
-.Home__section {
+.Home__Section__info__wrapper {
+  display: grid;
+  grid-template-columns: 15% 35% 35%;
+  margin: 60px 10px 0px 10px;
+  border: var(--color-purple) solid 2px;
+  gap: 20px;
+  background-color: var(--color-turqouise);
+  padding: 10px;
+  box-shadow: 0px 2px 8px var(--color-black);
+  max-width: 320px;
+}
+
+.Home__Section__info__wrapper li {
+  color: var(--color-purple);
+  padding: 10px;
+  font-size: 0.8rem;
+  list-style-type: none;
+}
+
+.Home__section__intro {
+  margin-left: 30px;
+  margin-top: 10px;
+}
+.Home__section__banner {
   display: flex;
   height: 75vh;
   justify-content: center;
@@ -19,21 +42,46 @@
   background-color: var(--color-purple);
   width: fit-content;
   padding: 8px;
-  margin: 10px;
+  margin: 10px 0 10px 90px;
 }
 
 .Home__banner-title3 {
   color: var(--color-purple);
+  margin-left: 20px;
 }
 
 .Home__SubmitForm {
   box-shadow: 6px 4px 10px var(--color-black);
-  max-width: 320px;
+  max-width: 375px;
   margin: 10px;
   padding: 5px;
   justify-content: space-between;
 }
 
+.Home__section__intro__subline {
+  font-size: 1.2rem;
+  color: var(--color-purple);
+  display: flex;
+  justify-content: left;
+  margin: 10px;
+}
+
+.Home__SubmitForm__toolTipp--show {
+  border: var(--color-purple) 2px solid;
+  border-radius: 10px;
+  width: 160px;
+  position: absolute;
+  background-color: var(--color-turqouise);
+  right: 20px;
+  top: 350px;
+  text-align: center;
+  color: var(--color-purple);
+  padding: 5px;
+}
+
+.Home__SubmitForm__toolTipp--hide {
+  display: none;
+}
 @media only screen and (max-width: 450px) {
   .Home__SubmitForm {
     max-width: 100%;
