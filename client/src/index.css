@@ -9,10 +9,12 @@
 *,
 *::after,
 *::before {
-  padding: 0;
-  margin: 0;
   box-sizing: border-box;
   border: none;
+}
+
+body {
+  margin: 0;
 }
 :root {
   font-family: "HammersmithOne", sans-serif;
@@ -34,6 +36,7 @@
 
 h1 {
   font-size: 3.2rem;
+  color: var(--color-purple);
 }
 
 h2 {
