@@ -20,7 +20,6 @@ router.post("/api/contactform", (req, res) => {
     html: `<ul>
       <li>${req.body.fName}</li>
       <li>${req.body.eMail}</li>
-      <li>${req.body.tel}</li>
       </ul>
       <p>${req.body.message}</p><br>
       <p>This message was sent by the website contact form</p>
