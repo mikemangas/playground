@@ -4,7 +4,6 @@
 .SubmitForm__info-button {
   width: 20px;
   height: 20px;
-  position: absolute;
   filter: invert(43%) sepia(37%) saturate(448%) hue-rotate(225deg)
     brightness(93%) contrast(90%);
 }
@@ -39,7 +38,7 @@
   border: 2px var(--color-purple) solid;
   color: var(--color-purple);
   background-color: var(--color-turqouise);
-  max-width: 20%;
+  width: fit-content;
   display: flex;
   justify-content: center;
 }
