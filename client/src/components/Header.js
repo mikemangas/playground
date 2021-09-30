@@ -123,12 +123,6 @@ export default function Header({ checkInState, checkOutState }) {
           <NavLink className={navLink} to="/">
             Home
           </NavLink>
-          <NavLink className={navLink} to="/spielplatz-eintragen">
-            Spielplatz Eintragen
-          </NavLink>
-          <NavLink className={navLink} to="/wir">
-            Über Uns
-          </NavLink>
           <NavLink className={navLink} to="/kontakt">
             Kontakt
           </NavLink>
