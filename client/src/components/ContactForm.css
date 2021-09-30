@@ -5,7 +5,6 @@
   flex-flow: column;
   background: var(--color-turqouise);
   border: solid 2px var(--color-purple);
-  width: fit-content;
   color: var(--color-purple);
 }
 

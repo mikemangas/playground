@@ -42,7 +42,8 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: left;
 }
 
 .Header__navigation--links--off {
@@ -52,7 +53,7 @@
 .Header__navigation__link {
   padding: 10px;
   border: 2px var(--color-purple) solid;
-  width: 80%;
+  width: fit-content;
   color: var(--color-purple);
   text-align: center;
   text-decoration: none;
