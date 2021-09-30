@@ -27,7 +27,6 @@ router.get("/api/playground/:longitude/:latitude", async (req, res) => {
     const playgroundsWithCount = await Promise.all(
       playgroundsWithCountPromises
     );
-    console.log(playgroundsWithCount);
     res.send(playgroundsWithCount);
   } catch (error) {
     console.error(error);
