@@ -55,7 +55,9 @@ h5,
 h6,
 p,
 input,
-button {
+button,
+label,
+textarea {
   font-size: 1rem;
 }
 
@@ -63,7 +65,7 @@ p {
   color: var(--color-purple);
 }
 
-@media only screen and (min-width: 650px) {
+@media only screen and (min-width: 700px) {
   h1 {
     font-size: 4.2rem;
     color: var(--color-purple);
@@ -84,7 +86,9 @@ p {
   h5,
   h6,
   p,
-  button {
+  button,
+  label,
+  textarea {
     font-size: 2rem;
   }
 

@@ -30,3 +30,9 @@
 .ContactForm div {
   padding: 10px;
 }
+
+@media only screen and (min-width: 700px) {
+  .ContactForm {
+    width: 700px;
+  }
+}
