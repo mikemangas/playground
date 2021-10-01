@@ -1,5 +1,38 @@
 .ContactForm {
   padding: 20px;
+  margin: 10px;
   display: flex;
   flex-flow: column;
+  background: var(--color-turqouise);
+  border: solid 2px var(--color-purple);
+  color: var(--color-purple);
+}
+
+.ContactForm__submit {
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ContactForm__submit:hover {
+  padding: 10px;
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-turqouise);
+  background-color: var(--color-purple);
+  cursor: pointer;
+}
+
+.ContactForm div {
+  padding: 10px;
+}
+
+@media only screen and (min-width: 700px) {
+  .ContactForm {
+    width: 700px;
+  }
 }

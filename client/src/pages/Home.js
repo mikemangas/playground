@@ -29,12 +29,8 @@ export default function Home() {
         />
         <ol className="Home__Section__info__wrapper">
           <li>Spielplatz finden</li>
-          <li>
-            Beim Betreten des Spielplatzes - <b>Einchecken</b>
-          </li>
-          <li>
-            Beim Verlassen des Spielplatzes - <b>Auschecken</b>
-          </li>
+          <li>Beim Betreten des Spielplatzes - Einchecken</li>
+          <li>Beim Verlassen des Spielplatzes - Auschecken</li>
         </ol>
       </section>
 

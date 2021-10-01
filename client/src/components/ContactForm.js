@@ -33,6 +33,10 @@ export default function ContactForm() {
               fName,
             }),
           };
+          form.reset();
+          toast.success(
+            "Super, deine Nachricht ist bei uns angekommen. Wir werden uns bald bei dir melden!"
+          );
 
           fetch("/api/contactform", postMethod)
             .then((res) => {
@@ -40,9 +44,6 @@ export default function ContactForm() {
             })
             .then((res) => {
               console.log("OK");
-              toast.success(
-                "Super, deine Nachricht ist bei uns angekommen. Wir werden uns bald bei dir melden!"
-              );
             })
             .catch((error) => {
               console.error(
@@ -82,7 +83,7 @@ export default function ContactForm() {
       <div className={`${cF}__message`}>
         <textarea
           placeholder="z.B. Da ist ein Spielplatz auf der Maximilianstraße 13a, Hannover "
-          cols="25"
+          cols="35"
           rows="10"
           name="message"
           id="message"

@@ -4,7 +4,6 @@ const nodemailer = require("nodemailer");
 const { GMAIL_PASSWORD } = process.env;
 
 router.post("/api/contactform", (req, res) => {
-  console.log(req.body);
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -27,7 +26,7 @@ router.post("/api/contactform", (req, res) => {
   };
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      console.log(error);
+      console.error(error);
       res.send("error");
     } else {
       console.log(`Email sent: ` + info.response);
