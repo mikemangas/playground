@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  // useMapEvents,
+} from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
 import "./Map.css";
 import L from "leaflet";
@@ -121,6 +127,15 @@ export default function Map({ checkInState, checkOutState }) {
       });
   }
 
+  function geoapiCoordinates(pos) {
+    const { latitude, longitude } = pos.coords;
+    map.setView([latitude, longitude], 17);
+  }
+
+  function geoapiGetLocation() {
+    navigator.geolocation.getCurrentPosition(geoapiCoordinates);
+  }
+
   return (
     <>
       <SubmitForm
@@ -128,6 +143,12 @@ export default function Map({ checkInState, checkOutState }) {
         handleOnSubmit={handleOnSubmit}
         individualClass="Map"
       />
+      <button
+        className={"Map__useLocation__button"}
+        onClick={geoapiGetLocation}
+      >
+        Meinen Standort zur Suche nutzen
+      </button>
 
       <MapContainer
         className="Map__Mapcontainer"
@@ -140,6 +161,8 @@ export default function Map({ checkInState, checkOutState }) {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> Contributors | Imagery by <a href="https://carto.com/">Carto</a>'
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
         />
+
+        {/* <LocationMarker /> */}
 
         <MarkerClusterGroup>
           {playGroundData.map((positionData) => (

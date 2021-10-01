@@ -61,6 +61,26 @@
   color: var(--color-purple);
 }
 
+.Map__useLocation__button {
+  padding: 10px;
+  margin: 10px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  width: fit-content;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.Map__useLocation__button:hover {
+  padding: 10px;
+  border: 2px var(--color-turqouise) solid;
+  color: var(--color-turqouise);
+  background-color: var(--color-purple);
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 450px) {
   .SubmitForm input {
     width: 100%;
