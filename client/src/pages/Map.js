@@ -121,6 +121,15 @@ export default function Map({ checkInState, checkOutState }) {
       });
   }
 
+  function geoapiCoordinates(pos) {
+    const { latitude, longitude } = pos.coords;
+    map.setView([latitude, longitude], 17);
+  }
+
+  function geoapiGetLocation() {
+    navigator.geolocation.getCurrentPosition(geoapiCoordinates);
+  }
+
   return (
     <>
       <SubmitForm
@@ -128,6 +137,12 @@ export default function Map({ checkInState, checkOutState }) {
         handleOnSubmit={handleOnSubmit}
         individualClass="Map"
       />
+      <button
+        className={"Map__useLocation__button"}
+        onClick={geoapiGetLocation}
+      >
+        Meinen Standort zur Suche nutzen
+      </button>
 
       <MapContainer
         className="Map__Mapcontainer"
