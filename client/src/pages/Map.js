@@ -49,7 +49,6 @@ export default function Map({ checkInState, checkOutState }) {
       .then((res) => res.json())
       .then((allPlaygrounds) => {
         setPlayGroundData(allPlaygrounds);
-        console.log(allPlaygrounds);
       })
       .catch((error) => {
         console.error(error);
