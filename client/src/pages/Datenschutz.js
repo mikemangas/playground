@@ -1,6 +1,11 @@
+import helmet from "../hooks/helmet";
 export default function Datenschutz() {
   return (
     <>
+      {helmet(
+        "Datenschutz",
+        "Hier findest du die Datenschutzerklärung dieser Seite"
+      )}
       <h4>Datenschutzerklärung</h4>
 
       <p>

@@ -10,6 +10,7 @@ import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
+import helmet from "../hooks/helmet";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -132,6 +133,10 @@ export default function Map({ checkInState, checkOutState }) {
 
   return (
     <>
+      {helmet(
+        "Spielplatz-Karte",
+        "In dieser Karte kannst du Spielplätze in deiner Nähe suchen, finden, dich einchecken und einsehen, ob sich andere Eltern auf Spielplätzen befinden."
+      )}
       <SubmitForm
         className={"Map__submitform"}
         handleOnSubmit={handleOnSubmit}
@@ -143,7 +148,6 @@ export default function Map({ checkInState, checkOutState }) {
       >
         Meinen Standort zur Suche nutzen
       </button>
-
       <MapContainer
         className="Map__Mapcontainer"
         tap={false}
