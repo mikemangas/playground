@@ -178,6 +178,11 @@ export default function Map({ checkInState, checkOutState }) {
                       positionData?.geometry?.coordinates[0][1],
                       positionData?.geometry?.coordinates[0][0],
                     ]
+                  : positionData?.geometry?.type === "MultiPolygon"
+                  ? [
+                      positionData?.geometry?.coordinates[0][0][0][1],
+                      positionData?.geometry?.coordinates[0][0][0][0],
+                    ]
                   : console.log(
                       `the playgroundID: ${positionData?._id} does not work`
                     )
