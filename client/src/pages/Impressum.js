@@ -1,8 +1,14 @@
 import createLink from "../hooks/createLink";
+import helmet from "../hooks/helmet";
 
 export default function Impressum() {
   return (
     <div>
+      {helmet(
+        "Impressum",
+        "Hier bekommst du die wichtigsten Informationen zum Seiteninhaber"
+      )}
+
       <h1>Impressum</h1>
       <ul>
         <li>
