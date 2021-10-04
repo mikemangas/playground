@@ -11,6 +11,7 @@ import iconChild from "../assets/Images/child_icon.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
@@ -68,6 +69,10 @@ export default function Map({ checkInState, checkOutState }) {
         console.error(error);
       });
   }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
+
+  useEffect(() => {
+    defaultVisitsPatch("615af599ff20382e9dd25aab");
+  }, []);
 
   function handleOnSubmit(e) {
     e.preventDefault();

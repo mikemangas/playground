@@ -1,10 +1,15 @@
 import "./Home.css";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import SubmitForm from "../components/SubmitForm";
 import helmet from "../hooks/helmet";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Home() {
   const history = useHistory();
+  useEffect(() => {
+    defaultVisitsPatch("615af57dff20382e9dd25aa9");
+  }, []);
 
   function handleOnSubmit(e) {
     e.preventDefault();
