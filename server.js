@@ -7,12 +7,14 @@ const app = express();
 const playgroundRoutes = require("./Routes/PlaygroundRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const contactFormRoutes = require("./Routes/ContactFormRoutes");
+const VisitsRoutes = require("./Routes/VisitsRoutes");
 
 app.use(express.json());
 app.use(cors());
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
+app.use(VisitsRoutes);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
