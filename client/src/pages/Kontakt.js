@@ -1,7 +1,26 @@
 import ContactForm from "../components/ContactForm";
 import helmet from "../hooks/helmet";
+import { useEffect } from "react";
 
 export default function Kontakt() {
+  useEffect(() => {
+    const url = "/api/visits/615af635ff20382e9dd25aad";
+
+    const patchMethodCheckin = {
+      method: "PATCH",
+    };
+    fetch(url, patchMethodCheckin)
+      .then((res) => {
+        res.json();
+      })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+
   return (
     <>
       {helmet(
