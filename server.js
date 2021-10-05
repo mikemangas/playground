@@ -8,6 +8,7 @@ const playgroundRoutes = require("./Routes/PlaygroundRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
+const VisitCronRoutes = require("./Routes/VisitsCronRoutes");
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +16,7 @@ app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
 app.use(VisitsRoutes);
+app.use(VisitCronRoutes);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
