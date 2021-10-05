@@ -22,7 +22,6 @@ router.patch("/api/visits/:id", async (req, res) => {
     );
 
     res.status(200).send(counter);
-    console.log(id);
   } catch (error) {
     res.status(500).send(error);
   }
