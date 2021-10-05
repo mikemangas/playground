@@ -2,11 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Visits = require("../models/Visits");
 
-router.post("/api/visits", async (req, res) => {
-  const counter = req.body;
-  await Visits.create(counter);
-});
-
 router.patch("/api/visits/:id", async (req, res) => {
   const counter = req.body;
   const id = req.params.id;
@@ -28,3 +23,8 @@ router.patch("/api/visits/:id", async (req, res) => {
 });
 
 module.exports = router;
+
+// router.post("/api/visits", async (req, res) => {
+//   const counter = req.body;
+//   await Visits.create(counter);
+// });
