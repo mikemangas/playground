@@ -1,7 +1,13 @@
 import ContactForm from "../components/ContactForm";
 import helmet from "../hooks/helmet";
+import { useEffect } from "react";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Kontakt() {
+  useEffect(() => {
+    defaultVisitsPatch("615af635ff20382e9dd25aad");
+  }, []);
+
   return (
     <>
       {helmet(

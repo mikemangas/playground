@@ -1,10 +1,14 @@
 import "./Home.css";
 import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
 import SubmitForm from "../components/SubmitForm";
-import helmet from "../hooks/helmet";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Home() {
   const history = useHistory();
+  useEffect(() => {
+    defaultVisitsPatch("615af57dff20382e9dd25aa9");
+  }, []);
 
   function handleOnSubmit(e) {
     e.preventDefault();
@@ -17,10 +21,6 @@ export default function Home() {
 
   return (
     <div className="Home__outer__wrapper">
-      {helmet(
-        "Spielplätze mit Auslastung finden",
-        "In dieser Karte kannst du Spielplätze in deiner Nähe suchen, finden, dich einchecken und einsehen, ob sich andere Eltern auf Spielplätzen befinden."
-      )}
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
           <h2 className="Home__banner-title1">Spielplätze mit </h2>

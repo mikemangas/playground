@@ -1,13 +1,23 @@
 ###get all articles
-GET http://localhost:4000/api/playground/612f9a58de1a89d96ce12aaf HTTP/1.1
+GET http://localhost:4000/api/playground/ HTTP/1.1
+
+###
+GET http://localhost:4000/api/hallo HTTP/1.1
 
 ###test
-GET http://localhost:4000/api/playground HTTP/1.1
+PATCH http://localhost:4000/api/visits/615ae6338fc1163864348cbb HTTP/1.1
+# Content-Type: application/json
+
+# {
+#   "counter" : "1235"
+# }
+
+### update
+PATCH http://localhost:4000/api/playground/61264830a1792817b301dabd HTTP/1.1
 Content-Type: application/json
 
 {
-  "nominatim1" : "1",
-  "nominatim2" : "2"
+  "userId": "0d804961-6236-4773-90cb-f3990a7c6222c"
 }
 
 ### User infos
@@ -57,13 +67,7 @@ DELETE http://localhost:4000//api/playground HTTP/1.1
 ###DELETE Playground
 DELETE http://localhost:4000/api/playground/612541ea11dfdb5faf1a99ff HTTP/1.1
 
-### update
-PATCH http://localhost:4000/api/playground/61264830a1792817b301dabd HTTP/1.1
-Content-Type: application/json
 
-{
-  "userId": "0d804961-6236-4773-90cb-f3990a7c6222c"
-}
 
 ### User infos
 GET http://localhost:4000/api/user/0d804961-6236-4773-90cb-f3990a7c6c9c HTTP/1.1

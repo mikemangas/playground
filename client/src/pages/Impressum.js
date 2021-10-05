@@ -1,7 +1,13 @@
 import createLink from "../hooks/createLink";
 import helmet from "../hooks/helmet";
+import { useEffect } from "react";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Impressum() {
+  useEffect(() => {
+    defaultVisitsPatch("615af590ff20382e9dd25aaa");
+  }, []);
+
   return (
     <div>
       {helmet(
