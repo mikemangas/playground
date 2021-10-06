@@ -2,6 +2,7 @@ const Playground = require("../models/Playground");
 const User = require("../models/User");
 const express = require("express");
 const router = express.Router();
+const Checkins = require("../models/Checkins");
 
 router.get("/api/playground/:longitude/:latitude", async (req, res) => {
   const { latitude } = req.params;
@@ -46,10 +47,16 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
       userId,
       checkedInPlayground: playgroundId,
     });
+
     res.status(200).send({
       status: "CHECKED-IN",
       playgroundId: playgroundId,
     });
+    try {
+      await Checkins.create({ playgroundId: playgroundId });
+    } catch {
+      console.error("error");
+    }
   } else {
     if (user.checkedInPlayground === playgroundId) {
       await User.findOneAndDelete({
