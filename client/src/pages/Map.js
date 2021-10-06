@@ -161,8 +161,8 @@ export default function Map({ checkInState, checkOutState }) {
         scrollWheelZoom={false}
       >
         <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> Contributors | Imagery by <a href="https://carto.com/">Carto</a>'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> Contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
         <MarkerClusterGroup>
@@ -192,7 +192,7 @@ export default function Map({ checkInState, checkOutState }) {
                       positionData?.geometry?.coordinates[0][0][0][1],
                       positionData?.geometry?.coordinates[0][0][0][0],
                     ]
-                  : console.log(
+                  : console.error(
                       `the playgroundID: ${positionData?._id} does not work`
                     )
               }
