@@ -16,7 +16,7 @@ cron.schedule("59 59 20 * * *", async () => {
   return allVisits;
 });
 
-cron.schedule("0 0 1 * 1-12 *", async () => {
+cron.schedule("0 0 3 1 1-12 *", async () => {
   const currentVisits = await Visits.find();
   const allVisits = currentVisits.map((singleValues) => {
     VisitsSummaryMonthly.create({
