@@ -7,6 +7,7 @@ const Checkins = require("../models/Checkins");
 router.get("/api/playground/:longitude/:latitude", async (req, res) => {
   const { latitude } = req.params;
   const { longitude } = req.params;
+
   try {
     const playgrounds = await Playground.find({
       geometry: {
@@ -32,7 +33,6 @@ router.get("/api/playground/:longitude/:latitude", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500);
-    //send error
   }
 });
 
@@ -56,6 +56,7 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
       await Checkins.create({ playgroundId: playgroundId });
     } catch {
       console.error("error");
+      res.status(500);
     }
   } else {
     if (user.checkedInPlayground === playgroundId) {
