@@ -22,7 +22,6 @@ export default function Map({ checkInState, checkOutState }) {
   const [dbUserId, setDbUserId] = useState(null);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
-  // const [disabled, setDisabled] = useState(null)
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
