@@ -33,7 +33,7 @@
   background-color: var(--color-purple);
   width: fit-content;
   padding: 8px;
-  margin: 10px 0 10px 90px;
+  margin: 10px 0 10px 50px;
 }
 
 .Home__banner-title3 {
@@ -50,7 +50,6 @@
 }
 
 .Home__section__intro__subline {
-  font-size: 1.6rem;
   color: var(--color-purple);
   display: flex;
   justify-content: left;
@@ -72,9 +71,4 @@
 
 .Home__SubmitForm__toolTipp--hide {
   display: none;
-}
-@media only screen and (max-width: 450px) {
-  .Home__SubmitForm {
-    max-width: 100%;
-  }
 }

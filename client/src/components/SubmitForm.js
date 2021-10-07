@@ -1,6 +1,7 @@
 import "./SubmitForm.css";
 import information from "../assets/Images/information.png";
 import { useState } from "react";
+import createInternLink from "../hooks/createInternLink";
 
 export default function SubmitForm({
   handleOnSubmit,
@@ -32,13 +33,28 @@ export default function SubmitForm({
         alt="info-button"
       />
       <form className={`SubmitForm ${className}`} onSubmit={handleOnSubmit}>
-        <input
-          required
-          placeholder="PLZ, Ort oder Adresse"
-          name="searchInput"
-          id="searchInput"
-        />
-        <button type="submit"> Suchen </button>
+        <div className={"SubmitForm__search"}>
+          <input
+            required
+            placeholder="PLZ, Ort oder Adresse"
+            name="searchInput"
+            id="searchInput"
+          />
+
+          <button type="submit"> Suchen </button>
+        </div>
+        <div className="SubmitForm__checkbox">
+          <p>
+            Mit dem Klick auf "Suchen" stimmen sie unserer{" "}
+            {createInternLink("/datenschutz", "Datenschutzerklärung")} zu.
+          </p>
+          <input
+            className="SubmitForm__checkbox__ticker"
+            type="checkbox"
+            id="datenschutz"
+            required
+          ></input>
+        </div>
       </form>
     </div>
   );
