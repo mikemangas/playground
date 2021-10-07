@@ -1,6 +1,22 @@
 .SubmitForm {
   display: flex;
+  flex-direction: column;
 }
+
+.SubmitForm p {
+  font-size: 1rem;
+}
+
+.SubmitForm__checkbox {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.SubmitForm__checkbox__ticker {
+  width: fit-content;
+}
+
 .SubmitForm__info-button {
   width: 20px;
   height: 20px;
@@ -41,6 +57,14 @@
   width: fit-content;
   display: flex;
   justify-content: center;
+}
+
+.SubmitForm__search {
+  display: flex;
+}
+
+.SubmitForm__checkbox__ticker {
+  width: fit-content !important;
 }
 
 @media only screen and (min-width: 450px) {

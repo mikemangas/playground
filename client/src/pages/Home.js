@@ -21,10 +21,13 @@ export default function Home() {
 
   return (
     <div className="Home__outer__wrapper">
+      <h6 className="Home__section__intro__subline">
+        Über 100.000 registrierte Spielplätze
+      </h6>
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
-          <h2 className="Home__banner-title1">Spielplätze mit </h2>
-          <h2 className="Home__banner-title2">Auslastung</h2>
+          <h1 className="Home__banner-title1">Spielplätze mit </h1>
+          <h1 className="Home__banner-title2">Auslastung</h1>
           <h2 className="Home__banner-title3">finden</h2>
         </div>
         <SubmitForm
@@ -38,10 +41,6 @@ export default function Home() {
           <li>Beim Verlassen des Spielplatzes - Auschecken</li>
         </ol>
       </section>
-
-      <h2 className="Home__section__intro__subline">
-        Über 100.000 registrierte Spielplätze
-      </h2>
     </div>
   );
 }
