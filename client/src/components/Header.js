@@ -126,6 +126,9 @@ export default function Header({ checkInState, checkOutState }) {
           <NavLink className={navLink} to="/map">
             Spieplatz-Karte
           </NavLink>
+          <NavLink className={navLink} to="/faq">
+            FAQ
+          </NavLink>
           <NavLink className={navLink} to="/kontakt">
             Kontakt
           </NavLink>

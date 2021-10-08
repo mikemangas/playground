@@ -1,0 +1,7 @@
+.jo--hide {
+  display: none;
+}
+
+.jo--show {
+  display: flex;
+}
