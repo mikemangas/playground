@@ -2,6 +2,7 @@ import "./SubmitForm.css";
 import information from "../assets/Images/information.png";
 import { useState } from "react";
 import createInternLink from "../hooks/createInternLink";
+import { Link } from "react-router-dom";
 
 export default function SubmitForm({
   handleOnSubmit,
@@ -23,8 +24,7 @@ export default function SubmitForm({
   return (
     <div>
       <div className={toolTipp}>
-        Eine 2er Kombination funktioniert am Besten. z.B.: Musterstraße
-        Musterstadt
+        <Link to="/faq">Unser FAQ hilft dir bei Fragen.</Link>
       </div>
       <img
         onClick={handleToolTipp}
@@ -32,30 +32,17 @@ export default function SubmitForm({
         src={information}
         alt="info-button"
       />
-      <form className={`SubmitForm ${className}`} onSubmit={handleOnSubmit}>
-        <div className={"SubmitForm__search"}>
-          <input
-            required
-            placeholder="PLZ, Ort oder Adresse"
-            name="searchInput"
-            id="searchInput"
-          />
 
-          <button type="submit"> Suchen </button>
-        </div>
-        <div className="SubmitForm__checkbox">
-          <p>
-            Mit dem Klick auf "Suchen" stimmen sie unserer{" "}
-            {createInternLink("/datenschutz", "Datenschutzerklärung")} zu.
-          </p>
-          <input
-            className="SubmitForm__checkbox__ticker"
-            type="checkbox"
-            id="datenschutz"
-            required
-          ></input>
-        </div>
-      </form>
+      <div className={"SubmitForm__search"}>
+        <input
+          required
+          placeholder="PLZ, Ort oder Adresse"
+          name="searchInput"
+          id="searchInput"
+        />
+
+        <button type="submit"> Suchen </button>
+      </div>
     </div>
   );
 }

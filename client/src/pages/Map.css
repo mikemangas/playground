@@ -1,8 +1,7 @@
 .Map__SubmitForm__toolTipp--show {
   border: var(--color-purple) 2px solid;
   border-radius: 10px;
-  width: 160px;
-  position: absolute;
+  width: fit-content;
   background-color: var(--color-turqouise);
   right: 140px;
   top: 16px;
@@ -81,11 +80,30 @@
   cursor: pointer;
 }
 
+.Map__SubmitForm button {
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  border: 2px solid var(--color-purple);
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  -webkit-justify-content: center;
+  justify-content: center;
+  display: flex;
+}
+
+.Map__SubmitForm input {
+  padding: 10px;
+  margin: 10px 4px 10px 10px;
+  border: 2px solid var(--color-purple);
+  color: var(--color-placeholder);
+  width: 100%;
+}
+
 @media only screen and (max-width: 450px) {
-  .SubmitForm input {
-    width: 100%;
-  }
-  .SubmitForm {
+  .Map__SubmitForm {
     display: flex;
     justify-content: space-between;
   }

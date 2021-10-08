@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import SubmitForm from "../components/SubmitForm";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
+import createInternLink from "../hooks/createInternLink";
 
 export default function Home() {
   const history = useHistory();
@@ -30,14 +31,25 @@ export default function Home() {
           <h1 className="Home__banner-title2">Auslastung</h1>
           <h2 className="Home__banner-title3">finden</h2>
         </div>
-        <SubmitForm
-          individualClass="Home"
-          className={"Home__SubmitForm"}
-          handleOnSubmit={handleOnSubmit}
-        />
+
+        <form className="Home__SubmitForm" onSubmit={handleOnSubmit}>
+          <SubmitForm individualClass="Home" handleOnSubmit={handleOnSubmit} />
+          <div className="SubmitForm__checkbox">
+            <p>
+              Mit dem Klick auf "Suchen" stimmen sie unserer{" "}
+              {createInternLink("/datenschutz", "Datenschutzerklärung")} zu.
+            </p>
+            <input
+              className="SubmitForm__checkbox__ticker"
+              type="checkbox"
+              id="datenschutz"
+              required
+            ></input>
+          </div>
+        </form>
         <ol className="Home__Section__info__wrapper">
           <li>Spielplatz finden</li>
-          <li>Beim Betreten des Spielplatzes - Einchecken</li>
+          <li>Einchecken</li>
           <li>Beim Verlassen des Spielplatzes - Auschecken</li>
         </ol>
       </section>

@@ -1,10 +1,7 @@
 .Home__Section__info__wrapper {
   display: grid;
-
   margin: 60px 10px 0px 10px;
-  border: var(--color-purple) solid 2px;
-
-  padding: 10px;
+  border: var(--color-turqouise) solid 2px;
   box-shadow: 0px 2px 8px var(--color-black);
   max-width: fit-content;
   margin-bottom: 10%;
@@ -13,7 +10,7 @@
 .Home__Section__info__wrapper li {
   color: var(--color-purple);
   padding: 10px;
-  list-style-type: none;
+  font-size: 1.4rem;
 }
 
 .Home__section__intro {
@@ -33,7 +30,7 @@
   background-color: var(--color-purple);
   width: fit-content;
   padding: 8px;
-  margin: 10px 0 10px 50px;
+  margin: 10px 0 10px 35px;
 }
 
 .Home__banner-title3 {
@@ -56,14 +53,31 @@
   margin: 10px;
 }
 
+.Home__SubmitForm button {
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  border: 2px solid var(--color-purple);
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  width: fit-content;
+  -webkit-justify-content: center;
+  justify-content: center;
+  display: flex;
+}
+
+.Home__SubmitForm input {
+  padding: 10px;
+  margin: 10px 4px 10px 10px;
+  border: 2px solid var(--color-purple);
+  color: var(--color-placeholder);
+  width: 100%;
+}
+
 .Home__SubmitForm__toolTipp--show {
   border: var(--color-purple) 2px solid;
   border-radius: 10px;
-  width: 160px;
-  position: absolute;
+  width: fit-content;
   background-color: var(--color-turqouise);
-  right: 20px;
-  top: 350px;
   text-align: center;
   color: var(--color-purple);
   padding: 5px;
