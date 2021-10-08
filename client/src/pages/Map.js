@@ -142,11 +142,9 @@ export default function Map({ checkInState, checkOutState }) {
         "Spielplatz-Karte",
         "In dieser Karte kannst du Spielplätze in deiner Nähe suchen, finden, dich einchecken und einsehen, ob sich andere Eltern auf Spielplätzen befinden."
       )}
-      <SubmitForm
-        className={"Map__submitform"}
-        handleOnSubmit={handleOnSubmit}
-        individualClass="Map"
-      />
+      <form className="Map__SubmitForm" onSubmit={handleOnSubmit}>
+        <SubmitForm handleOnSubmit={handleOnSubmit} individualClass="Map" />
+      </form>
       <button
         className={"Map__useLocation__button"}
         onClick={geoapiGetLocation}
