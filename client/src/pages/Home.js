@@ -49,7 +49,7 @@ export default function Home() {
         </form>
         <ol className="Home__Section__info__wrapper">
           <li>Spielplatz finden</li>
-          <li>Beim Betreten des Spielplatzes - Einchecken</li>
+          <li>Einchecken</li>
           <li>Beim Verlassen des Spielplatzes - Auschecken</li>
         </ol>
       </section>
