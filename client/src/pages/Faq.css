@@ -1,7 +1,31 @@
-.jo--hide {
+.Faq__question--hide {
   display: none;
 }
 
-.jo--show {
+.Faq__question--show {
   display: flex;
+}
+
+.Faq__question__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+}
+
+.Faq__question__unit button {
+  height: fit-content;
+  display: flex;
+  padding: 10px;
+  margin: 10px 10px 10px 0px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  cursor: pointer;
+}
+
+.Faq__question__unit {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 10px;
+  padding: 10px 20px;
 }
