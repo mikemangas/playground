@@ -5,6 +5,7 @@ import Impressum from "../pages/Impressum";
 import Datenschutz from "../pages/Datenschutz";
 import NotFound from "../pages/NotFound";
 import Kontakt from "../pages/Kontakt";
+import Login from "../pages/Login";
 
 export default function Main({ checkInState, checkOutState }) {
   return (
@@ -21,6 +22,9 @@ export default function Main({ checkInState, checkOutState }) {
         </Route>
         <Route path="/kontakt">
           <Kontakt />
+        </Route>
+        <Route path="/login">
+          <Login />
         </Route>
         <Route exact path="/">
           <Home />

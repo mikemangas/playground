@@ -9,6 +9,9 @@ const userRoutes = require("./Routes/UserRoutes");
 const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
+const AuthRoutes = require("./Routes/AuthRoutes");
+const passportSetup = require("./config/passportSetup");
+const passport = require("passport");
 
 const corsOptions = {
   origin: "/",
@@ -22,6 +25,9 @@ app.use(userRoutes);
 app.use(contactFormRoutes);
 app.use(VisitsRoutes);
 app.use(CronRoutes);
+app.use("/auth", AuthRoutes);
+
+// app.use(passportSetup);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
