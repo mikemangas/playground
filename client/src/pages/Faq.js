@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import "./Faq.css";
 import { v4 as uuidv4 } from "uuid";
 
 export default function Faq() {
-  //   const [toggle, setToggle] = useState(false);
   const [selected, setSelected] = useState(null);
+
+  useEffect(() => {
+    defaultVisitsPatch("6161602160b5ed21a33c5b98");
+  }, []);
 
   function toggle(e) {
     setSelected(e);
