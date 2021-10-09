@@ -23,10 +23,12 @@ export default function Home() {
   return (
     <div className="Home__outer__wrapper">
       <h6 className="Home__section__intro__subline">
-        Über 100.000 registrierte Spielplätze
+        Der größte Spielplatzfinder in Deutschland mit über 100.000
+        registrierten Spielplätzen
       </h6>
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
+          <h1>Spielplatzsuche mit Eincheckfunktion </h1>
           <h1 className="Home__banner-title1">Spielplätze mit </h1>
           <h1 className="Home__banner-title2">Auslastung</h1>
           <h2 className="Home__banner-title3">finden</h2>
