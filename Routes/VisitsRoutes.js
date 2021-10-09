@@ -22,9 +22,13 @@ router.patch("/api/visits/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get("/api/visit-stats", (req, res) => {
+  // const counter = req.body;
+  Visits.find()
+    .then((visits) => {
+      res.send(visits);
+    })
+    .catch((error) => console.error(error));
+});
 
-// router.post("/api/visits", async (req, res) => {
-//   const counter = req.body;
-//   await Visits.create(counter);
-// });
+module.exports = router;
