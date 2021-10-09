@@ -68,13 +68,13 @@ const data = [
   {
     question: "Was bedeuten die Spielplatzsymbole in grün oder grau?",
     answer:
-      "Grün bedeutet, dass sich an dem bestimmten Spielpatz bereits eine Person eingecheckt hat. Grau bedeutet, dass sich bisher niemand eingecheckt hat.",
+      "Grün bedeutet, dass sich an dem bestimmten Spielpatz bereits mindestens eine Person eingecheckt hat. Grau bedeutet, dass sich bisher niemand eingecheckt hat.",
   },
   {
     question:
       "Kann ich mich über ein Gerät einchecken und über ein anderes auschecken?",
     answer:
-      "Wir haben auf dieser Webseite bewusst keine Login-Funktion eingebaut, damit wir allen Eltern die Möglichkeit geben, an der Plattform teilzunehmen. Das hat aber den Preis, dass du dich mit einem Gerät ein und auschecken musst.",
+      "Wir haben auf dieser Webseite bewusst keine Login-Funktion eingebaut, damit wir allen Eltern die Möglichkeit geben, an der Plattform teilzunehmen. Das hat aber den Preis, dass du dich mit demselben Gerät & Browser ein und auschecken musst.",
   },
   {
     question:
