@@ -2,7 +2,6 @@ import "./SubmitForm.css";
 import information from "../assets/Images/information.png";
 import { useState } from "react";
 import createInternLink from "../hooks/createInternLink";
-import { Link } from "react-router-dom";
 
 export default function SubmitForm({
   handleOnSubmit,
@@ -24,7 +23,7 @@ export default function SubmitForm({
   return (
     <div>
       <div className={toolTipp}>
-        <Link to="/faq">Unser FAQ hilft dir bei Fragen.</Link>
+        {createInternLink("/faq", "Unser FAQ hilft dir bei Fragen. ")}
       </div>
       <img
         onClick={handleToolTipp}

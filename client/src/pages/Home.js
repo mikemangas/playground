@@ -9,6 +9,7 @@ export default function Home() {
   const history = useHistory();
   useEffect(() => {
     defaultVisitsPatch("615af57dff20382e9dd25aa9");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   function handleOnSubmit(e) {
@@ -23,7 +24,8 @@ export default function Home() {
   return (
     <div className="Home__outer__wrapper">
       <h6 className="Home__section__intro__subline">
-        Über 100.000 registrierte Spielplätze
+        Der große Spielplatzfinder mit über 100.000 registrierten Spielplätzen
+        in Deutschland.
       </h6>
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
@@ -48,9 +50,10 @@ export default function Home() {
           </div>
         </form>
         <ol className="Home__Section__info__wrapper">
+          <h2>So geht die Spielplatzsuche</h2>
           <li>Spielplatz finden</li>
           <li>Einchecken</li>
-          <li>Beim Verlassen des Spielplatzes - Auschecken</li>
+          <li>Beim Verlassen des Spielplatzes auschecken</li>
         </ol>
       </section>
     </div>

@@ -10,13 +10,13 @@ const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
 
-const corsOptions = {
-  origin: "/",
-  optionsSuccessStatus: 200,
-};
+// const corsOptions = {
+//   origin: "/",
+//   optionsSuccessStatus: 200,
+// };
 
 app.use(express.json());
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);

@@ -8,6 +8,7 @@ export default function Faq() {
 
   useEffect(() => {
     defaultVisitsPatch("6161602160b5ed21a33c5b98");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   function toggle(e) {

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Visits = require("../models/Visits");
+const VisitsSummaryDaily = require("../models/VisitsSummaryDaily");
 
 router.patch("/api/visits/:id", async (req, res) => {
   const counter = req.body;
@@ -22,9 +22,28 @@ router.patch("/api/visits/:id", async (req, res) => {
   }
 });
 
-module.exports = router;
+router.get("/api/visitsdaily/overall", (req, res) => {
+  VisitsSummaryDaily.find({ pageName: "spielplatzchecken.de" })
+    .then((visits) => {
+      res.send(visits);
+    })
+    .catch((error) => console.error(error));
+});
 
-// router.post("/api/visits", async (req, res) => {
-//   const counter = req.body;
-//   await Visits.create(counter);
-// });
+router.get("/api/visitsdaily/home", (req, res) => {
+  VisitsSummaryDaily.find({ pageName: "spielplatzchecken.de/home" })
+    .then((visits) => {
+      res.send(visits);
+    })
+    .catch((error) => console.error(error));
+});
+
+router.get("/api/visitsdaily/map", (req, res) => {
+  VisitsSummaryDaily.find({ pageName: "spielplatzchecken.de/map" })
+    .then((visits) => {
+      res.send(visits);
+    })
+    .catch((error) => console.error(error));
+});
+
+module.exports = router;
