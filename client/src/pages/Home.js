@@ -9,6 +9,7 @@ export default function Home() {
   const history = useHistory();
   useEffect(() => {
     defaultVisitsPatch("615af57dff20382e9dd25aa9");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   function handleOnSubmit(e) {

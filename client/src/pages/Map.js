@@ -72,6 +72,7 @@ export default function Map({ checkInState, checkOutState }) {
 
   useEffect(() => {
     defaultVisitsPatch("615af599ff20382e9dd25aab");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   function handleOnSubmit(e) {

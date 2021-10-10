@@ -1,20 +1,14 @@
 import { Line } from "react-chartjs-2";
-import { useEffect, useState } from "react";
-import SelectDate from "../components/SelectDate";
+import { useState } from "react";
+
 import useCreateFetchEffect from "../hooks/useCreateFetchEffect";
 
 export default function LineChart() {
-  const [today, setToday] = useState();
-  const [tenDaysAgo, setTenDaysAgo] = useState();
-
   const [dailyVisitsDataGlobal, setDailyVisitsDataGlobal] = useState([]);
-  const [dailyVisitsDataHome, setDailyVisitsDataHome] = useState([]);
-  const [dailyVisitsDataMap, setDailyVisitsDataMap] = useState([]);
 
   useCreateFetchEffect("/api/visitsdaily/overall", setDailyVisitsDataGlobal);
-  useCreateFetchEffect("/api/visitsdaily/home", setDailyVisitsDataHome);
-  useCreateFetchEffect("/api/visitsdaily/map", setDailyVisitsDataMap);
 
+  //Visits Global Settings
   const slicedArray = dailyVisitsDataGlobal.slice(1);
   function subtractArrayValues() {
     const originalArray = dailyVisitsDataGlobal.map((original) => {
@@ -30,67 +24,65 @@ export default function LineChart() {
     }
     return absSubtract(originalArray, subtractedArray);
   }
-  const boss = subtractArrayValues();
-  console.log(boss);
+  const dailyVisitsCounterDataGlobal = subtractArrayValues();
 
   return (
-    <>
-      <ul>
-        <h1>Overall</h1>
+    <div>
+      <Line
+        data={{
+          labels: slicedArray.map((date) => date?.createdAt.split("T")[0]),
 
-        {boss.map((singleDay) => {
-          return <li>{`hey ${singleDay}`}</li>;
-        })}
-      </ul>
-      {/* <ul>
-        <h1>Home</h1>
-        {dailyVisitsDataHome.map((singleDay) => {
-          return <li>{singleDay?.counter}</li>;
-        })}
-      </ul> */}
-      <ul>
-        <h1>Map</h1>
-        {dailyVisitsDataMap.map((singleDay) => {
-          return <li>{singleDay?.counter}</li>;
-        })}
-      </ul>
-    </>
+          datasets: [
+            {
+              label: "Page (GLOBAL) Views Daily",
+              data: dailyVisitsCounterDataGlobal.map(
+                (singleDayValue) => singleDayValue
+              ),
+              borderColor: ["rgba(44, 130, 201, 1)"],
+              borderWidth: 1,
+            },
+          ],
+        }}
+        height={400}
+        width={600}
+        options={{
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+          legend: {
+            labels: {
+              fontSize: 10,
+            },
+          },
+        }}
+      />
+    </div>
   );
-  // (
-  //   <div>
-  //     <SelectDate toDay={setToday} todayMinusTen={setTenDaysAgo} />
-  //     <Line
-  //       data={{
-  //         labels: dailyVisitsData.map((date) => date?.timestamp.split("T")[0]),
-  //         datasets: [
-  //           {
-  //             label: "USD/BITCOIN",
-  //             data: dailyVisitsData.map((rates) => Number(rates?.rate)),
-  //             borderColor: ["rgba(44, 130, 201, 1)"],
-  //             borderWidth: 1,
-  //           },
-  //         ],
-  //       }}
-  //       height={400}
-  //       width={600}
-  //       options={{
-  //         maintainAspectRatio: false,
-  //         scales: {
-  //           yAxes: [
-  //             {
-  //               ticks: {
-  //                 beginAtZero: true,
-  //               },
-  //             },
-  //           ],
-  //         },
-  //         legend: {
-  //           labels: {
-  //             fontSize: 10,
-  //           },
-  //         },
-  //       }}
-  //     />
-  //   </div>
-  // );
 }
+
+//  (
+//   <>
+//     <ul>
+//       <h1>Overall</h1>
+//       {dailyVisitsCounterDataGlobal.map((singleDay) => {
+//         return <li>{singleDay}</li>;
+//       })}
+//       {slicedArray.map((singleDate) => {
+//         return <li>{singleDate.createdAt.split("T")[0]}</li>;
+//       })}
+//     </ul>
+//     <ul>
+//       <h1>Map</h1>
+//       {dailyVisitsDataMap.map((singleDay) => {
+//         return <li>{singleDay?.counter}</li>;
+//       })}
+//     </ul>
+//   </>
+// );

@@ -6,6 +6,7 @@ import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 export default function Kontakt() {
   useEffect(() => {
     defaultVisitsPatch("615af635ff20382e9dd25aad");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   return (

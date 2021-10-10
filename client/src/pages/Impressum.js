@@ -7,6 +7,7 @@ import "./Datenschutz.css";
 export default function Impressum() {
   useEffect(() => {
     defaultVisitsPatch("615af590ff20382e9dd25aaa");
+    defaultVisitsPatch("615af5a7ff20382e9dd25aac");
   }, []);
 
   return (
