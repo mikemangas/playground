@@ -14,7 +14,7 @@ const CheckinRoutes = require("./Routes/CheckinRoutes");
 app.use(express.json());
 app.use(
   cors({
-    origin: ["https://www.spieplatzchecken.de"],
+    origin: ["https://www.spielplatzchecken.de"],
   })
 );
 app.use(playgroundRoutes);
