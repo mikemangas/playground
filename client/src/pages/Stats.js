@@ -66,23 +66,3 @@ export default function LineChart() {
     </div>
   );
 }
-
-//  (
-//   <>
-//     <ul>
-//       <h1>Overall</h1>
-//       {dailyVisitsCounterDataGlobal.map((singleDay) => {
-//         return <li>{singleDay}</li>;
-//       })}
-//       {slicedArray.map((singleDate) => {
-//         return <li>{singleDate.createdAt.split("T")[0]}</li>;
-//       })}
-//     </ul>
-//     <ul>
-//       <h1>Map</h1>
-//       {dailyVisitsDataMap.map((singleDay) => {
-//         return <li>{singleDay?.counter}</li>;
-//       })}
-//     </ul>
-//   </>
-// );

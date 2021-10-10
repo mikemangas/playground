@@ -1,5 +1,6 @@
+//unused component
+
 import { useEffect } from "react";
-// import "./SelectDate.css";
 export default function SelectDate({ toDay, todayMinusTen }) {
   let today = new Date();
   today = today.toISOString().split("T")[0];
