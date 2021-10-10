@@ -13,7 +13,7 @@ const CheckinRoutes = require("./Routes/CheckinRoutes");
 
 app.use(
   cors({
-    origin: "http://spielplatzchecken.de",
+    origin: "https://spielplatzchecken.de",
     optionsSuccessStatus: 200,
   })
 );
