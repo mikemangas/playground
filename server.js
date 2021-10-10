@@ -1,8 +1,8 @@
 require("dotenv").config();
+const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const playgroundRoutes = require("./Routes/PlaygroundRoutes");
 const userRoutes = require("./Routes/UserRoutes");
@@ -11,12 +11,13 @@ const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 
-app.use(express.json());
 app.use(
   cors({
-    origin: ["https://spielplatzchecken.de"],
+    origin: "http://spielplatzchecken.de",
+    optionsSuccessStatus: 200,
   })
 );
+app.use(express.json());
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
