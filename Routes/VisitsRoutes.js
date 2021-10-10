@@ -4,7 +4,7 @@ const VisitsSummaryDaily = require("../models/VisitsSummaryDaily");
 const Visits = require("../models/Visits");
 const CheckinsSummaryDaily = require("../models/CheckinsSummaryDaily");
 
-router.patch("/api/visits/:id", async (req, res) => {
+router.get("/api/visits/:id", async (req, res) => {
   const counter = req.body;
   const id = req.params.id;
 
