@@ -13,6 +13,10 @@
   font-size: 1.4rem;
 }
 
+.Home__Section__info__wrapper h2 {
+  padding-right: 25px;
+}
+
 .Home__section__intro {
   margin-left: 30px;
   margin-top: 10px;
