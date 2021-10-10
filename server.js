@@ -1,27 +1,29 @@
 require("dotenv").config();
+const cors = require("cors");
 const path = require("path");
 const mongoose = require("mongoose");
 const express = require("express");
-const cors = require("cors");
 const app = express();
 const playgroundRoutes = require("./Routes/PlaygroundRoutes");
 const userRoutes = require("./Routes/UserRoutes");
 const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
+const CheckinRoutes = require("./Routes/CheckinRoutes");
 
-// const corsOptions = {
-//   origin: "/",
-//   optionsSuccessStatus: 200,
-// };
-
+app.use(
+  cors({
+    origin: "https://spielplatzchecken.de",
+    optionsSuccessStatus: 200,
+  })
+);
 app.use(express.json());
-app.use(cors());
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
 app.use(VisitsRoutes);
 app.use(CronRoutes);
+app.use(CheckinRoutes);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
