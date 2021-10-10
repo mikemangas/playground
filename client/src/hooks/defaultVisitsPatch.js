@@ -1,8 +1,10 @@
 export default function defaultVisitsPatch(id) {
   const url = `/api/visits/${id}`;
-  const patchMethod = {
-    method: "PATCH",
-  };
-
-  fetch(url, patchMethod);
+  fetch(url)
+    .then((res) => {
+      res.json();
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 }
