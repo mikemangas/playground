@@ -12,7 +12,11 @@ const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://www.spieplatzchecken.de"],
+  })
+);
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
