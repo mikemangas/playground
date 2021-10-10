@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const VisitsSummaryDaily = require("../models/VisitsSummaryDaily");
+const Visits = require("../models/Visits");
 
 router.patch("/api/visits/:id", async (req, res) => {
   const counter = req.body;
