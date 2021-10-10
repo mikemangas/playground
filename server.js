@@ -9,11 +9,7 @@ const userRoutes = require("./Routes/UserRoutes");
 const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
-
-// const corsOptions = {
-//   origin: "/",
-//   optionsSuccessStatus: 200,
-// };
+const CheckinRoutes = require("./Routes/CheckinRoutes");
 
 app.use(express.json());
 app.use(cors());
@@ -22,6 +18,7 @@ app.use(userRoutes);
 app.use(contactFormRoutes);
 app.use(VisitsRoutes);
 app.use(CronRoutes);
+app.use(CheckinRoutes);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
