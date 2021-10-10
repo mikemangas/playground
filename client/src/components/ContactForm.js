@@ -83,7 +83,7 @@ export default function ContactForm() {
       <div className={`${cF}__message`}>
         <textarea
           placeholder="z.B. Da ist ein Spielplatz auf der Maximilianstraße 13a, Hannover "
-          cols="35"
+          cols="25"
           rows="10"
           name="message"
           id="message"
