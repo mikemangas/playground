@@ -113,7 +113,7 @@
   background-color: var(--color-unsubmit);
   color: var(--color-text);
   padding: 10px;
-  margin-left: 10px;
+  margin: 15px;
   cursor: pointer;
 }
 
