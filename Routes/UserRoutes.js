@@ -27,7 +27,6 @@ router.get("/api/currentcheckedinusers/", async (req, res) => {
   try {
     const currentCheckedInUsers = await User.find({});
     res.status(200).send(currentCheckedInUsers);
-    console.log(currentCheckedInUsers);
   } catch {
     res.status(500).send("error");
     console.error("there has been an error retrieving those data");
