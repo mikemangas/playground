@@ -14,8 +14,6 @@ router.post("/api/contactform", (req, res) => {
     },
   });
 
-  console.log(GMAIL_PASSWORD);
-
   const mailOptions = {
     from: req.body.eMail,
     to: "kontakt@kindersport-wissen.de",
