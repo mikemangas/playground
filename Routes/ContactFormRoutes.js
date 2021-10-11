@@ -21,7 +21,7 @@ router.post("/api/contactform", (req, res) => {
       <li>${req.body.eMail}</li>
       </ul>
       <p>${req.body.message}</p><br>
-      <p>This message was sent by the website contact form</p>
+      <p>This message was sent by the spieplatzchecken.de contact form</p>
       `,
   };
   transporter.sendMail(mailOptions, (error, info) => {
