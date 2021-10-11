@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const nodemailer = require("nodemailer");
-const { GMAIL_PASSWORD } = process.env;
+const { GMAIL_PASSWORD, GMAIL_CLIENT, GMAIL_SECRET } = process.env;
 
 router.post("/api/contactform", (req, res) => {
   const transporter = nodemailer.createTransport({
@@ -9,8 +9,12 @@ router.post("/api/contactform", (req, res) => {
     auth: {
       user: "miketheboy11@gmail.com",
       pass: GMAIL_PASSWORD,
+      clientId: GMAIL_CLIENT,
+      clientSecret: GMAIL_SECRET,
     },
   });
+
+  console.log(GMAIL_PASSWORD);
 
   const mailOptions = {
     from: req.body.eMail,

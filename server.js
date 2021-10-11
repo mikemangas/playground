@@ -11,12 +11,7 @@ const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 
-app.use(
-  cors({
-    origin: "https://spielplatzchecken.de",
-    optionsSuccessStatus: 200,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(playgroundRoutes);
 app.use(userRoutes);
