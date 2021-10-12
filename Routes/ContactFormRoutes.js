@@ -13,6 +13,8 @@ router.post("/api/contactform", (req, res) => {
       clientSecret: GMAIL_SECRET,
     },
   });
+  console.log(GMAIL_PASSWORD);
+  console.log(GMAIL_CLIENT);
 
   const mailOptions = {
     from: req.body.eMail,
