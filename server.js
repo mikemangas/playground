@@ -18,6 +18,12 @@ app.use(
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
         "script-src": ["'self'", "'unsafe-inline'"],
+        "connect-src": [
+          "nominatim.openstreetmap.org",
+          "https://nominatim.openstreetmap.org",
+          "https://spielplatzchecken.de",
+          "spielplatzchecken.de",
+        ],
       },
     },
   })
