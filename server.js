@@ -12,7 +12,16 @@ const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 const helmet = require("helmet");
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", "'unsafe-inline'"],
+      },
+    },
+  })
+);
 app.use(cors());
 app.use(express.json());
 app.use(playgroundRoutes);
