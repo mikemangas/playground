@@ -40,6 +40,8 @@ app.use(
           "https://a.tiles.openstreetmap.org",
           "https://b.tiles.openstreetmap.org",
           "https://c.tiles.openstreetmap.org",
+          "https://spielplatzchecken.de",
+          "spielplatzchecken.de",
         ],
       },
     },
