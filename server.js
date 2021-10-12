@@ -17,7 +17,19 @@ app.use(
     contentSecurityPolicy: {
       directives: {
         ...helmet.contentSecurityPolicy.getDefaultDirectives(),
-        "script-src": ["'self'", "'unsafe-inline'"],
+        "script-src": [
+          "'self'",
+          "'unsafe-inline'",
+          "https://spielplatzchecken.de",
+          "spielplatzchecken.de",
+        ],
+        "font-src": ["https://spielplatzchecken.de", "spielplatzchecken.de"],
+
+        "default-src": [
+          "'self'",
+          "https://spielplatzchecken.de",
+          "spielplatzchecken.de",
+        ],
         "connect-src": [
           "nominatim.openstreetmap.org",
           "https://nominatim.openstreetmap.org",
