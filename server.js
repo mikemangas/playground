@@ -23,6 +23,8 @@ app.use(
           "https://nominatim.openstreetmap.org",
           "https://spielplatzchecken.de",
           "spielplatzchecken.de",
+        ],
+        "img-src": [
           "https://a.tile.openstreetmap.org",
           "https://b.tile.openstreetmap.org",
           "https://c.tile.openstreetmap.org",
