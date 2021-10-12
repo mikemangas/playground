@@ -10,7 +10,9 @@ const contactFormRoutes = require("./Routes/ContactFormRoutes");
 const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
+const helmet = require("helmet");
 
+app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(playgroundRoutes);
