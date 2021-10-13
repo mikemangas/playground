@@ -16,7 +16,11 @@ cron.schedule("45 46 21 * * *", async () => {
       pageName: singleValues.pageName,
     });
   });
-  console.log("visitsdaily created at 21:46:45");
+
+  const currentCheckins = await Checkins.find();
+  CheckinsSummaryDaily.create({
+    counter: currentCheckins.length,
+  });
 });
 
 cron.schedule("0 0 3 1 1-12 *", async () => {
@@ -27,14 +31,6 @@ cron.schedule("0 0 3 1 1-12 *", async () => {
       pageName: singleValues.pageName,
     });
   });
-});
-
-cron.schedule("44 46 21 * * *", async () => {
-  const currentCheckins = await Checkins.find();
-  CheckinsSummaryDaily.create({
-    counter: currentCheckins.length,
-  });
-  console.log("checkinsdaily created at 21:46:45");
 });
 
 cron.schedule("0 0 3 1 1-12 *", async () => {
