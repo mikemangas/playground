@@ -54,6 +54,8 @@ app.use(
           "https://c.tiles.openstreetmap.org",
           "https://spielplatzchecken.de",
           "spielplatzchecken.de",
+          "self",
+          "data:",
         ],
       },
     },
