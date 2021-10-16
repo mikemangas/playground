@@ -131,6 +131,8 @@ export default function Map({ checkInState, checkOutState }) {
   function geoapiCoordinates(pos) {
     const { latitude, longitude } = pos.coords;
     map.setView([latitude, longitude], 17);
+    setLat(latitude);
+    setLon(longitude);
   }
 
   function geoapiGetLocation() {
