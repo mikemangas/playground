@@ -32,8 +32,6 @@ router.get("/api/playground/:longitude/:latitude", async (req, res) => {
     res.send(playgroundsWithCount);
   } catch (error) {
     res.status(500);
-    console.log("playground id 1" + playgroundId);
-    console.error(error + "playground error 2 " + playground._id);
   }
 });
 
@@ -68,17 +66,6 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
         status: "CHECKED-OUT",
       });
     }
-  }
-});
-
-router.get("/api/playgroundshare/:longitude/:latitude", (req, res) => {
-  const { latitude } = req.params;
-  const { longitude } = req.params;
-
-  try {
-    res.send({ longitude, latitude });
-  } catch (error) {
-    res.status(500);
   }
 });
 
