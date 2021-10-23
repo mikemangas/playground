@@ -32,10 +32,9 @@ export default function Map({
 
   const numberLatParams = Number(latparams);
   const numberLonParams = Number(lonparams);
-  console.log(numberLonParams);
-  console.log(numberLatParams);
-
-  console.log(lon);
+  console.log("paramslon", numberLonParams);
+  console.log("paramslat", numberLatParams);
+  console.log("currentlon", lon);
 
   const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
   const whatsappurl =
@@ -157,8 +156,7 @@ export default function Map({
     if (latparams == null) {
       console.log("hi, nothing to search");
     } else {
-      setTimeout(map.setView([numberLatParams, numberLonParams], 20), 3000);
-
+      map.setView([numberLatParams, numberLonParams], 5);
       setLat(numberLatParams);
       setLon(numberLonParams);
       console.log("Oh, there are some params");
