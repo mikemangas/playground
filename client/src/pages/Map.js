@@ -28,7 +28,7 @@ export default function Map({
   const [dbUserId, setDbUserId] = useState(null);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
-  const { latparams, lonparams } = useParams();
+  let { latparams, lonparams } = useParams();
 
   const numberLatParams = Number(latparams);
   const numberLonParams = Number(lonparams);
@@ -157,7 +157,7 @@ export default function Map({
     if (latparams == null) {
       console.log("hi, nothing to search");
     } else {
-      map.setView([numberLatParams, numberLonParams], 20);
+      setTimeout(map.setView([numberLatParams, numberLonParams], 20), 3000);
 
       setLat(numberLatParams);
       setLon(numberLonParams);
