@@ -32,8 +32,6 @@ router.get("/api/playground/:longitude/:latitude", async (req, res) => {
     res.send(playgroundsWithCount);
   } catch (error) {
     res.status(500);
-    console.log("playground id 1" + playgroundId);
-    console.error(error + "playground error 2 " + playground._id);
   }
 });
 

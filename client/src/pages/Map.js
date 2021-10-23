@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -13,7 +14,12 @@ import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
-export default function Map({ checkInState, checkOutState }) {
+export default function Map({
+  checkInState,
+  checkOutState,
+  importedLatState,
+  importedLonState,
+}) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -22,6 +28,30 @@ export default function Map({ checkInState, checkOutState }) {
   const [dbUserId, setDbUserId] = useState(null);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  let { latparams, lonparams } = useParams();
+  // const numberLatParams = Number(latparams);
+  // const numberLonParams = Number(lonparams);
+
+  // console.log("log für lat, initial", lat);
+  // console.log("log für lon, initial", lon);
+
+  // useEffect(() => {
+  //   if (latparams == null) {
+  //     console.log("hi, nothing to search");
+  //   } else {
+  //     setLat(numberLatParams);
+  //     setLon(numberLonParams);
+  //     console.log("Oh, there are some params to be used");
+  //   }
+  // }, [lat, lon, numberLatParams, numberLonParams, latparams]);
+
+  // console.log("paramslon", numberLonParams);
+  // console.log("paramslat", numberLatParams);
+  // console.log("currentlon", lon);
+
+  // const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
+  // const whatsappurl =
+  //   "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/blabla Guck mal, ich bin bei diesem Spielplatz. Möchtest du kommen?";
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
@@ -129,10 +159,14 @@ export default function Map({ checkInState, checkOutState }) {
   }
 
   function geoapiCoordinates(pos) {
-    const { latitude, longitude } = pos.coords;
-    map.setView([latitude, longitude], 17);
-    setLat(latitude);
-    setLon(longitude);
+    if (pos) {
+      const { latitude, longitude } = pos.coords;
+      map.setView([latitude, longitude], 17);
+      setLat(latitude);
+      setLon(longitude);
+    } else {
+      console.log("nothing to position from the currentlocation api GPS");
+    }
   }
 
   function geoapiGetLocation() {
@@ -222,6 +256,41 @@ export default function Map({ checkInState, checkOutState }) {
                     />
                     <p className="Map__Popup__childnumber">
                       {positionData?.userCount}
+                    </p>
+                  </div>
+                  <div className="Map__Popup__share">
+                    <p>
+                      <a
+                        href={
+                          positionData?.geometry?.type === "Point"
+                            ? [
+                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[1]},
+                                ${positionData?.geometry?.coordinates[0]}`,
+                              ]
+                            : positionData?.geometry?.type === "Polygon"
+                            ? [
+                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1][1]},
+                              ${positionData?.geometry?.coordinates[0][1][0]}`,
+                              ]
+                            : positionData?.geometry?.type === "LineString"
+                            ? [
+                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1]},
+                              ${positionData?.geometry?.coordinates[0][0]}`,
+                              ]
+                            : positionData?.geometry?.type === "MultiPolygon"
+                            ? [
+                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][0][0][1]},
+                              ${positionData?.geometry?.coordinates[0][0][0][0]}`,
+                              ]
+                            : console.error(
+                                `problem in finding the playground coordinates: ${positionData?._id}`
+                              )
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Route finden
+                      </a>
                     </p>
                   </div>
                 </>

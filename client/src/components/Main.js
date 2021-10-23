@@ -15,10 +15,14 @@ export default function Main({ checkInState, checkOutState }) {
         <Route path="/impressum">
           <Impressum />
         </Route>
-
         <Route path="/map/">
           <Map checkInState={checkInState} checkOutState={checkOutState} />
         </Route>
+
+        <Route path="/api/playgroundshare/:latparams/:lonparams">
+          <Map checkInState={checkInState} checkOutState={checkOutState} />
+        </Route>
+
         <Route path="/datenschutz">
           <Datenschutz />
         </Route>
