@@ -71,4 +71,15 @@ router.patch("/api/playground/:playgroundId", async (req, res) => {
   }
 });
 
+router.get("/api/playgroundshare/:longitude/:latitude", (req, res) => {
+  const { latitude } = req.params;
+  const { longitude } = req.params;
+
+  try {
+    res.send({ longitude, latitude });
+  } catch (error) {
+    res.status(500);
+  }
+});
+
 module.exports = router;

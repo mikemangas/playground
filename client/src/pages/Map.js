@@ -23,6 +23,10 @@ export default function Map({ checkInState, checkOutState }) {
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
 
+  const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
+  const whatsappurl =
+    "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/blabla Guck mal, ich bin bei diesem Spielplatz. Möchtest du kommen?";
+
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
     fetch(searchInputUrl)
@@ -222,6 +226,16 @@ export default function Map({ checkInState, checkOutState }) {
                     />
                     <p className="Map__Popup__childnumber">
                       {positionData?.userCount}
+                    </p>
+                  </div>
+                  <div className="Map__Popup__share">
+                    <p>
+                      <a
+                        href={`https://api.whatsapp.com/send?text=/api/playgroundshare/${positionData?.geometry?.coordinates[1]}/
+                      ${positionData?.geometry?.coordinates[0]}`}
+                      >
+                        Share this
+                      </a>
                     </p>
                   </div>
                 </>
