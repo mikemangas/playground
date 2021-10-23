@@ -9,16 +9,31 @@ import Faq from "../pages/Faq";
 import Stats from "../pages/Stats";
 
 export default function Main({ checkInState, checkOutState }) {
+  // const [exportedLatState, setExportedLatState] = useState();
+  // const [exportedLonState, setExportedLonState] = useState();
+
+  // let { eins } = useParams();
+  // console.log(eins);
+
+  // /api/playgroundshare/48.1064201/24.444/
+
+  // path="/{id}/solution"
+  // console.log(eins);
+
   return (
     <main className="Main">
       <Switch>
         <Route path="/impressum">
           <Impressum />
         </Route>
-
         <Route path="/map/">
           <Map checkInState={checkInState} checkOutState={checkOutState} />
         </Route>
+
+        <Route path="/api/playgroundshare/:latparams/:lonparams">
+          <Map checkInState={checkInState} checkOutState={checkOutState} />
+        </Route>
+
         <Route path="/datenschutz">
           <Datenschutz />
         </Route>

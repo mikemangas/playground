@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import CheckInButton from "../components/CheckInButton";
 import SubmitForm from "../components/SubmitForm";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -13,7 +14,12 @@ import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
-export default function Map({ checkInState, checkOutState }) {
+export default function Map({
+  checkInState,
+  checkOutState,
+  importedLatState,
+  importedLonState,
+}) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -22,6 +28,14 @@ export default function Map({ checkInState, checkOutState }) {
   const [dbUserId, setDbUserId] = useState(null);
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
+  const { latparams, lonparams } = useParams();
+
+  const numberLatParams = Number(latparams);
+  const numberLonParams = Number(lonparams);
+  console.log(numberLonParams);
+  console.log(numberLatParams);
+
+  console.log(lon);
 
   const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
   const whatsappurl =
@@ -138,6 +152,18 @@ export default function Map({ checkInState, checkOutState }) {
     setLat(latitude);
     setLon(longitude);
   }
+
+  useEffect(() => {
+    if (latparams == null) {
+      console.log("hi, nothing to search");
+    } else {
+      map.setView([numberLatParams, numberLonParams], 20);
+
+      setLat(numberLatParams);
+      setLon(numberLonParams);
+      console.log("Oh, there are some params");
+    }
+  }, [latparams, numberLonParams, numberLatParams, lonparams, map]);
 
   function geoapiGetLocation() {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
