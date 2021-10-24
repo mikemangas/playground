@@ -165,6 +165,15 @@ export default function Map({ checkInState, checkOutState }) {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
+  // function trimmer(blabla) {
+  //   blabla.replace(/\s/g, "");
+  // }
+
+  let whatsappApiUrl =
+    "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
+
+  let googleRouteUrl = "https://www.google.de/maps/dir//";
+
   return (
     <>
       {helmet(
@@ -255,23 +264,19 @@ export default function Map({ checkInState, checkOutState }) {
                         href={
                           positionData?.geometry?.type === "Point"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[1]},
-                                ${positionData?.geometry?.coordinates[0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[1]},${positionData?.geometry?.coordinates[0]}`,
                               ]
                             : positionData?.geometry?.type === "Polygon"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1][1]},
-                              ${positionData?.geometry?.coordinates[0][1][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1][1]},${positionData?.geometry?.coordinates[0][1][0]}`,
                               ]
                             : positionData?.geometry?.type === "LineString"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1]},
-                              ${positionData?.geometry?.coordinates[0][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1]},${positionData?.geometry?.coordinates[0][0]}`,
                               ]
                             : positionData?.geometry?.type === "MultiPolygon"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][0][0][1]},
-                              ${positionData?.geometry?.coordinates[0][0][0][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][0][0][1]},${positionData?.geometry?.coordinates[0][0][0][0]}`,
                               ]
                             : console.error(
                                 `problem in finding the playground coordinates: ${positionData?._id}`
@@ -290,31 +295,19 @@ export default function Map({ checkInState, checkOutState }) {
                         href={
                           positionData?.geometry?.type === "Point"
                             ? [
-                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[1]}/
-                                ${positionData?.geometry?.coordinates[0]}/`
-                                  .toString()
-                                  .trim(),
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/`,
                               ]
                             : positionData?.geometry?.type === "Polygon"
                             ? [
-                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1][1]}/
-                              ${positionData?.geometry?.coordinates[0][1][0]}/`
-                                  .toString()
-                                  .trim(),
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/`,
                               ]
                             : positionData?.geometry?.type === "LineString"
                             ? [
-                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1]}/
-                              ${positionData?.geometry?.coordinates[0][0]}/`
-                                  .toString()
-                                  .trim(),
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/`,
                               ]
                             : positionData?.geometry?.type === "MultiPolygon"
                             ? [
-                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][0][0][1]}/
-                              ${positionData?.geometry?.coordinates[0][0][0][0]}/`
-                                  .toString()
-                                  .trim(),
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/`,
                               ]
                             : console.error(
                                 `problem in finding the playground coordinates: ${positionData?._id}`
