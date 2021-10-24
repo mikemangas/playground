@@ -29,25 +29,21 @@ export default function Map({
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   let { latparams, lonparams } = useParams();
-  // const numberLatParams = Number(latparams);
-  // const numberLonParams = Number(lonparams);
 
-  // console.log("log für lat, initial", lat);
-  // console.log("log für lon, initial", lon);
+  const numberLatParams = Number(latparams);
+  const numberLonParams = Number(lonparams);
 
-  // useEffect(() => {
-  //   if (latparams == null) {
-  //     console.log("hi, nothing to search");
-  //   } else {
-  //     setLat(numberLatParams);
-  //     setLon(numberLonParams);
-  //     console.log("Oh, there are some params to be used");
-  //   }
-  // }, [lat, lon, numberLatParams, numberLonParams, latparams]);
+  function setViewFunction() {
+    map.setView([numberLatParams, numberLonParams], 16);
+  }
 
-  // console.log("paramslon", numberLonParams);
-  // console.log("paramslat", numberLatParams);
-  // console.log("currentlon", lon);
+  async function callSetViewFunction() {
+    try {
+      await setViewFunction();
+    } catch {
+      console.log("something went wrong calling ing the callSetViewFunction");
+    }
+  }
 
   // const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
   // const whatsappurl =
@@ -55,25 +51,31 @@ export default function Map({
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
-    fetch(searchInputUrl)
-      .then((res) => res.json())
-      .then((searchedLocationData) => {
-        if (searchedLocationData.length > 0) {
-          const newLatitude = Number(searchedLocationData[0]?.lat);
-          const newLongitude = Number(searchedLocationData[0]?.lon);
-          setLat(newLatitude);
-          setLon(newLongitude);
-          map.setView([newLatitude, newLongitude], 16);
-        } else {
-          toast.error(
-            "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [map, locationSearchValue]);
+    if (locationSearchValue) {
+      fetch(searchInputUrl)
+        .then((res) => res.json())
+        .then((searchedLocationData) => {
+          if (searchedLocationData.length > 0) {
+            const newLatitude = Number(searchedLocationData[0]?.lat);
+            const newLongitude = Number(searchedLocationData[0]?.lon);
+            setLat(newLatitude);
+            setLon(newLongitude);
+            map.setView([newLatitude, newLongitude], 16);
+          } else {
+            toast.error(
+              "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else if (numberLonParams) {
+      callSetViewFunction();
+      setLat(numberLatParams);
+      setLon(numberLonParams);
+    }
+  }, [locationSearchValue, map]);
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
@@ -85,7 +87,7 @@ export default function Map({
       .catch((error) => {
         console.error(error);
       });
-  }, [lat, lon]);
+  }, [lat, lon, numberLatParams]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
