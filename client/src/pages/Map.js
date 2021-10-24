@@ -28,6 +28,9 @@ export default function Map({ checkInState, checkOutState }) {
   let { latparams, lonparams } = useParams();
   const numberLatParams = Number(latparams);
   const numberLonParams = Number(lonparams);
+  const whatsappApiUrl =
+    "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
+  const googleRouteUrl = "https://www.google.de/maps/dir//";
 
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
@@ -166,11 +169,6 @@ export default function Map({ checkInState, checkOutState }) {
   function geoapiGetLocation() {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
-
-  let whatsappApiUrl =
-    "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
-
-  let googleRouteUrl = "https://www.google.de/maps/dir//";
 
   return (
     <>
