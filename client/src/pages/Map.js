@@ -295,19 +295,19 @@ export default function Map({ checkInState, checkOutState }) {
                         href={
                           positionData?.geometry?.type === "Point"
                             ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/`,
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
                               ]
                             : positionData?.geometry?.type === "Polygon"
                             ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/`,
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
                               ]
                             : positionData?.geometry?.type === "LineString"
                             ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/`,
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
                               ]
                             : positionData?.geometry?.type === "MultiPolygon"
                             ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/`,
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
                               ]
                             : console.error(
                                 `problem in finding the playground coordinates: ${positionData?._id}`
