@@ -15,7 +15,7 @@ import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
 export default function Map({ checkInState, checkOutState }) {
-  const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+  const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
@@ -101,7 +101,7 @@ export default function Map({ checkInState, checkOutState }) {
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
-    localStorage.setItem("inputText", JSON.stringify(formInputValue));
+    sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
     setUpdatePage(!updatePage);
   }
@@ -290,23 +290,31 @@ export default function Map({ checkInState, checkOutState }) {
                         href={
                           positionData?.geometry?.type === "Point"
                             ? [
-                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen?  https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[1]}/
-                                ${positionData?.geometry?.coordinates[0]}/`,
+                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[1]}/
+                                ${positionData?.geometry?.coordinates[0]}/`
+                                  .toString()
+                                  .trim(),
                               ]
                             : positionData?.geometry?.type === "Polygon"
                             ? [
-                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1][1]}/
-                              ${positionData?.geometry?.coordinates[0][1][0]}/`,
+                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1][1]}/
+                              ${positionData?.geometry?.coordinates[0][1][0]}/`
+                                  .toString()
+                                  .trim(),
                               ]
                             : positionData?.geometry?.type === "LineString"
                             ? [
-                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1]}/
-                              ${positionData?.geometry?.coordinates[0][0]}/`,
+                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1]}/
+                              ${positionData?.geometry?.coordinates[0][0]}/`
+                                  .toString()
+                                  .trim(),
                               ]
                             : positionData?.geometry?.type === "MultiPolygon"
                             ? [
-                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][0][0][1]}/
-                              ${positionData?.geometry?.coordinates[0][0][0][0]}/`,
+                                `https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][0][0][1]}/
+                              ${positionData?.geometry?.coordinates[0][0][0][0]}/`
+                                  .toString()
+                                  .trim(),
                               ]
                             : console.error(
                                 `problem in finding the playground coordinates: ${positionData?._id}`
