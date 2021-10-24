@@ -16,7 +16,7 @@ export default function Home() {
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
-    localStorage.setItem("inputText", JSON.stringify(formInputValue));
+    sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
     history.push(`/map`);
   }

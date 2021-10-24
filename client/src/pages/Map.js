@@ -9,18 +9,15 @@ import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
+import googleMapsIcon from "../assets/Images/google-maps.png";
+import shareIcon from "../assets/Images/sharing.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
-export default function Map({
-  checkInState,
-  checkOutState,
-  importedLatState,
-  importedLonState,
-}) {
-  const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
+export default function Map({ checkInState, checkOutState }) {
+  const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
   const [map, setMap] = useState(null);
@@ -29,51 +26,51 @@ export default function Map({
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   let { latparams, lonparams } = useParams();
-  // const numberLatParams = Number(latparams);
-  // const numberLonParams = Number(lonparams);
+  const numberLatParams = Number(latparams);
+  const numberLonParams = Number(lonparams);
+  const whatsappApiUrl =
+    "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
+  const googleRouteUrl = "https://www.google.de/maps/dir//";
 
-  // console.log("log für lat, initial", lat);
-  // console.log("log für lon, initial", lon);
+  function setViewFunction() {
+    map.setView([numberLatParams, numberLonParams], 20);
+  }
 
-  // useEffect(() => {
-  //   if (latparams == null) {
-  //     console.log("hi, nothing to search");
-  //   } else {
-  //     setLat(numberLatParams);
-  //     setLon(numberLonParams);
-  //     console.log("Oh, there are some params to be used");
-  //   }
-  // }, [lat, lon, numberLatParams, numberLonParams, latparams]);
-
-  // console.log("paramslon", numberLonParams);
-  // console.log("paramslat", numberLatParams);
-  // console.log("currentlon", lon);
-
-  // const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
-  // const whatsappurl =
-  //   "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/blabla Guck mal, ich bin bei diesem Spielplatz. Möchtest du kommen?";
+  async function callSetViewFunction() {
+    try {
+      await setViewFunction();
+    } catch {
+      console.log("something went wrong calling ing the callSetViewFunction");
+    }
+  }
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
-    fetch(searchInputUrl)
-      .then((res) => res.json())
-      .then((searchedLocationData) => {
-        if (searchedLocationData.length > 0) {
-          const newLatitude = Number(searchedLocationData[0]?.lat);
-          const newLongitude = Number(searchedLocationData[0]?.lon);
-          setLat(newLatitude);
-          setLon(newLongitude);
-          map.setView([newLatitude, newLongitude], 16);
-        } else {
-          toast.error(
-            "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
-          );
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [map, locationSearchValue]);
+    if (locationSearchValue) {
+      fetch(searchInputUrl)
+        .then((res) => res.json())
+        .then((searchedLocationData) => {
+          if (searchedLocationData.length > 0) {
+            const newLatitude = Number(searchedLocationData[0]?.lat);
+            const newLongitude = Number(searchedLocationData[0]?.lon);
+            setLat(newLatitude);
+            setLon(newLongitude);
+            map.setView([newLatitude, newLongitude], 16);
+          } else {
+            toast.error(
+              "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
+            );
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else if (numberLonParams) {
+      callSetViewFunction();
+      setLat(numberLatParams);
+      setLon(numberLonParams);
+    }
+  }, [locationSearchValue, map]);
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
@@ -85,7 +82,7 @@ export default function Map({
       .catch((error) => {
         console.error(error);
       });
-  }, [lat, lon]);
+  }, [lat, lon, numberLatParams]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -109,7 +106,7 @@ export default function Map({
     e.preventDefault();
     const form = e.target;
     const formInputValue = form.searchInput.value;
-    localStorage.setItem("inputText", JSON.stringify(formInputValue));
+    sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
     setUpdatePage(!updatePage);
   }
@@ -242,7 +239,6 @@ export default function Map({
                     isDisabled={dbUserId ? true : false}
                     className={"Map__button--checkin"}
                   />
-
                   {positionData?.properties?.name ? (
                     <p>{positionData?.properties?.name}</p>
                   ) : (
@@ -258,29 +254,26 @@ export default function Map({
                       {positionData?.userCount}
                     </p>
                   </div>
-                  <div className="Map__Popup__share">
-                    <p>
+                  <div className="Map__Popup__linebreaker"></div>
+                  <div className="Map__sharer__wrapper">
+                    <div className="Map__Popup__route__google">
                       <a
                         href={
                           positionData?.geometry?.type === "Point"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[1]},
-                                ${positionData?.geometry?.coordinates[0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[1]},${positionData?.geometry?.coordinates[0]}`,
                               ]
                             : positionData?.geometry?.type === "Polygon"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1][1]},
-                              ${positionData?.geometry?.coordinates[0][1][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1][1]},${positionData?.geometry?.coordinates[0][1][0]}`,
                               ]
                             : positionData?.geometry?.type === "LineString"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][1]},
-                              ${positionData?.geometry?.coordinates[0][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1]},${positionData?.geometry?.coordinates[0][0]}`,
                               ]
                             : positionData?.geometry?.type === "MultiPolygon"
                             ? [
-                                `https://www.google.de/maps/dir//${positionData?.geometry?.coordinates[0][0][0][1]},
-                              ${positionData?.geometry?.coordinates[0][0][0][0]}`,
+                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][0][0][1]},${positionData?.geometry?.coordinates[0][0][0][0]}`,
                               ]
                             : console.error(
                                 `problem in finding the playground coordinates: ${positionData?._id}`
@@ -289,9 +282,42 @@ export default function Map({
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Route finden
+                        <img
+                          src={googleMapsIcon}
+                          alt="Google-Maps-Route zum Spielplatz"
+                        />
                       </a>
-                    </p>
+                    </div>
+                    <div className="Map__Popup__share__playground">
+                      <a
+                        href={
+                          positionData?.geometry?.type === "Point"
+                            ? [
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "Polygon"
+                            ? [
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "LineString"
+                            ? [
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "MultiPolygon"
+                            ? [
+                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : console.error(
+                                `problem in finding the playground coordinates: ${positionData?._id}`
+                              )
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {" "}
+                        <img src={shareIcon} alt="Spielplatz teilen" />
+                      </a>
+                    </div>
                   </div>
                 </>
               </Popup>
