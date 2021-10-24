@@ -14,12 +14,7 @@ import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 
-export default function Map({
-  checkInState,
-  checkOutState,
-  importedLatState,
-  importedLonState,
-}) {
+export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(localStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -29,12 +24,11 @@ export default function Map({
   const [lat, setLat] = useState(null);
   const [lon, setLon] = useState(null);
   let { latparams, lonparams } = useParams();
-
   const numberLatParams = Number(latparams);
   const numberLonParams = Number(lonparams);
 
   function setViewFunction() {
-    map.setView([numberLatParams, numberLonParams], 16);
+    map.setView([numberLatParams, numberLonParams], 20);
   }
 
   async function callSetViewFunction() {
@@ -44,10 +38,6 @@ export default function Map({
       console.log("something went wrong calling ing the callSetViewFunction");
     }
   }
-
-  // const googlemapsurl = "https://www.google.de/maps/@48.0685518,11.5335574";
-  // const whatsappurl =
-  //   "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/blabla Guck mal, ich bin bei diesem Spielplatz. Möchtest du kommen?";
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
@@ -244,7 +234,6 @@ export default function Map({
                     isDisabled={dbUserId ? true : false}
                     className={"Map__button--checkin"}
                   />
-
                   {positionData?.properties?.name ? (
                     <p>{positionData?.properties?.name}</p>
                   ) : (
@@ -260,7 +249,7 @@ export default function Map({
                       {positionData?.userCount}
                     </p>
                   </div>
-                  <div className="Map__Popup__share">
+                  <div className="Map__Popup__route__google">
                     <p>
                       <a
                         href={
@@ -292,6 +281,41 @@ export default function Map({
                         rel="noreferrer"
                       >
                         Route finden
+                      </a>
+                    </p>
+                  </div>
+                  <div className="Map__Popup__share__playground">
+                    <p>
+                      <a
+                        href={
+                          positionData?.geometry?.type === "Point"
+                            ? [
+                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen?  https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[1]}/
+                                ${positionData?.geometry?.coordinates[0]}/`,
+                              ]
+                            : positionData?.geometry?.type === "Polygon"
+                            ? [
+                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1][1]}/
+                              ${positionData?.geometry?.coordinates[0][1][0]}/`,
+                              ]
+                            : positionData?.geometry?.type === "LineString"
+                            ? [
+                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][1]}/
+                              ${positionData?.geometry?.coordinates[0][0]}/`,
+                              ]
+                            : positionData?.geometry?.type === "MultiPolygon"
+                            ? [
+                                `Guck mal, ich bin auf diesem Spielplatz. Magst du kommen? https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/${positionData?.geometry?.coordinates[0][0][0][1]}/
+                              ${positionData?.geometry?.coordinates[0][0][0][0]}/`,
+                              ]
+                            : console.error(
+                                `problem in finding the playground coordinates: ${positionData?._id}`
+                              )
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Spielplatz teilen
                       </a>
                     </p>
                   </div>
