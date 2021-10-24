@@ -122,6 +122,7 @@
   color: white;
   padding: 5px;
   cursor: pointer;
+  width: 100%;
 }
 
 .Map__button--checkin:disabled {
@@ -140,4 +141,22 @@
     var(--color-turqouise),
     var(--color-beige)
   );
+}
+
+.Map__Popup__childnumber {
+  font-size: 1.8rem;
+}
+
+.Map__sharer__wrapper {
+  display: flex;
+}
+
+.Map__sharer__wrapper img {
+  width: 80%;
+}
+
+.Map__Popup__linebreaker {
+  margin: 10px 0;
+  border: 2px solid var(--color-purple);
+  border-radius: 30px;
 }

@@ -9,6 +9,8 @@ import L from "leaflet";
 import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
+import googleMapsIcon from "../assets/Images/google-maps.png";
+import shareIcon from "../assets/Images/sharing.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
@@ -165,10 +167,6 @@ export default function Map({ checkInState, checkOutState }) {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
-  // function trimmer(blabla) {
-  //   blabla.replace(/\s/g, "");
-  // }
-
   let whatsappApiUrl =
     "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
 
@@ -258,8 +256,9 @@ export default function Map({ checkInState, checkOutState }) {
                       {positionData?.userCount}
                     </p>
                   </div>
-                  <div className="Map__Popup__route__google">
-                    <p>
+                  <div className="Map__Popup__linebreaker"></div>
+                  <div className="Map__sharer__wrapper">
+                    <div className="Map__Popup__route__google">
                       <a
                         href={
                           positionData?.geometry?.type === "Point"
@@ -285,12 +284,13 @@ export default function Map({ checkInState, checkOutState }) {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Route finden
+                        <img
+                          src={googleMapsIcon}
+                          alt="Google-Maps-Route zum Spielplatz"
+                        />
                       </a>
-                    </p>
-                  </div>
-                  <div className="Map__Popup__share__playground">
-                    <p>
+                    </div>
+                    <div className="Map__Popup__share__playground">
                       <a
                         href={
                           positionData?.geometry?.type === "Point"
@@ -316,9 +316,10 @@ export default function Map({ checkInState, checkOutState }) {
                         target="_blank"
                         rel="noreferrer"
                       >
-                        Spielplatz teilen
+                        {" "}
+                        <img src={shareIcon} alt="Spielplatz teilen" />
                       </a>
-                    </p>
+                    </div>
                   </div>
                 </>
               </Popup>
