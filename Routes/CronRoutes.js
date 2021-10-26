@@ -9,7 +9,7 @@ const CheckinsSummaryDaily = require("../models/CheckinsSummaryDaily");
 const CheckinsSummaryMonthly = require("../models/CheckinsSummaryMonthly");
 
 //schedule daily visits and checkins
-cron.schedule("46 21 * * *", async () => {
+cron.schedule("3 46 21 * * *", async () => {
   const currentVisits = await Visits.find();
   currentVisits.forEach((singleValues) => {
     VisitsSummaryDaily.create({
@@ -25,7 +25,7 @@ cron.schedule("46 21 * * *", async () => {
 });
 
 //schedule  monthly visits
-cron.schedule("0 3 1 1-12 *", async () => {
+cron.schedule("3 0 3 1 1-12 *", async () => {
   const currentVisits = await Visits.find();
   currentVisits.forEach((singleValues) => {
     VisitsSummaryMonthly.create({
@@ -36,7 +36,7 @@ cron.schedule("0 3 1 1-12 *", async () => {
 });
 
 //schedule monthly checkins
-cron.schedule("0 3 1 1-12 *", async () => {
+cron.schedule("3 0 3 1 1-12 *", async () => {
   const currentCheckins = await Checkins.find();
   CheckinsSummaryMonthly.create({
     counter: currentCheckins.length,
