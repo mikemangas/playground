@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CheckInButton from "../components/CheckInButton";
+import { latBasedToGeometryType } from "../hooks/positionsBasedToGeometryType";
+import { lonBasedToGeometryType } from "../hooks/positionsBasedToGeometryType";
 import SubmitForm from "../components/SubmitForm";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -66,8 +68,10 @@ export default function Map({ checkInState, checkOutState }) {
             );
           }
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          console.error(
+            "ups there has been an error while calling the nominatim api"
+          );
         });
     } else if (numberLonParams) {
       callSetViewFunction();
@@ -107,12 +111,16 @@ export default function Map({ checkInState, checkOutState }) {
   }, []);
 
   function handleOnSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formInputValue = form.searchInput.value;
-    sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
-    form.reset();
-    setUpdatePage(!updatePage);
+    try {
+      e.preventDefault();
+      const form = e.target;
+      const formInputValue = form.searchInput.value;
+      sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
+      form.reset();
+      setUpdatePage(!updatePage);
+    } catch {
+      console.error("ups, there has been an error while submiting your value");
+    }
   }
 
   function getIcon(allPlaygrounds) {
@@ -215,31 +223,10 @@ export default function Map({ checkInState, checkOutState }) {
               className="Map__Marker"
               icon={getIcon(positionData.userCount)}
               key={positionData?._id}
-              position={
-                positionData?.geometry?.type === "Point"
-                  ? [
-                      positionData?.geometry?.coordinates[1],
-                      positionData?.geometry?.coordinates[0],
-                    ]
-                  : positionData?.geometry?.type === "Polygon"
-                  ? [
-                      positionData?.geometry?.coordinates[0][1][1],
-                      positionData?.geometry?.coordinates[0][1][0],
-                    ]
-                  : positionData?.geometry?.type === "LineString"
-                  ? [
-                      positionData?.geometry?.coordinates[0][1],
-                      positionData?.geometry?.coordinates[0][0],
-                    ]
-                  : positionData?.geometry?.type === "MultiPolygon"
-                  ? [
-                      positionData?.geometry?.coordinates[0][0][0][1],
-                      positionData?.geometry?.coordinates[0][0][0][0],
-                    ]
-                  : console.error(
-                      `the playgroundID: ${positionData?._id} does not work`
-                    )
-              }
+              position={[
+                latBasedToGeometryType(positionData),
+                lonBasedToGeometryType(positionData),
+              ]}
             >
               <Popup className="Map__Popup">
                 <>
@@ -282,30 +269,15 @@ export default function Map({ checkInState, checkOutState }) {
                   <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
                       <a
-                        href={
-                          positionData?.geometry?.type === "Point"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[1]},${positionData?.geometry?.coordinates[0]}`,
-                              ]
-                            : positionData?.geometry?.type === "Polygon"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1][1]},${positionData?.geometry?.coordinates[0][1][0]}`,
-                              ]
-                            : positionData?.geometry?.type === "LineString"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1]},${positionData?.geometry?.coordinates[0][0]}`,
-                              ]
-                            : positionData?.geometry?.type === "MultiPolygon"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][0][0][1]},${positionData?.geometry?.coordinates[0][0][0][0]}`,
-                              ]
-                            : console.error(
-                                `problem in finding the playground coordinates: ${positionData?._id}`
-                              )
-                        }
+                        href={[
+                          `${googleRouteUrl}${latBasedToGeometryType(
+                            positionData
+                          )},${lonBasedToGeometryType(positionData)}`,
+                        ]}
                         target="_blank"
                         rel="noreferrer"
                       >
+                        {" "}
                         <img
                           src={googleMapsIcon}
                           alt="Google-Maps-Route zum Spielplatz"
@@ -314,27 +286,13 @@ export default function Map({ checkInState, checkOutState }) {
                     </div>
                     <div className="Map__Popup__share__playground__whatsapp">
                       <a
-                        href={
-                          positionData?.geometry?.type === "Point"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "Polygon"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "LineString"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "MultiPolygon"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : console.error(
-                                `problem in finding the playground coordinates: ${positionData?._id}`
-                              )
-                        }
+                        href={[
+                          `${whatsappApiUrl}${latBasedToGeometryType(
+                            positionData
+                          )}/${lonBasedToGeometryType(
+                            positionData
+                          )}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                        ]}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -347,27 +305,13 @@ export default function Map({ checkInState, checkOutState }) {
                     </div>
                     <div className="Map__Popup__share__playground__telegram">
                       <a
-                        href={
-                          positionData?.geometry?.type === "Point"
-                            ? [
-                                `${telegramUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "Polygon"
-                            ? [
-                                `${telegramUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "LineString"
-                            ? [
-                                `${telegramUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "MultiPolygon"
-                            ? [
-                                `${telegramUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : console.error(
-                                `problem in finding the playground coordinates: ${positionData?._id}`
-                              )
-                        }
+                        href={[
+                          `${telegramUrl}${latBasedToGeometryType(
+                            positionData
+                          )}/${lonBasedToGeometryType(
+                            positionData
+                          )}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                        ]}
                         target="_blank"
                         rel="noreferrer"
                       >
