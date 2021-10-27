@@ -16,6 +16,7 @@ import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
+import information from "../assets/Images/information.png";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
@@ -33,6 +34,7 @@ export default function Map({ checkInState, checkOutState }) {
     "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
   const googleRouteUrl = "https://www.google.de/maps/dir//";
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
+  const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
@@ -172,6 +174,14 @@ export default function Map({ checkInState, checkOutState }) {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
+  function handleToolTipp() {
+    if (toolTipp === `Map__Popup__toolTipp--hide`) {
+      setToolTipp(`Map__Popup__toolTipp--show`);
+    } else {
+      setToolTipp(`Map__Popup__toolTipp--hide`);
+    }
+  }
+
   return (
     <>
       {helmet(
@@ -257,6 +267,18 @@ export default function Map({ checkInState, checkOutState }) {
                     </p>
                   </div>
                   <div className="Map__Popup__linebreaker"></div>
+                  <div className={toolTipp}>
+                    <p>
+                      Route zum Spielplatz über Google-Maps finden und
+                      Spielplatz auf Whatsapp oder Telegram teilen
+                    </p>
+                  </div>
+                  <img
+                    onClick={handleToolTipp}
+                    className="SubmitForm__info-button"
+                    src={information}
+                    alt="info-button"
+                  />
                   <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
                       <a
