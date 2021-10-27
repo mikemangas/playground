@@ -46,7 +46,7 @@
 }
 .Map__Popup__childcounter__wrapper {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -147,16 +147,28 @@
   font-size: 1.8rem;
 }
 
-.Map__sharer__wrapper {
+.Map__Popup__sharer__wrapper {
   display: flex;
+  justify-content: space-between;
 }
 
-.Map__sharer__wrapper img {
+.Map__Popup__sharer__wrapper img {
   width: 80%;
+  filter: invert(48%) sepia(16%) saturate(985%) hue-rotate(225deg)
+    brightness(88%) contrast(91%);
 }
 
 .Map__Popup__linebreaker {
   margin: 10px 0;
-  border: 2px solid var(--color-purple);
+  border: 1.3px solid var(--color-purple);
   border-radius: 30px;
+}
+
+.Map__Popup__toolTipp--hide {
+  display: none;
+}
+
+.Map__Popup__toolTipp--show p {
+  font-size: 0.8rem;
+  max-width: 140px;
 }
