@@ -26,7 +26,6 @@
   height: 20px;
   filter: invert(28%) sepia(96%) saturate(1205%) hue-rotate(188deg)
     brightness(88%) contrast(94%);
-  /* background-color: green; */
 }
 
 .SubmitForm input {
