@@ -147,12 +147,14 @@
   font-size: 1.8rem;
 }
 
-.Map__sharer__wrapper {
+.Map__Popup__sharer__wrapper {
   display: flex;
 }
 
-.Map__sharer__wrapper img {
+.Map__Popup__sharer__wrapper img {
   width: 80%;
+  filter: invert(48%) sepia(16%) saturate(985%) hue-rotate(225deg)
+    brightness(88%) contrast(91%);
 }
 
 .Map__Popup__linebreaker {

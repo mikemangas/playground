@@ -10,7 +10,8 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import googleMapsIcon from "../assets/Images/google-maps.png";
-import shareIcon from "../assets/Images/sharing.png";
+import telegramIcon from "../assets/Images/telegram_icon_share.png";
+import whatsappIcon from "../assets/Images/whatsapp_icon_share.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
@@ -31,6 +32,7 @@ export default function Map({ checkInState, checkOutState }) {
   const whatsappApiUrl =
     "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
   const googleRouteUrl = "https://www.google.de/maps/dir//";
+  const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
 
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
@@ -255,7 +257,7 @@ export default function Map({ checkInState, checkOutState }) {
                     </p>
                   </div>
                   <div className="Map__Popup__linebreaker"></div>
-                  <div className="Map__sharer__wrapper">
+                  <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
                       <a
                         href={
@@ -288,7 +290,7 @@ export default function Map({ checkInState, checkOutState }) {
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground">
+                    <div className="Map__Popup__share__playground__whatsapp">
                       <a
                         href={
                           positionData?.geometry?.type === "Point"
@@ -315,7 +317,42 @@ export default function Map({ checkInState, checkOutState }) {
                         rel="noreferrer"
                       >
                         {" "}
-                        <img src={shareIcon} alt="Spielplatz teilen" />
+                        <img
+                          src={whatsappIcon}
+                          alt="Spielplatz auf Whatsapp teilen"
+                        />
+                      </a>
+                    </div>
+                    <div className="Map__Popup__share__playground__telegram">
+                      <a
+                        href={
+                          positionData?.geometry?.type === "Point"
+                            ? [
+                                `${telegramUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "Polygon"
+                            ? [
+                                `${telegramUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "LineString"
+                            ? [
+                                `${telegramUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : positionData?.geometry?.type === "MultiPolygon"
+                            ? [
+                                `${telegramUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                              ]
+                            : console.error(
+                                `problem in finding the playground coordinates: ${positionData?._id}`
+                              )
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img
+                          src={telegramIcon}
+                          alt="Spielplatz auf Telegram teilen"
+                        />
                       </a>
                     </div>
                   </div>
