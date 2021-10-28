@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import CheckInButton from "../components/CheckInButton";
+import { latBasedToGeometryType } from "../hooks/positionsBasedToGeometryType";
+import { lonBasedToGeometryType } from "../hooks/positionsBasedToGeometryType";
 import SubmitForm from "../components/SubmitForm";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-markercluster";
@@ -10,11 +12,13 @@ import iconColored from "../assets/Images/swing_icon_colored.png";
 import iconWhite from "../assets/Images/swing_icon_white.png";
 import iconChild from "../assets/Images/child_icon.png";
 import googleMapsIcon from "../assets/Images/google-maps.png";
-import shareIcon from "../assets/Images/sharing.png";
+import telegramIcon from "../assets/Images/telegram_icon_share.png";
+import whatsappIcon from "../assets/Images/whatsapp_icon_share.png";
 import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
+import information from "../assets/Images/information.png";
 
 export default function Map({ checkInState, checkOutState }) {
   const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
@@ -31,6 +35,8 @@ export default function Map({ checkInState, checkOutState }) {
   const whatsappApiUrl =
     "https://api.whatsapp.com/send?text=https://spielplatzchecken.de/api/playgroundshare/";
   const googleRouteUrl = "https://www.google.de/maps/dir//";
+  const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
+  const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
@@ -62,8 +68,10 @@ export default function Map({ checkInState, checkOutState }) {
             );
           }
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          console.error(
+            "ups there has been an error while calling the nominatim api"
+          );
         });
     } else if (numberLonParams) {
       callSetViewFunction();
@@ -103,12 +111,16 @@ export default function Map({ checkInState, checkOutState }) {
   }, []);
 
   function handleOnSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const formInputValue = form.searchInput.value;
-    sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
-    form.reset();
-    setUpdatePage(!updatePage);
+    try {
+      e.preventDefault();
+      const form = e.target;
+      const formInputValue = form.searchInput.value;
+      sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
+      form.reset();
+      setUpdatePage(!updatePage);
+    } catch {
+      console.error("ups, there has been an error while submiting your value");
+    }
   }
 
   function getIcon(allPlaygrounds) {
@@ -170,6 +182,14 @@ export default function Map({ checkInState, checkOutState }) {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
+  function handleToolTipp() {
+    if (toolTipp === `Map__Popup__toolTipp--hide`) {
+      setToolTipp(`Map__Popup__toolTipp--show`);
+    } else {
+      setToolTipp(`Map__Popup__toolTipp--hide`);
+    }
+  }
+
   return (
     <>
       {helmet(
@@ -203,31 +223,10 @@ export default function Map({ checkInState, checkOutState }) {
               className="Map__Marker"
               icon={getIcon(positionData.userCount)}
               key={positionData?._id}
-              position={
-                positionData?.geometry?.type === "Point"
-                  ? [
-                      positionData?.geometry?.coordinates[1],
-                      positionData?.geometry?.coordinates[0],
-                    ]
-                  : positionData?.geometry?.type === "Polygon"
-                  ? [
-                      positionData?.geometry?.coordinates[0][1][1],
-                      positionData?.geometry?.coordinates[0][1][0],
-                    ]
-                  : positionData?.geometry?.type === "LineString"
-                  ? [
-                      positionData?.geometry?.coordinates[0][1],
-                      positionData?.geometry?.coordinates[0][0],
-                    ]
-                  : positionData?.geometry?.type === "MultiPolygon"
-                  ? [
-                      positionData?.geometry?.coordinates[0][0][0][1],
-                      positionData?.geometry?.coordinates[0][0][0][0],
-                    ]
-                  : console.error(
-                      `the playgroundID: ${positionData?._id} does not work`
-                    )
-              }
+              position={[
+                latBasedToGeometryType(positionData),
+                lonBasedToGeometryType(positionData),
+              ]}
             >
               <Popup className="Map__Popup">
                 <>
@@ -255,67 +254,71 @@ export default function Map({ checkInState, checkOutState }) {
                     </p>
                   </div>
                   <div className="Map__Popup__linebreaker"></div>
-                  <div className="Map__sharer__wrapper">
+                  <div className={toolTipp}>
+                    <p>
+                      Route zum Spielplatz über Google-Maps finden und
+                      Spielplatz auf Whatsapp oder Telegram teilen
+                    </p>
+                  </div>
+                  <img
+                    onClick={handleToolTipp}
+                    className="SubmitForm__info-button"
+                    src={information}
+                    alt="info-button"
+                  />
+                  <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
                       <a
-                        href={
-                          positionData?.geometry?.type === "Point"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[1]},${positionData?.geometry?.coordinates[0]}`,
-                              ]
-                            : positionData?.geometry?.type === "Polygon"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1][1]},${positionData?.geometry?.coordinates[0][1][0]}`,
-                              ]
-                            : positionData?.geometry?.type === "LineString"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][1]},${positionData?.geometry?.coordinates[0][0]}`,
-                              ]
-                            : positionData?.geometry?.type === "MultiPolygon"
-                            ? [
-                                `${googleRouteUrl}${positionData?.geometry?.coordinates[0][0][0][1]},${positionData?.geometry?.coordinates[0][0][0][0]}`,
-                              ]
-                            : console.error(
-                                `problem in finding the playground coordinates: ${positionData?._id}`
-                              )
-                        }
+                        href={[
+                          `${googleRouteUrl}${latBasedToGeometryType(
+                            positionData
+                          )},${lonBasedToGeometryType(positionData)}`,
+                        ]}
                         target="_blank"
                         rel="noreferrer"
                       >
+                        {" "}
                         <img
                           src={googleMapsIcon}
                           alt="Google-Maps-Route zum Spielplatz"
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground">
+                    <div className="Map__Popup__share__playground__whatsapp">
                       <a
-                        href={
-                          positionData?.geometry?.type === "Point"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[1]}/${positionData?.geometry?.coordinates[0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "Polygon"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1][1]}/${positionData?.geometry?.coordinates[0][1][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "LineString"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][1]}/${positionData?.geometry?.coordinates[0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : positionData?.geometry?.type === "MultiPolygon"
-                            ? [
-                                `${whatsappApiUrl}${positionData?.geometry?.coordinates[0][0][0][1]}/${positionData?.geometry?.coordinates[0][0][0][0]}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
-                              ]
-                            : console.error(
-                                `problem in finding the playground coordinates: ${positionData?._id}`
-                              )
-                        }
+                        href={[
+                          `${whatsappApiUrl}${latBasedToGeometryType(
+                            positionData
+                          )}/${lonBasedToGeometryType(
+                            positionData
+                          )}/ Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                        ]}
                         target="_blank"
                         rel="noreferrer"
                       >
                         {" "}
-                        <img src={shareIcon} alt="Spielplatz teilen" />
+                        <img
+                          src={whatsappIcon}
+                          alt="Spielplatz auf Whatsapp teilen"
+                        />
+                      </a>
+                    </div>
+                    <div className="Map__Popup__share__playground__telegram">
+                      <a
+                        href={[
+                          `${telegramUrl}${latBasedToGeometryType(
+                            positionData
+                          )}/${lonBasedToGeometryType(
+                            positionData
+                          )}/&text=Hättest du Lust auf diesen Spielplatz zu gehen?`,
+                        ]}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img
+                          src={telegramIcon}
+                          alt="Spielplatz auf Telegram teilen"
+                        />
                       </a>
                     </div>
                   </div>
