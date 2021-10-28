@@ -108,7 +108,7 @@ export default function Map({ checkInState, checkOutState }) {
       }
     }
     fetchAllPlaygroundsApi();
-  }, [dbUserId, checkOutState, localStorageUserId, checkInState]);
+  }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
 
   useEffect(() => {
     defaultVisitsPatch("615af599ff20382e9dd25aab");
