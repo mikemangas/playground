@@ -54,12 +54,13 @@ export default function Map({ checkInState, checkOutState }) {
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland,${locationSearchValue}&limit=3&format=json`;
     if (locationSearchValue) {
-      fetch(searchInputUrl)
-        .then((res) => res.json())
-        .then((searchedLocationData) => {
-          if (searchedLocationData.length > 0) {
-            const newLatitude = Number(searchedLocationData[0]?.lat);
-            const newLongitude = Number(searchedLocationData[0]?.lon);
+      async function fetchCoordinatesApi() {
+        try {
+          let response = await fetch(searchInputUrl);
+          response = await response.json();
+          if (response.length > 0) {
+            const newLatitude = Number(response[0]?.lat);
+            const newLongitude = Number(response[0]?.lon);
             setLat(newLatitude);
             setLon(newLongitude);
             map.setView([newLatitude, newLongitude], 16);
@@ -68,12 +69,13 @@ export default function Map({ checkInState, checkOutState }) {
               "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
             );
           }
-        })
-        .catch(() => {
+        } catch {
           console.error(
             "ups there has been an error while calling the nominatim api"
           );
-        });
+        }
+      }
+      fetchCoordinatesApi();
     } else if (numberLonParams) {
       callSetViewFunction();
       setLat(numberLatParams);
@@ -83,27 +85,31 @@ export default function Map({ checkInState, checkOutState }) {
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((allPlaygrounds) => {
-        setPlayGroundData(allPlaygrounds);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    async function fetchAllPlaygroundsApi() {
+      try {
+        let response = await fetch(url);
+        response = await response.json();
+        setPlayGroundData(response);
+      } catch {
+        console.error("sorry, couldnt fetch your data");
+      }
+    }
+    fetchAllPlaygroundsApi();
   }, [lat, lon, numberLatParams, map]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((checkedInUser) => {
-        setDbUserId(checkedInUser?.checkedInUserMongoId);
+    async function fetchAllPlaygroundsApi() {
+      try {
+        let response = await fetch(url);
+        response = await response.json();
+        setDbUserId(response?.checkedInUserMongoId);
         checkInState(dbUserId);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch {
+        console.error("sorry, couldnt fetch your data");
+      }
+    }
+    fetchAllPlaygroundsApi();
   }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
 
   useEffect(() => {
@@ -240,7 +246,9 @@ export default function Map({ checkInState, checkOutState }) {
                     className={"Map__button--checkin"}
                   />
                   {positionData?.properties?.name ? (
-                    <p>{positionData?.properties?.name}</p>
+                    <p className="Popup__playgroundName">
+                      {positionData?.properties?.name}
+                    </p>
                   ) : (
                     false
                   )}
