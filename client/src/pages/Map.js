@@ -93,7 +93,7 @@ export default function Map({ checkInState, checkOutState }) {
       }
     }
     fetchAllPlaygroundsApi();
-  }, [lat, lon, numberLatParams, map]);
+  }, [lat, lon, numberLatParams, map, updatePage]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -108,7 +108,7 @@ export default function Map({ checkInState, checkOutState }) {
       }
     }
     fetchAllPlaygroundsApi();
-  }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
+  }, [dbUserId, checkOutState, localStorageUserId, checkInState]);
 
   useEffect(() => {
     defaultVisitsPatch("615af599ff20382e9dd25aab");
@@ -116,6 +116,7 @@ export default function Map({ checkInState, checkOutState }) {
   }, []);
 
   function handleOnSubmit(e) {
+    window.location.reload();
     try {
       e.preventDefault();
       const form = e.target;
@@ -194,7 +195,6 @@ export default function Map({ checkInState, checkOutState }) {
       setToolTipp(`Map__Popup__toolTipp--hide`);
     }
   }
-
   return (
     <>
       {helmet(
@@ -244,7 +244,7 @@ export default function Map({ checkInState, checkOutState }) {
                     className={"Map__button--checkin"}
                   />
                   {positionData?.properties?.name ? (
-                    <p className="Popup__playgroundName">
+                    <p className="Popup__positionDataName">
                       {positionData?.properties?.name}
                     </p>
                   ) : (
@@ -291,7 +291,7 @@ export default function Map({ checkInState, checkOutState }) {
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground__whatsapp">
+                    <div className="Map__Popup__share__positionData__whatsapp">
                       <a
                         href={[
                           `${whatsappApiUrl}${latBasedToGeometryType(
@@ -310,7 +310,7 @@ export default function Map({ checkInState, checkOutState }) {
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground__telegram">
+                    <div className="Map__Popup__share__positionData__telegram">
                       <a
                         href={[
                           `${telegramUrl}${latBasedToGeometryType(
@@ -331,6 +331,7 @@ export default function Map({ checkInState, checkOutState }) {
                   </div>
                 </>
               </Popup>
+              ;
             </Marker>
           ))}
         </MarkerClusterGroup>
