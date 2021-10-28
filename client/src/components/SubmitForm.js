@@ -3,11 +3,7 @@ import information from "../assets/Images/information.png";
 import { useState } from "react";
 import createInternLink from "../hooks/createInternLink";
 
-export default function SubmitForm({
-  handleOnSubmit,
-  className,
-  individualClass,
-}) {
+export default function SubmitForm({ individualClass }) {
   const [toolTipp, setToolTipp] = useState(
     `${individualClass}__SubmitForm__toolTipp--hide`
   );

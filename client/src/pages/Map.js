@@ -38,6 +38,7 @@ export default function Map({ checkInState, checkOutState }) {
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
+  // calling the setview function when coordinates are beeing used in params
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
   }
@@ -51,7 +52,7 @@ export default function Map({ checkInState, checkOutState }) {
   }
 
   useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland, ${locationSearchValue}&limit=3&format=json`;
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland,${locationSearchValue}&limit=3&format=json`;
     if (locationSearchValue) {
       fetch(searchInputUrl)
         .then((res) => res.json())
@@ -90,7 +91,7 @@ export default function Map({ checkInState, checkOutState }) {
       .catch((error) => {
         console.error(error);
       });
-  }, [lat, lon, numberLatParams]);
+  }, [lat, lon, numberLatParams, map]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
@@ -197,7 +198,7 @@ export default function Map({ checkInState, checkOutState }) {
         "In dieser Karte kannst du Spielplätze in deiner Nähe suchen, finden, dich einchecken und einsehen, ob sich andere Eltern auf Spielplätzen befinden."
       )}
       <form className="Map__SubmitForm" onSubmit={handleOnSubmit}>
-        <SubmitForm handleOnSubmit={handleOnSubmit} individualClass="Map" />
+        <SubmitForm individualClass="Map" />
       </form>
       <button
         className={"Map__useLocation__button"}
