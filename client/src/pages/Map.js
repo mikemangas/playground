@@ -69,10 +69,8 @@ export default function Map({ checkInState, checkOutState }) {
               "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
             );
           }
-        } catch {
-          console.error(
-            "ups there has been an error while calling the nominatim api"
-          );
+        } catch (e) {
+          console.error("nominatim api error:", e);
         }
       }
       fetchCoordinatesApi();
@@ -90,8 +88,8 @@ export default function Map({ checkInState, checkOutState }) {
         let response = await fetch(url);
         response = await response.json();
         setPlayGroundData(response);
-      } catch {
-        console.error("sorry, couldnt fetch your data");
+      } catch (e) {
+        console.error("fetch all playgrounds error:", e);
       }
     }
     fetchAllPlaygroundsApi();
@@ -105,8 +103,8 @@ export default function Map({ checkInState, checkOutState }) {
         response = await response.json();
         setDbUserId(response?.checkedInUserMongoId);
         checkInState(dbUserId);
-      } catch {
-        console.error("sorry, couldnt fetch your data");
+      } catch (e) {
+        console.error("fetching user data error:", e);
       }
     }
     fetchAllPlaygroundsApi();
@@ -170,7 +168,7 @@ export default function Map({ checkInState, checkOutState }) {
         toast.error(
           "Ups, leider ist beim einchecken etwas schief gelaufen. Versuche es noch einmal."
         );
-        console.error(error);
+        console.error("check-in error:", error);
       });
   }
 
