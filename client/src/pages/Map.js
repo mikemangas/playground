@@ -45,7 +45,7 @@ export default function Map({ checkInState, checkOutState }) {
   }
 
   useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=${locationSearchValue}&limit=20&format=json`;
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland, ${locationSearchValue}&limit=3&format=json`;
     if (locationSearchValue) {
       fetch(searchInputUrl)
         .then((res) => res.json())
