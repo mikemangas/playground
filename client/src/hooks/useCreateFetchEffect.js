@@ -8,5 +8,5 @@ export default function useCreateFetchEffect(url, setData) {
         setData(data);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [setData, url]);
 }

@@ -38,6 +38,7 @@ export default function Map({ checkInState, checkOutState }) {
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
+  // calling the setview function when coordinates are beeing used in params
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
   }
@@ -51,14 +52,15 @@ export default function Map({ checkInState, checkOutState }) {
   }
 
   useEffect(() => {
-    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland, ${locationSearchValue}&limit=3&format=json`;
+    const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland,${locationSearchValue}&limit=3&format=json`;
     if (locationSearchValue) {
-      fetch(searchInputUrl)
-        .then((res) => res.json())
-        .then((searchedLocationData) => {
-          if (searchedLocationData.length > 0) {
-            const newLatitude = Number(searchedLocationData[0]?.lat);
-            const newLongitude = Number(searchedLocationData[0]?.lon);
+      async function fetchCoordinatesApi() {
+        try {
+          let response = await fetch(searchInputUrl);
+          response = await response.json();
+          if (response.length > 0) {
+            const newLatitude = Number(response[0]?.lat);
+            const newLongitude = Number(response[0]?.lon);
             setLat(newLatitude);
             setLon(newLongitude);
             map.setView([newLatitude, newLongitude], 16);
@@ -67,12 +69,11 @@ export default function Map({ checkInState, checkOutState }) {
               "Leider konnten wir mit deiner Suchanfrage nichts finden. Versuche es nochmal."
             );
           }
-        })
-        .catch(() => {
-          console.error(
-            "ups there has been an error while calling the nominatim api"
-          );
-        });
+        } catch (e) {
+          console.error("nominatim api error:", e);
+        }
+      }
+      fetchCoordinatesApi();
     } else if (numberLonParams) {
       callSetViewFunction();
       setLat(numberLatParams);
@@ -82,27 +83,31 @@ export default function Map({ checkInState, checkOutState }) {
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((allPlaygrounds) => {
-        setPlayGroundData(allPlaygrounds);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, [lat, lon, numberLatParams]);
+    async function fetchAllPlaygroundsApi() {
+      try {
+        let response = await fetch(url);
+        response = await response.json();
+        setPlayGroundData(response);
+      } catch (e) {
+        console.error("fetch all playgrounds error:", e);
+      }
+    }
+    fetchAllPlaygroundsApi();
+  }, [lat, lon, numberLatParams, map, updatePage]);
 
   useEffect(() => {
     const url = `/api/user/${localStorageUserId}`;
-    fetch(url)
-      .then((res) => res.json())
-      .then((checkedInUser) => {
-        setDbUserId(checkedInUser?.checkedInUserMongoId);
+    async function fetchAllPlaygroundsApi() {
+      try {
+        let response = await fetch(url);
+        response = await response.json();
+        setDbUserId(response?.checkedInUserMongoId);
         checkInState(dbUserId);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (e) {
+        console.error("fetching user data error:", e);
+      }
+    }
+    fetchAllPlaygroundsApi();
   }, [dbUserId, checkOutState, localStorageUserId, updatePage, checkInState]);
 
   useEffect(() => {
@@ -111,6 +116,7 @@ export default function Map({ checkInState, checkOutState }) {
   }, []);
 
   function handleOnSubmit(e) {
+    window.location.reload();
     try {
       e.preventDefault();
       const form = e.target;
@@ -163,7 +169,7 @@ export default function Map({ checkInState, checkOutState }) {
         toast.error(
           "Ups, leider ist beim einchecken etwas schief gelaufen. Versuche es noch einmal."
         );
-        console.error(error);
+        console.error("check-in error:", error);
       });
   }
 
@@ -189,7 +195,6 @@ export default function Map({ checkInState, checkOutState }) {
       setToolTipp(`Map__Popup__toolTipp--hide`);
     }
   }
-
   return (
     <>
       {helmet(
@@ -197,7 +202,7 @@ export default function Map({ checkInState, checkOutState }) {
         "In dieser Karte kannst du Spielplätze in deiner Nähe suchen, finden, dich einchecken und einsehen, ob sich andere Eltern auf Spielplätzen befinden."
       )}
       <form className="Map__SubmitForm" onSubmit={handleOnSubmit}>
-        <SubmitForm handleOnSubmit={handleOnSubmit} individualClass="Map" />
+        <SubmitForm individualClass="Map" />
       </form>
       <button
         className={"Map__useLocation__button"}
@@ -239,7 +244,9 @@ export default function Map({ checkInState, checkOutState }) {
                     className={"Map__button--checkin"}
                   />
                   {positionData?.properties?.name ? (
-                    <p>{positionData?.properties?.name}</p>
+                    <p className="Popup__positionDataName">
+                      {positionData?.properties?.name}
+                    </p>
                   ) : (
                     false
                   )}
@@ -284,7 +291,7 @@ export default function Map({ checkInState, checkOutState }) {
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground__whatsapp">
+                    <div className="Map__Popup__share__positionData__whatsapp">
                       <a
                         href={[
                           `${whatsappApiUrl}${latBasedToGeometryType(
@@ -303,7 +310,7 @@ export default function Map({ checkInState, checkOutState }) {
                         />
                       </a>
                     </div>
-                    <div className="Map__Popup__share__playground__telegram">
+                    <div className="Map__Popup__share__positionData__telegram">
                       <a
                         href={[
                           `${telegramUrl}${latBasedToGeometryType(
@@ -324,6 +331,7 @@ export default function Map({ checkInState, checkOutState }) {
                   </div>
                 </>
               </Popup>
+              ;
             </Marker>
           ))}
         </MarkerClusterGroup>
