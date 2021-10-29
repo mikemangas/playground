@@ -8,7 +8,7 @@ const Checkins = require("../models/Checkins");
 const CheckinsSummaryDaily = require("../models/CheckinsSummaryDaily");
 const CheckinsSummaryMonthly = require("../models/CheckinsSummaryMonthly");
 
-//schedule daily visits and checkins
+//schedule daily visits & checkins
 cron.schedule(
   "59 59 23 * * *",
   async () => {
@@ -28,7 +28,7 @@ cron.schedule(
   { timezone: "GMT0" }
 );
 
-//schedule  monthly visits
+//schedule  monthly visits & checkins
 cron.schedule(
   "3 0 3 1 1-12 *",
   async () => {
