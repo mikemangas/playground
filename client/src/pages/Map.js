@@ -233,7 +233,7 @@ export default function Map({ checkInState, checkOutState }) {
                 lonBasedToGeometryType(positionData),
               ]}
             >
-              <Popup className="Map__Popup">
+              {/* <Popup className="Map__Popup">
                 <>
                   <CheckInButton
                     handleCheckInButton={() =>
@@ -330,7 +330,7 @@ export default function Map({ checkInState, checkOutState }) {
                     </div>
                   </div>
                 </>
-              </Popup>
+              </Popup> */}
             </Marker>
           ))}
         </MarkerClusterGroup>
