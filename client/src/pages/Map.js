@@ -331,7 +331,6 @@ export default function Map({ checkInState, checkOutState }) {
                   </div>
                 </>
               </Popup>
-              ;
             </Marker>
           ))}
         </MarkerClusterGroup>
