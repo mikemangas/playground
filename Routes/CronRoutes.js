@@ -8,39 +8,43 @@ const Checkins = require("../models/Checkins");
 const CheckinsSummaryDaily = require("../models/CheckinsSummaryDaily");
 const CheckinsSummaryMonthly = require("../models/CheckinsSummaryMonthly");
 
-//schedule daily visits and checkins
-cron.schedule("3 46 21 * * *", async () => {
-  const currentVisits = await Visits.find();
-  currentVisits.forEach((singleValues) => {
-    VisitsSummaryDaily.create({
-      counter: singleValues.counter,
-      pageName: singleValues.pageName,
+//schedule daily visits & checkins
+cron.schedule(
+  "59 59 23 * * *",
+  async () => {
+    const currentVisits = await Visits.find();
+    currentVisits.forEach((singleValues) => {
+      VisitsSummaryDaily.create({
+        counter: singleValues.counter,
+        pageName: singleValues.pageName,
+      });
     });
-  });
 
-  const currentCheckins = await Checkins.find();
-  CheckinsSummaryDaily.create({
-    counter: currentCheckins.length,
-  });
-});
-
-//schedule  monthly visits
-cron.schedule("3 0 3 1 1-12 *", async () => {
-  const currentVisits = await Visits.find();
-  currentVisits.forEach((singleValues) => {
-    VisitsSummaryMonthly.create({
-      counter: singleValues.counter,
-      pageName: singleValues.pageName,
+    const currentCheckins = await Checkins.find();
+    CheckinsSummaryDaily.create({
+      counter: currentCheckins.length,
     });
-  });
-});
+  },
+  { timezone: "GMT0" }
+);
 
-//schedule monthly checkins
-cron.schedule("3 0 3 1 1-12 *", async () => {
-  const currentCheckins = await Checkins.find();
-  CheckinsSummaryMonthly.create({
-    counter: currentCheckins.length,
-  });
-});
+//schedule  monthly visits & checkins
+cron.schedule(
+  "3 0 3 1 1-12 *",
+  async () => {
+    const currentVisits = await Visits.find();
+    currentVisits.forEach((singleValues) => {
+      VisitsSummaryMonthly.create({
+        counter: singleValues.counter,
+        pageName: singleValues.pageName,
+      });
+    });
+    const currentCheckins = await Checkins.find();
+    CheckinsSummaryMonthly.create({
+      counter: currentCheckins.length,
+    });
+  },
+  { timezone: "GMT0" }
+);
 
 module.exports = router;
