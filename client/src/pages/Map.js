@@ -179,8 +179,6 @@ export default function Map({ checkInState, checkOutState }) {
       map.setView([latitude, longitude], 17);
       setLat(latitude);
       setLon(longitude);
-    } else {
-      console.log("nothing to position from the currentlocation api GPS");
     }
   }
 

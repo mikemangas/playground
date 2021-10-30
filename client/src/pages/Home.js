@@ -5,7 +5,7 @@ import SubmitForm from "../components/SubmitForm";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import createInternLink from "../hooks/createInternLink";
 
-export default function Home() {
+export default function Home({ lat, lon, setview }) {
   const [checkbox, setCheckbox] = useState(true);
   const history = useHistory();
   useEffect(() => {
@@ -24,6 +24,19 @@ export default function Home() {
 
   function privacyFunction() {
     setCheckbox(!checkbox);
+  }
+
+  function geoapiCoordinates(pos) {
+    if (pos) {
+      const { latitude, longitude } = pos.coords;
+      setview([latitude, longitude], 17);
+      lat(latitude);
+      lon(longitude);
+    }
+  }
+
+  function geoapiGetLocation() {
+    navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
   return (
@@ -45,6 +58,14 @@ export default function Home() {
             handleOnSubmit={handleOnSubmit}
             isDisabled={checkbox}
           />
+
+          <button
+            className={"Map__useLocation__button"}
+            onClick={geoapiGetLocation}
+            disabled={checkbox}
+          >
+            Meinen Standort zur Suche nutzen
+          </button>
           <div className="SubmitForm__checkbox">
             <p>
               Stimmen Sie unserer{" "}
