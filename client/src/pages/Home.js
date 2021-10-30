@@ -1,11 +1,12 @@
 import "./Home.css";
 import { useHistory } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import SubmitForm from "../components/SubmitForm";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import createInternLink from "../hooks/createInternLink";
 
 export default function Home() {
+  const [checkbox, setCheckbox] = useState(true);
   const history = useHistory();
   useEffect(() => {
     defaultVisitsPatch("615af57dff20382e9dd25aa9");
@@ -19,6 +20,10 @@ export default function Home() {
     sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
     form.reset();
     history.push(`/map`);
+  }
+
+  function privacyFunction() {
+    setCheckbox(!checkbox);
   }
 
   return (
@@ -35,17 +40,22 @@ export default function Home() {
         </div>
 
         <form className="Home__SubmitForm" onSubmit={handleOnSubmit}>
-          <SubmitForm individualClass="Home" handleOnSubmit={handleOnSubmit} />
+          <SubmitForm
+            individualClass="Home"
+            handleOnSubmit={handleOnSubmit}
+            isDisabled={checkbox}
+          />
           <div className="SubmitForm__checkbox">
             <p>
-              Mit dem Klick auf "Suchen" stimmen sie unserer{" "}
-              {createInternLink("/datenschutz", "Datenschutzerklärung")} zu.
+              Stimmen Sie unserer{" "}
+              {createInternLink("/datenschutz", "Datenschutzerklärung")} zu,
+              damit sie suchen können.
             </p>
             <input
               className="SubmitForm__checkbox__ticker"
               type="checkbox"
               id="datenschutz"
-              required
+              onClick={privacyFunction}
             ></input>
           </div>
         </form>

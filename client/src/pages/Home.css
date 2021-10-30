@@ -90,3 +90,14 @@
 .Home__SubmitForm__toolTipp--hide {
   display: none;
 }
+
+.Home__SubmitForm button[disabled] {
+  background-color: var(--color-disabled-background);
+  color: var(--color-disabled-text);
+  align-items: center;
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  width: fit-content;
+  justify-content: center;
+  display: flex;
+}
