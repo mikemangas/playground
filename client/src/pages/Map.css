@@ -114,14 +114,12 @@
   color: var(--color-text);
   padding: 10px;
   margin: 15px;
-  cursor: pointer;
 }
 
 .Map__button--checkin {
   background-color: var(--color-submit);
   color: white;
   padding: 5px;
-  cursor: pointer;
   width: 100%;
 }
 

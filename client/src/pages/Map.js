@@ -53,19 +53,7 @@ export default function Map({
     } catch (e) {
       console.error(e);
     }
-  });
-  // calling the setview function when coordinates are beeing used in params
-  function setViewFunction() {
-    map.setView([numberLatParams, numberLonParams], 20);
-  }
-
-  async function callSetViewFunction() {
-    try {
-      await setViewFunction();
-    } catch {
-      console.log("something went wrong calling ing the callSetViewFunction");
-    }
-  }
+  }, [latState, lonState, map]);
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland,${locationSearchValue}&limit=3&format=json`;
@@ -91,11 +79,15 @@ export default function Map({
       }
       fetchCoordinatesApi();
     } else if (numberLonParams) {
-      callSetViewFunction();
+      try {
+        map.setView([numberLatParams, numberLonParams], 20);
+      } catch (e) {
+        console.error(e);
+      }
       setLat(numberLatParams);
       setLon(numberLonParams);
     }
-  }, [locationSearchValue, map]);
+  }, [locationSearchValue, map, numberLatParams, numberLonParams]);
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
@@ -140,8 +132,11 @@ export default function Map({
       sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
       form.reset();
       setUpdatePage(!updatePage);
-    } catch {
-      console.error("ups, there has been an error while submiting your value");
+    } catch (e) {
+      console.error(
+        "ups, there has been an error while submiting your value",
+        e
+      );
     }
   }
 
