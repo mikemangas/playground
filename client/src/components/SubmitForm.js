@@ -34,6 +34,7 @@ export default function SubmitForm({ individualClass, isDisabled }) {
           placeholder="PLZ, Ort oder Adresse"
           name="searchInput"
           id="searchInput"
+          disabled={isDisabled}
         />
 
         <button disabled={isDisabled} type="submit">

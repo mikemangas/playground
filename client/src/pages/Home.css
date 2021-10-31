@@ -101,4 +101,5 @@
   width: fit-content;
   justify-content: center;
   display: flex;
+  cursor: not-allowed;
 }

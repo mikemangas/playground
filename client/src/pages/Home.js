@@ -68,9 +68,9 @@ export default function Home({ lat, lon, setview }) {
           </button>
           <div className="SubmitForm__checkbox">
             <p>
-              Stimmen Sie unserer{" "}
+              Stimme unserer{" "}
               {createInternLink("/datenschutz", "Datenschutzerklärung")} zu,
-              damit Sie suchen können.
+              damit du suchen kannst.
             </p>
             <input
               className="SubmitForm__checkbox__ticker"

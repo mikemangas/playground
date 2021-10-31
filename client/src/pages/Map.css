@@ -72,14 +72,6 @@
   justify-content: center;
 }
 
-.Map__useLocation__button:hover {
-  padding: 10px;
-  border: 2px var(--color-turqouise) solid;
-  color: var(--color-turqouise);
-  background-color: var(--color-purple);
-  cursor: pointer;
-}
-
 .Map__SubmitForm button {
   padding: 10px;
   margin: 10px 10px 10px 0;
