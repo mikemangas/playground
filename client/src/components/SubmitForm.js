@@ -3,7 +3,7 @@ import information from "../assets/Images/information.png";
 import { useState } from "react";
 import createInternLink from "../hooks/createInternLink";
 
-export default function SubmitForm({ individualClass }) {
+export default function SubmitForm({ individualClass, isDisabled }) {
   const [toolTipp, setToolTipp] = useState(
     `${individualClass}__SubmitForm__toolTipp--hide`
   );
@@ -34,9 +34,12 @@ export default function SubmitForm({ individualClass }) {
           placeholder="PLZ, Ort oder Adresse"
           name="searchInput"
           id="searchInput"
+          disabled={isDisabled}
         />
 
-        <button type="submit"> Suchen </button>
+        <button disabled={isDisabled} type="submit">
+          Suchen
+        </button>
       </div>
     </div>
   );

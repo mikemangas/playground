@@ -20,7 +20,12 @@ import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import information from "../assets/Images/information.png";
 
-export default function Map({ checkInState, checkOutState }) {
+export default function Map({
+  checkInState,
+  checkOutState,
+  latState,
+  lonState,
+}) {
   const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -38,18 +43,17 @@ export default function Map({ checkInState, checkOutState }) {
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
-  // calling the setview function when coordinates are beeing used in params
-  function setViewFunction() {
-    map.setView([numberLatParams, numberLonParams], 20);
-  }
-
-  async function callSetViewFunction() {
+  useEffect(() => {
     try {
-      await setViewFunction();
-    } catch {
-      console.log("something went wrong calling ing the callSetViewFunction");
+      if (latState && lonState) {
+        setLat(latState);
+        setLon(lonState);
+        map.setView([latState, lonState], 17);
+      }
+    } catch (e) {
+      console.error(e);
     }
-  }
+  }, [latState, lonState, map]);
 
   useEffect(() => {
     const searchInputUrl = `https://nominatim.openstreetmap.org/search?q=Deutschland,${locationSearchValue}&limit=3&format=json`;
@@ -75,11 +79,15 @@ export default function Map({ checkInState, checkOutState }) {
       }
       fetchCoordinatesApi();
     } else if (numberLonParams) {
-      callSetViewFunction();
+      try {
+        map.setView([numberLatParams, numberLonParams], 20);
+      } catch (e) {
+        console.error(e);
+      }
       setLat(numberLatParams);
       setLon(numberLonParams);
     }
-  }, [locationSearchValue, map]);
+  }, [locationSearchValue, map, numberLatParams, numberLonParams]);
 
   useEffect(() => {
     const url = `/api/playground/${lon}/${lat}`;
@@ -124,8 +132,11 @@ export default function Map({ checkInState, checkOutState }) {
       sessionStorage.setItem("inputText", JSON.stringify(formInputValue));
       form.reset();
       setUpdatePage(!updatePage);
-    } catch {
-      console.error("ups, there has been an error while submiting your value");
+    } catch (e) {
+      console.error(
+        "ups, there has been an error while submiting your value",
+        e
+      );
     }
   }
 
@@ -179,8 +190,6 @@ export default function Map({ checkInState, checkOutState }) {
       map.setView([latitude, longitude], 17);
       setLat(latitude);
       setLon(longitude);
-    } else {
-      console.log("nothing to position from the currentlocation api GPS");
     }
   }
 
