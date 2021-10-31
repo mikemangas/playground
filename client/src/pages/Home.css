@@ -59,7 +59,7 @@
 
 .Home__SubmitForm button {
   padding: 10px;
-  margin: 10px 10px 10px 0;
+  margin: 10px;
   border: 2px solid var(--color-purple);
   color: var(--color-purple);
   background-color: var(--color-turqouise);
@@ -67,6 +67,7 @@
   -webkit-justify-content: center;
   justify-content: center;
   display: flex;
+  align-items: center;
 }
 
 .Home__SubmitForm input {
@@ -95,9 +96,7 @@
 .Map__useLocation__button[disabled] {
   background-color: var(--color-disabled-background);
   color: var(--color-disabled-text);
-  align-items: center;
   padding: 10px;
-  margin: 10px 10px 10px 0;
   width: fit-content;
   justify-content: center;
   display: flex;

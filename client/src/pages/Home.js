@@ -82,6 +82,10 @@ export default function Home({ lat, lon, setview }) {
         </form>
         <ol className="Home__Section__info__wrapper">
           <h2>So geht die Spielplatzsuche</h2>
+          <li>
+            PLZ oder Ort eingeben (alternativ kann auch die Funktion "Meinen
+            Standort zur Suche nutzen" genutzt werden.
+          </li>
           <li>Spielplatz finden</li>
           <li>Einchecken</li>
           <li>Beim Verlassen des Spielplatzes auschecken</li>
