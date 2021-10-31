@@ -1,4 +1,5 @@
 import { Switch, Route } from "react-router-dom";
+import { useState } from "react";
 import Home from "../pages/Home";
 import Map from "../pages/Map";
 import Impressum from "../pages/Impressum";
@@ -9,6 +10,9 @@ import Faq from "../pages/Faq";
 import Stats from "../pages/Stats";
 
 export default function Main({ checkInState, checkOutState }) {
+  const [lat, setLat] = useState();
+  const [lon, setLon] = useState();
+
   return (
     <main className="Main">
       <Switch>
@@ -16,7 +20,12 @@ export default function Main({ checkInState, checkOutState }) {
           <Impressum />
         </Route>
         <Route path="/map/">
-          <Map checkInState={checkInState} checkOutState={checkOutState} />
+          <Map
+            latState={lat}
+            lonState={lon}
+            checkInState={checkInState}
+            checkOutState={checkOutState}
+          />
         </Route>
 
         <Route path="/api/playgroundshare/:latparams/:lonparams">
@@ -37,7 +46,7 @@ export default function Main({ checkInState, checkOutState }) {
         </Route>
 
         <Route exact path="/">
-          <Home />
+          <Home lat={setLat} lon={setLon} />
         </Route>
         <Route path="*">
           <NotFound />

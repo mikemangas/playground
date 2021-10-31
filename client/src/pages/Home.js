@@ -29,9 +29,9 @@ export default function Home({ lat, lon, setview }) {
   function geoapiCoordinates(pos) {
     if (pos) {
       const { latitude, longitude } = pos.coords;
-      setview([latitude, longitude], 17);
       lat(latitude);
       lon(longitude);
+      history.push(`/map`);
     }
   }
 
@@ -70,7 +70,7 @@ export default function Home({ lat, lon, setview }) {
             <p>
               Stimmen Sie unserer{" "}
               {createInternLink("/datenschutz", "Datenschutzerklärung")} zu,
-              damit sie suchen können.
+              damit Sie suchen können.
             </p>
             <input
               className="SubmitForm__checkbox__ticker"

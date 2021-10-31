@@ -20,7 +20,12 @@ import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import information from "../assets/Images/information.png";
 
-export default function Map({ checkInState, checkOutState }) {
+export default function Map({
+  checkInState,
+  checkOutState,
+  latState,
+  lonState,
+}) {
   const locationSearchValue = JSON.parse(sessionStorage.getItem("inputText"));
   const localStorageUserId = JSON.parse(localStorage.getItem("userId"));
   const [updatePage, setUpdatePage] = useState();
@@ -38,6 +43,17 @@ export default function Map({ checkInState, checkOutState }) {
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
 
+  useEffect(() => {
+    try {
+      if (latState && lonState) {
+        setLat(latState);
+        setLon(lonState);
+        map.setView([latState, lonState], 17);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  });
   // calling the setview function when coordinates are beeing used in params
   function setViewFunction() {
     map.setView([numberLatParams, numberLonParams], 20);
