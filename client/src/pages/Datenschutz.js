@@ -128,7 +128,7 @@ export default function Datenschutz() {
       <p>
         Telefon: +49 176 567 63760
         <br />
-        E-Mail: kontakt@kindersport-wissen.de
+        E-Mail: kontakt[@]kindersport-wissen.de
       </p>
       <p>
         Verantwortliche Stelle ist die nat&uuml;rliche oder juristische Person,

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const VisitsSummaryDaily = require("../models/VisitsSummaryDaily");
 const Visits = require("../models/Visits");
-const CheckinsSummaryDaily = require("../models/CheckinsSummaryDaily");
 
 router.get("/api/visits/:id", async (req, res) => {
   const counter = req.body;

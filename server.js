@@ -11,6 +11,7 @@ const VisitsRoutes = require("./Routes/VisitsRoutes");
 const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 const helmet = require("helmet");
+const ReferrerRoutes = require("./Routes/ReferrerRoutes");
 
 app.use(
   helmet({
@@ -69,6 +70,7 @@ app.use(contactFormRoutes);
 app.use(VisitsRoutes);
 app.use(CronRoutes);
 app.use(CheckinRoutes);
+app.use(ReferrerRoutes);
 
 if (process.env.NODE_ENV === "production") {
   // Serve any static file
