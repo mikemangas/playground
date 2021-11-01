@@ -12,7 +12,21 @@ const CronRoutes = require("./Routes/CronRoutes");
 const CheckinRoutes = require("./Routes/CheckinRoutes");
 const helmet = require("helmet");
 const ReferrerRoutes = require("./Routes/ReferrerRoutes");
+const { MONGO_URI, PORT, ORIGINS } = process.env;
+const whitelist = ORIGINS.split(",");
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  optionsSuccessStatus: 200,
+};
 
+app.use(cors(corsOptions));
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -62,7 +76,6 @@ app.use(
     },
   })
 );
-app.use(cors());
 app.use(express.json());
 app.use(playgroundRoutes);
 app.use(userRoutes);
@@ -81,8 +94,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "client/build", "index.html"));
   });
 }
-
-const { MONGO_URI, PORT } = process.env;
 
 mongoose
   .connect(MONGO_URI, {
