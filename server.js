@@ -64,7 +64,6 @@ app.use(
 );
 app.use(cors());
 app.use(express.json());
-
 app.use(playgroundRoutes);
 app.use(userRoutes);
 app.use(contactFormRoutes);
