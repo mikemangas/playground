@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Home from "../pages/Home";
 import Map from "../pages/Map";
 import Impressum from "../pages/Impressum";
@@ -12,6 +12,30 @@ import Stats from "../pages/Stats";
 export default function Main({ checkInState, checkOutState }) {
   const [lat, setLat] = useState();
   const [lon, setLon] = useState();
+
+  useEffect(() => {
+    const url = `/api/referrer/`;
+    let referrer = document.referrer;
+    if (referrer !== "") {
+      let settings = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          referrer,
+        }),
+      };
+      async function fetchReferrer() {
+        try {
+          let response = await fetch(url, settings);
+          response = await response.json();
+          console.log("response", response);
+        } catch (e) {
+          console.error("fetch referrers error:", e);
+        }
+      }
+      fetchReferrer();
+    }
+  }, []);
 
   return (
     <main className="Main">
