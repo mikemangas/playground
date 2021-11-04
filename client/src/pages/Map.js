@@ -20,6 +20,7 @@ import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import information from "../assets/Images/information.png";
 import createInternLink from "../hooks/createInternLink";
+import sharing from "../assets/Images/sharing.png";
 
 export default function Map({
   checkInState,
@@ -44,6 +45,7 @@ export default function Map({
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
   const mP = "Map__Popup";
+  const [select, setSelect] = useState();
 
   useEffect(() => {
     try {
@@ -208,34 +210,39 @@ export default function Map({
   }
 
   function handleOnReportPlayground(clickedPlayground) {
-    // clickedPlayground.preventDefault();
-    // const form = clickedPlayground.target;
-    // const message = form.message.value;
+    if (select) {
+      const postMethod = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: clickedPlayground._id,
+          message: select,
+        }),
+      };
 
-    const postMethod = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        subject: clickedPlayground._id,
-        // message,
-      }),
-    };
-    // form.reset();
+      fetch("/api/contactform", postMethod)
+        .then((res) => {
+          res.json();
+        })
+        .then((res) => {
+          toast.success("Vielen Dank");
+        })
+        .catch((error) => {
+          console.error(
+            error + "there has been a problem while sending us a message"
+          );
+        });
+    } else {
+      toast.error(
+        "bitte wähle einen Grund aus, warum dieser Spielplatz gemeldet wird"
+      );
+    }
+  }
 
-    fetch("/api/contactform", postMethod)
-      .then((res) => {
-        res.json();
-      })
-      .then((res) => {
-        console.log("OK");
-      })
-      .catch((error) => {
-        console.error(
-          error + "there has been a problem while sending us a message"
-        );
-      });
+  function handleOnChange(e) {
+    setSelect(e.target.value);
   }
 
   return (
@@ -319,8 +326,8 @@ export default function Map({
                   <img
                     onClick={handleToolTipp}
                     className="SubmitForm__info-button"
-                    src={information}
-                    alt="info-button"
+                    src={sharing}
+                    alt="sharing-button"
                   />
                   <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
@@ -379,16 +386,16 @@ export default function Map({
                     </div>
                   </div>
                   <div className="Map__Popup__linebreaker"></div>
-                  <form className={mP}>
-                    <div className={`${mP}__message`}>
-                      <textarea
-                        placeholder="z.B. Da ist ein Spielplatz auf der Maximilianstraße 13a, Hannover "
-                        cols="25"
-                        rows="10"
-                        name="message"
-                        id="message"
-                      />
-                    </div>
+                  <div className="Map__Popup__report__playground">
+                    <select onChange={handleOnChange}>
+                      <option value="">Bitte Grund wählen</option>
+                      <option value="Spielplatz gibt es nicht">
+                        Gibt es nicht
+                      </option>
+                      <option value="Spielplatz ist privat">Ist Privat</option>
+                      <option value="Sonstiges">Sonstiges</option>
+                    </select>
+
                     <button
                       onClick={() => handleOnReportPlayground(positionData)}
                       className={`${mP}__submit`}
@@ -396,7 +403,7 @@ export default function Map({
                     >
                       Spielplatz melden
                     </button>
-                  </form>
+                  </div>
                 </>
               </Popup>
             </Marker>
