@@ -13,20 +13,20 @@ const CheckinRoutes = require("./Routes/CheckinRoutes");
 const helmet = require("helmet");
 const ReferrerRoutes = require("./Routes/ReferrerRoutes");
 const { MONGO_URI, PORT, ORIGINS } = process.env;
-const whitelist = ORIGINS.split(",");
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  optionsSuccessStatus: 200,
-};
+// const whitelist = ORIGINS.split(",");
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//   optionsSuccessStatus: 200,
+// };
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(
   helmet({
     contentSecurityPolicy: {
