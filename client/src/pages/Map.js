@@ -231,13 +231,11 @@ export default function Map({
           message: select,
         }),
       };
+      toast.success("Vielen Dank für das Melden des Spielplatzes");
 
       fetch("/api/contactform", postMethod)
         .then((res) => {
           res.json();
-        })
-        .then((res) => {
-          toast.success("Vielen Dank");
         })
         .catch((error) => {
           console.error(
