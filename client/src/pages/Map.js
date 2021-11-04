@@ -43,6 +43,7 @@ export default function Map({
   const googleRouteUrl = "https://www.google.de/maps/dir//";
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
+  const mP = "Map__Popup";
 
   useEffect(() => {
     try {
@@ -206,6 +207,37 @@ export default function Map({
     }
   }
 
+  function handleOnReportPlayground(clickedPlayground) {
+    // clickedPlayground.preventDefault();
+    // const form = clickedPlayground.target;
+    // const message = form.message.value;
+
+    const postMethod = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        subject: clickedPlayground._id,
+        // message,
+      }),
+    };
+    // form.reset();
+
+    fetch("/api/contactform", postMethod)
+      .then((res) => {
+        res.json();
+      })
+      .then((res) => {
+        console.log("OK");
+      })
+      .catch((error) => {
+        console.error(
+          error + "there has been a problem while sending us a message"
+        );
+      });
+  }
+
   return (
     <>
       {helmet(
@@ -346,6 +378,25 @@ export default function Map({
                       </a>
                     </div>
                   </div>
+                  <div className="Map__Popup__linebreaker"></div>
+                  <form className={mP}>
+                    <div className={`${mP}__message`}>
+                      <textarea
+                        placeholder="z.B. Da ist ein Spielplatz auf der Maximilianstraße 13a, Hannover "
+                        cols="25"
+                        rows="10"
+                        name="message"
+                        id="message"
+                      />
+                    </div>
+                    <button
+                      onClick={() => handleOnReportPlayground(positionData)}
+                      className={`${mP}__submit`}
+                      type="submit"
+                    >
+                      Spielplatz melden
+                    </button>
+                  </form>
                 </>
               </Popup>
             </Marker>
