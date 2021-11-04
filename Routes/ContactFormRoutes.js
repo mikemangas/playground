@@ -16,7 +16,7 @@ router.post("/api/contactform", (req, res) => {
 
   const mailOptions = {
     from: req.body.eMail,
-    to: "kontakt@kindersport-wissen.de",
+    to: "miketheboy11@gmail.com",
     subject: `Message from ${req.body.eMail}: ${req.body.subject}`,
     html: `<ul>
       <li>${req.body.fName}</li>

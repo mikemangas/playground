@@ -192,6 +192,10 @@
   width: 100%;
 }
 
+.Map__Popup__report__playground__wrapper button:active {
+  background-color: yellow;
+}
+
 .Map__Popup__report__playground__wrapper select {
   background-color: var(--color-purple);
   color: var(--color-turqouise);

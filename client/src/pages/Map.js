@@ -227,8 +227,9 @@ export default function Map({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          subject: clickedPlayground._id,
+          fName: clickedPlayground._id,
           message: select,
+          subject: "Spielplatz Meldung",
         }),
       };
       toast.success("Vielen Dank für das Melden des Spielplatzes");
