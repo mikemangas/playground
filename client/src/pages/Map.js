@@ -19,6 +19,7 @@ import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
 import information from "../assets/Images/information.png";
+import createInternLink from "../hooks/createInternLink";
 
 export default function Map({
   checkInState,
@@ -204,6 +205,7 @@ export default function Map({
       setToolTipp(`Map__Popup__toolTipp--hide`);
     }
   }
+
   return (
     <>
       {helmet(
@@ -219,6 +221,12 @@ export default function Map({
       >
         Meinen Standort zur Suche nutzen
       </button>
+      <div className="Map__report__playground">
+        <p>
+          Du kannst einen Spielplatz nicht finden? Dann melde ihn bitte{" "}
+          {createInternLink("/kontakt", "hier")}.
+        </p>
+      </div>
       <MapContainer
         className="Map__Mapcontainer"
         tap={false}
