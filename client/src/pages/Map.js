@@ -18,7 +18,9 @@ import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
-import information from "../assets/Images/information.png";
+import exclamation from "../assets/Images/exclamation.png";
+import createInternLink from "../hooks/createInternLink";
+import sharing from "../assets/Images/sharing.png";
 
 export default function Map({
   checkInState,
@@ -42,6 +44,11 @@ export default function Map({
   const googleRouteUrl = "https://www.google.de/maps/dir//";
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
+  const [toolTippReporting, setToolTippReporting] = useState(
+    `Map__Popup__report__playground__wrapper--hide`
+  );
+  const mP = "Map__Popup";
+  const [select, setSelect] = useState();
 
   useEffect(() => {
     try {
@@ -197,13 +204,55 @@ export default function Map({
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
-  function handleToolTipp() {
+  function handleToolTippSharing() {
     if (toolTipp === `Map__Popup__toolTipp--hide`) {
       setToolTipp(`Map__Popup__toolTipp--show`);
     } else {
       setToolTipp(`Map__Popup__toolTipp--hide`);
     }
   }
+  function handleToolTippReport() {
+    if (toolTippReporting === `Map__Popup__report__playground__wrapper--hide`) {
+      setToolTippReporting(`Map__Popup__report__playground__wrapper`);
+    } else {
+      setToolTippReporting(`Map__Popup__report__playground__wrapper--hide`);
+    }
+  }
+
+  function handleOnReportPlayground(clickedPlayground) {
+    if (select) {
+      const postMethod = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: clickedPlayground._id,
+          message: select,
+        }),
+      };
+      toast.success("Vielen Dank für das Melden des Spielplatzes");
+
+      fetch("/api/contactform", postMethod)
+        .then((res) => {
+          res.json();
+        })
+        .catch((error) => {
+          console.error(
+            error + "there has been a problem while sending us a message"
+          );
+        });
+    } else {
+      toast.error(
+        "bitte wähle einen Grund aus, warum dieser Spielplatz gemeldet wird"
+      );
+    }
+  }
+
+  function handleOnChange(e) {
+    setSelect(e.target.value);
+  }
+
   return (
     <>
       {helmet(
@@ -219,6 +268,12 @@ export default function Map({
       >
         Meinen Standort zur Suche nutzen
       </button>
+      <div className="Map__report__playground">
+        <p>
+          Du kannst einen Spielplatz nicht finden? Dann melde ihn bitte{" "}
+          {createInternLink("/kontakt", "hier")}.
+        </p>
+      </div>
       <MapContainer
         className="Map__Mapcontainer"
         tap={false}
@@ -277,10 +332,10 @@ export default function Map({
                     </p>
                   </div>
                   <img
-                    onClick={handleToolTipp}
+                    onClick={handleToolTippSharing}
                     className="SubmitForm__info-button"
-                    src={information}
-                    alt="info-button"
+                    src={sharing}
+                    alt="sharing-button"
                   />
                   <div className="Map__Popup__sharer__wrapper">
                     <div className="Map__Popup__route__google">
@@ -337,6 +392,36 @@ export default function Map({
                         />
                       </a>
                     </div>
+                  </div>
+                  <div className="Map__Popup__linebreaker"></div>
+                  <div className={toolTippReporting}>
+                    <select onChange={handleOnChange}>
+                      <option value="">Bitte Grund wählen</option>
+                      <option value="Spielplatz gibt es nicht">
+                        Spielplatz gibt es nicht
+                      </option>
+                      <option value="Spielplatz ist privat">
+                        Spielplatz ist privat
+                      </option>
+                      <option value="Sonstiges">Sonstiges</option>
+                    </select>
+
+                    <button
+                      onClick={() => handleOnReportPlayground(positionData)}
+                      className={`${mP}__submit`}
+                      type="submit"
+                    >
+                      Spielplatz melden
+                    </button>
+                  </div>
+                  <div className="Map__Popup__report__info__wrapper">
+                    <img
+                      onClick={handleToolTippReport}
+                      className="SubmitForm__info-button"
+                      src={exclamation}
+                      alt="report-button"
+                    />
+                    <p>Spielplatz melden</p>
                   </div>
                 </>
               </Popup>

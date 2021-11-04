@@ -162,7 +162,59 @@
   font-size: 0.8rem;
   max-width: 140px;
 }
+.Map__Popup__report__playground__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  grid-gap: 4px;
+  gap: 4px;
+  padding: 2px;
+}
+
+.Map__Popup__report__info__wrapper p {
+  font-size: 1rem;
+}
+
+.Map__Popup__report__playground__wrapper--hide {
+  display: none;
+}
+
+.Map__Popup__report__playground__wrapper button {
+  font-size: 1rem;
+  padding: 10px;
+  border: 2px var(--color-purple) solid;
+  color: var(--color-purple);
+  background-color: var(--color-turqouise);
+  width: fit-content;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.Map__Popup__report__playground__wrapper select {
+  background-color: var(--color-purple);
+  color: var(--color-turqouise);
+}
+
+.Map__Popup__report__playground__wrapper--hide {
+  display: none;
+}
 
 .Popup__playgroundName {
   font-size: 0.8rem;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: var(--color-beige);
+}
+
+.leaflet-popup-close-button {
+  color: var(--color-purple) !important;
+}
+
+.Map__Popup__report__info__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }

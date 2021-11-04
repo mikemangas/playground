@@ -13,18 +13,16 @@ router.post("/api/contactform", (req, res) => {
       clientSecret: GMAIL_SECRET,
     },
   });
-  console.log(GMAIL_PASSWORD);
-  console.log(GMAIL_CLIENT);
 
   const mailOptions = {
-    from: req.body.eMail,
+    from: req?.body?.eMail,
     to: "kontakt@kindersport-wissen.de",
-    subject: `Message from ${req.body.eMail}: ${req.body.subject}`,
+    subject: `Message from ${req?.body?.eMail}: ${req?.body?.subject}`,
     html: `<ul>
-      <li>${req.body.fName}</li>
-      <li>${req.body.eMail}</li>
+      <li>${req?.body?.fName}</li>
+      <li>${req?.body?.eMail}</li>
       </ul>
-      <p>${req.body.message}</p><br>
+      <p>${req?.body?.message}</p><br>
       <p>This message was sent by the spieplatzchecken.de contact form</p>
       `,
   };
