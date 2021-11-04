@@ -44,6 +44,9 @@ export default function Map({
   const googleRouteUrl = "https://www.google.de/maps/dir//";
   const telegramUrl = `https://t.me/share/url?url=https://spielplatzchecken.de/api/playgroundshare/`;
   const [toolTipp, setToolTipp] = useState(`Map__Popup__toolTipp--hide`);
+  const [toolTippReporting, setToolTippReporting] = useState(
+    `Map__Popup__report__playground__wrapper--hide`
+  );
   const mP = "Map__Popup";
   const [select, setSelect] = useState();
 
@@ -201,11 +204,18 @@ export default function Map({
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
-  function handleToolTipp() {
+  function handleToolTippSharing() {
     if (toolTipp === `Map__Popup__toolTipp--hide`) {
       setToolTipp(`Map__Popup__toolTipp--show`);
     } else {
       setToolTipp(`Map__Popup__toolTipp--hide`);
+    }
+  }
+  function handleToolTippReport() {
+    if (toolTippReporting === `Map__Popup__report__playground__wrapper--hide`) {
+      setToolTippReporting(`Map__Popup__report__playground__wrapper`);
+    } else {
+      setToolTippReporting(`Map__Popup__report__playground__wrapper--hide`);
     }
   }
 
@@ -324,7 +334,7 @@ export default function Map({
                     </p>
                   </div>
                   <img
-                    onClick={handleToolTipp}
+                    onClick={handleToolTippSharing}
                     className="SubmitForm__info-button"
                     src={sharing}
                     alt="sharing-button"
@@ -386,13 +396,15 @@ export default function Map({
                     </div>
                   </div>
                   <div className="Map__Popup__linebreaker"></div>
-                  <div className="Map__Popup__report__playground">
+                  <div className={toolTippReporting}>
                     <select onChange={handleOnChange}>
                       <option value="">Bitte Grund wählen</option>
                       <option value="Spielplatz gibt es nicht">
-                        Gibt es nicht
+                        Spielplatz gibt es nicht
                       </option>
-                      <option value="Spielplatz ist privat">Ist Privat</option>
+                      <option value="Spielplatz ist privat">
+                        Spielplatz ist privat
+                      </option>
                       <option value="Sonstiges">Sonstiges</option>
                     </select>
 
@@ -404,6 +416,12 @@ export default function Map({
                       Spielplatz melden
                     </button>
                   </div>
+                  <img
+                    onClick={handleToolTippReport}
+                    className="SubmitForm__info-button"
+                    src={information}
+                    alt="report-button"
+                  />
                 </>
               </Popup>
             </Marker>

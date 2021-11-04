@@ -162,7 +162,7 @@
   font-size: 0.8rem;
   max-width: 140px;
 }
-.Map__Popup__report__playground {
+.Map__Popup__report__playground__wrapper {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
@@ -172,7 +172,11 @@
   padding: 2px;
 }
 
-.Map__Popup__report__playground button {
+.Map__Popup__report__playground__wrapper--hide {
+  display: none;
+}
+
+.Map__Popup__report__playground__wrapper button {
   font-size: 1rem;
   padding: 10px;
   border: 2px var(--color-purple) solid;
@@ -184,9 +188,13 @@
   justify-content: center;
 }
 
-.Map__Popup__report__playground select {
+.Map__Popup__report__playground__wrapper select {
   background-color: var(--color-purple);
   color: var(--color-turqouise);
+}
+
+.Map__Popup__report__playground__wrapper--hide {
+  display: none;
 }
 
 .Popup__playgroundName {
@@ -195,4 +203,8 @@
 
 .leaflet-popup-content-wrapper {
   background-color: var(--color-beige);
+}
+
+.leaflet-popup-close-button {
+  color: var(--color-purple) !important;
 }
