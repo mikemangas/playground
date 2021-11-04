@@ -18,7 +18,7 @@ import "leaflet-loading";
 import toast from "react-hot-toast";
 import helmet from "../hooks/helmet";
 import defaultVisitsPatch from "../hooks/defaultVisitsPatch";
-import information from "../assets/Images/information.png";
+import exclamation from "../assets/Images/exclamation.png";
 import createInternLink from "../hooks/createInternLink";
 import sharing from "../assets/Images/sharing.png";
 
@@ -416,12 +416,15 @@ export default function Map({
                       Spielplatz melden
                     </button>
                   </div>
-                  <img
-                    onClick={handleToolTippReport}
-                    className="SubmitForm__info-button"
-                    src={information}
-                    alt="report-button"
-                  />
+                  <div className="Map__Popup__report__info__wrapper">
+                    <img
+                      onClick={handleToolTippReport}
+                      className="SubmitForm__info-button"
+                      src={exclamation}
+                      alt="report-button"
+                    />
+                    <p>Spielplatz melden</p>
+                  </div>
                 </>
               </Popup>
             </Marker>

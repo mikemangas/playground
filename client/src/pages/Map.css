@@ -166,10 +166,13 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  justify-content: left;
+  grid-gap: 4px;
   gap: 4px;
-  max-width: fit-content;
   padding: 2px;
+}
+
+.Map__Popup__report__info__wrapper p {
+  font-size: 1rem;
 }
 
 .Map__Popup__report__playground__wrapper--hide {
@@ -186,6 +189,7 @@
   display: flex;
   -webkit-justify-content: center;
   justify-content: center;
+  width: 100%;
 }
 
 .Map__Popup__report__playground__wrapper select {
@@ -207,4 +211,10 @@
 
 .leaflet-popup-close-button {
   color: var(--color-purple) !important;
+}
+
+.Map__Popup__report__info__wrapper {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
