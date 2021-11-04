@@ -19,6 +19,8 @@ export default function Kontakt() {
       <p>
         Du hast eine Frage oder hast einen Spielplatz entdeckt, den wir nicht in
         unserer Datenbank haben? Dann schreib uns gerne.
+        <br></br>
+        Bitte beachte, dass wir keine privaten Spielplätze registrieren.
       </p>
       <ContactForm />
     </>
