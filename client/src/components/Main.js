@@ -17,7 +17,11 @@ export default function Main({ checkInState, checkOutState }) {
     const url = `/api/referrer/`;
     let referrer = document.referrer;
 
-    if (referrer !== "" && !referrer.includes("localhost")) {
+    if (
+      referrer !== "" &&
+      !referrer.includes("localhost") &&
+      !referrer.includes("https://spielplatzchecken.de")
+    ) {
       let settings = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
