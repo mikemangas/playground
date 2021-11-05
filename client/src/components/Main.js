@@ -16,7 +16,8 @@ export default function Main({ checkInState, checkOutState }) {
   useEffect(() => {
     const url = `/api/referrer/`;
     let referrer = document.referrer;
-    if (referrer !== "") {
+
+    if (referrer !== "" && !referrer.includes("localhost")) {
       let settings = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
