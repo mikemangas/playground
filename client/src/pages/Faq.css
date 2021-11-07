@@ -29,3 +29,12 @@
   margin-bottom: 10px;
   padding: 10px 20px;
 }
+
+@media only screen and (min-width: 900px) {
+  .Faq__question__mapped__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+  }
+}

@@ -41,10 +41,10 @@ export default function Home({ lat, lon, setview }) {
 
   return (
     <div className="Home__outer__wrapper">
-      <h6 className="Home__section__intro__subline">
-        Der große Spielplatzfinder mit über 100.000 registrierten Spielplätzen
-        in Deutschland.
-      </h6>
+      <h4 className="Home__section__intro__subline">
+        Der große Spielplatzfinder mit über 85.000 registrierten öffentlichen
+        Spielplätzen in Deutschland.
+      </h4>
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
           <h1 className="Home__banner-title1">Spielplätze mit </h1>
@@ -83,8 +83,8 @@ export default function Home({ lat, lon, setview }) {
         <ol className="Home__Section__info__wrapper">
           <h2>So geht die Spielplatzsuche</h2>
           <li>
-            PLZ oder Ort eingeben (alternativ kann auch die Funktion "Meinen
-            Standort zur Suche nutzen" genutzt werden.
+            PLZ, Ort oder Adresse eingeben (alternativ die Funktion "Meinen
+            Standort zur Suche nutzen" nutzen).
           </li>
           <li>Spielplatz finden</li>
           <li>Einchecken</li>
