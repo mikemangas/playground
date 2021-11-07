@@ -7,6 +7,7 @@ import createInternLink from "../hooks/createInternLink";
 
 export default function Home({ lat, lon, setview }) {
   const [checkbox, setCheckbox] = useState(true);
+  const [changingText, setChangingText] = useState("Spielplatz leer?");
   const history = useHistory();
   useEffect(() => {
     defaultVisitsPatch("615af57dff20382e9dd25aa9");
@@ -39,12 +40,29 @@ export default function Home({ lat, lon, setview }) {
     navigator.geolocation.getCurrentPosition(geoapiCoordinates);
   }
 
+  const blabla = setInterval(settingTextFunction, 3000);
+
+  function settingTextFunction() {
+    if (changingText === "Spielplatz leer?") {
+      setChangingText("Spielplatz zu voll?");
+    } else {
+      setChangingText(
+        "Spielplatzchecken.de hilft dir, damit du nie wieder enttäuscht wirst, wenn du zum Spielplatz gehst."
+      );
+    }
+    clearInterval(blabla);
+  }
+
   return (
     <div className="Home__outer__wrapper">
+      <div className="Home__phrases__wrapper">
+        <p>{changingText}</p>
+      </div>
       <h4 className="Home__section__intro__subline">
         Der große Spielplatzfinder mit über 85.000 registrierten öffentlichen
         Spielplätzen in Deutschland.
       </h4>
+
       <section className="Home__section__banner">
         <div className="Home__banner-wrapper">
           <h1 className="Home__banner-title1">Spielplätze mit </h1>
