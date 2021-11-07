@@ -1,5 +1,5 @@
 .ContactForm {
-  padding: 20px;
+  padding: 15px;
   margin: 10px;
   display: flex;
   flex-flow: column;
@@ -31,6 +31,10 @@
   padding: 10px;
 }
 
+.ContactForm input,
+.ContactForm textarea {
+  padding: 10px;
+}
 @media only screen and (min-width: 700px) {
   .ContactForm {
     width: 700px;
